@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Cadastro</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="card">
+            <h2>Criar Nova Conta</h2>
+            <input type="text" id="input_nome" placeholder="Nome Completo">
+            <input type="email" id="input_email" placeholder="E-mail">
+            <input type="text" id="input_senha" placeholder="Senha">
+            <button onclick="cadastro()">Registrar e Começar</button>
+            <p>Já tem uma conta? <a href="login.html">Fazer Login</a></p>
+    </div>
+</body>
+</html>
+<script>
+    function cadastro(){
+        let nome = input_nome.value;
+        let email = input_email.value;
+        let senha = input_senha.value;
+
+        if( nome != '' && email != '' && senha != '' ){
+            alert('Cadastro efetuado!');
+            window.location.href = 'index.html';
+        } else {
+            alert('Preencha todos os campos para continuar.');
+        }
+    }
+</script>

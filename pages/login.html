@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Login</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="card">
+        <div class="card-content">
+            <h2>Fazer Login</h2>
+            <input type="email" id="input_email" placeholder="E-mail">
+            <input type="password" id="input_senha" placeholder="Senha">
+            <button onclick="login()">Entrar</button>
+            <p>Não tem conta? <a href="cadastro.html">Comece agora</a></p>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function login(){
+        let email = input_email.value;
+        let senha = input_senha.value;
+
+        if( email != '' && senha != '' ){
+            alert('Login efetuado!');
+            window.location.href = 'index.html';
+        } else {
+            alert('Preencha todos os campos para continuar.');
+        }
+    }
+</script>
