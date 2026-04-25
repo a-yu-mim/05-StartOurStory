@@ -4,21 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Login</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
+    
 </head>
-<body>
-    <div class="card">
+<body id="body">
+    <button id="botao" onclick="darkModo()"><div id="alavanca"></div></button>
+
+    <div id="card">
         <div class="card-content">
             <h2>Fazer Login</h2>
             <input type="email" id="input_email" placeholder="E-mail">
             <input type="password" id="input_senha" placeholder="Senha">
-            <button onclick="login()">Entrar</button>
-            <p>Não tem conta? <a href="cadastro.html">Comece agora</a></p>
+            <button id="btn-entrar" onclick="login()">Entrar</button>
+            <p>Não tem conta? <a href="cadastro.html" id="link">Comece agora</a></p>
         </div>
     </div>
 </body>
 </html>
 <script>
+    function darkModo() {
+        let fundo = document.getElementById("body");
+        let botao = document.getElementById("botao");
+        let alavanca = document.getElementById("alavanca");
+        let card = document.getElementById("card");
+        let email = document.getElementById("input_email");
+        let senha = document.getElementById("input_senha");
+        let btnEntrar = document.getElementById("btn-entrar");
+        let link = document.getElementById("link");
+
+        if (alavanca.style.left == "32px") {
+            fundo.style.background = "";
+            fundo.style.color = "";
+            botao.style.background = "";
+            botao.style.outline = "";
+            alavanca.style.left = "";
+            card.style.background = "";
+            card.style.border = "";
+            card.style.color = "";
+            btnEntrar.style.background = "";
+            email.style.background = "";
+            email.style.color = "";
+            email.style.border = "";
+            senha.style.background = "";
+            senha.style.color = "";
+            senha.style.border = "";
+            link.style.color = "";
+        } else {
+            fundo.style.background = "#121212";
+            fundo.style.color = "#f1f1f1";
+            botao.style.background = "#4caf50";
+            botao.style.outline = "2px solid #4caf50";
+            alavanca.style.left = "32px";
+            card.style.background = "#1e1e1e";
+            card.style.border = "2px solid #333";
+            card.style.color = "#ffffff";
+            btnEntrar.style.background = "black";
+            email.style.background = "#252525";
+            email.style.color = "white";
+            email.style.border = "2px solid #333";
+            senha.style.background = "#252525";
+            senha.style.color = "white";
+            senha.style.border = "2px solid #333";
+            link.style.color = "white";
+        }
+    }
+
     function login(){
         let email = input_email.value;
         let senha = input_senha.value;

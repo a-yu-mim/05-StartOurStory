@@ -1,0 +1,95 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+    background: #f5f5f5;
+    color: #222;
+}
+
+#botao {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 30px;
+    border-radius: 20px;
+    border: none;
+    padding: 0;
+    background: #ccc;
+    outline: 2px solid #ccc;
+    cursor: pointer;
+}
+
+#alavanca {
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 4px;
+}
+
+#card {
+    width: 350px;
+    padding: 30px;
+    border: 2px solid #006400;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.card-content {
+    margin-top: 0;
+}
+
+h2 {
+    margin: 0 0 15px;
+    text-align: center;
+    font-size: 28px;
+}
+
+#card input {
+    width: 100%;
+    height: 42px;
+    margin-bottom: 12px;
+    padding: 0 10px;
+    border: 2px solid #006400;
+    border-radius: 5px;
+    font-size: 16px;
+    background: white;
+    color: #222;
+}
+
+#card button {
+    width: 100%;
+    height: 44px;
+    margin-top: 4px;
+    border: none;
+    border-radius: 6px;
+    background: #f06f62;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+p {
+    margin: 12px 0 0;
+    text-align: center;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+a:hover {
+    text-decoration: underline;
+}

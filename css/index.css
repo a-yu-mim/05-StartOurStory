@@ -1,0 +1,118 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: monospace;
+}
+
+.fundo {
+    min-height: 100vh;
+    overflow: hidden;
+    background-image: url('../assets/mar.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.areaTrabalho {
+    width: 100%;
+    display: grid;
+    min-height: 100vh;
+    padding: 28px 22px 90px;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 110px));
+    gap: 20px;
+    align-content: start;
+}
+
+.pasta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    text-shadow: 1px 1px 0 #000;
+    padding: 8px 6px;
+    cursor: pointer;
+}
+
+.iconePasta {
+    width: 64px;
+    height: 64px;
+    display: block;
+    object-fit: contain;
+}
+
+.nomePasta {
+    text-align: center;
+    width: 100%;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+.barraInferior {
+    position: fixed;
+    z-index: 20;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background: #b8b8b8;
+    border-top: 1px solid #f3f3f3;
+}
+
+#menu {
+    width: 110px;
+    height: 45px;
+    border: 2px solid;
+    border-color: #ffffff #5a5a5a #5a5a5a #ffffff;
+    background: #b9b9b9;
+    color: #000;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#menu:hover {
+    background: #b1b1b1;
+}
+
+#menu:focus-visible {
+    outline: 2px dashed #1f4f94;
+    outline-offset: 2px;
+}
+
+#menuItens {
+    display: none;
+    position: absolute;
+    left: 8px;
+    bottom: 66px;
+    width: 220px;
+    padding: 6px;
+    border: 2px solid;
+    border-color: #ffffff #5a5a5a #5a5a5a #ffffff;
+    background: #b8b8b8;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
+}
+
+.itemMenu {
+    padding: 8px 10px;
+    margin-top: 2px;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.itemMenu:first-child {
+    margin-top: 0;
+}
+
+.itemMenu:hover {
+    background: #1f4f94;
+    color: #ffffff;
+    border-color: #9bc0ff;
+}

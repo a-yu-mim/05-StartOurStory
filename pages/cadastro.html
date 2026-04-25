@@ -1,33 +1,75 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Página Cadastro</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cadastro.css" />
+
 </head>
 <body>
-    <div class="card">
-            <h2>Criar Nova Conta</h2>
-            <input type="text" id="input_nome" placeholder="Nome Completo">
-            <input type="email" id="input_email" placeholder="E-mail">
-            <input type="text" id="input_senha" placeholder="Senha">
-            <button onclick="cadastro()">Registrar e Começar</button>
-            <p>Já tem uma conta? <a href="login.html">Fazer Login</a></p>
-    </div>
+  <div class="card">
+    <h2>Criar Nova Conta</h2>
+
+    <input type="text" id="input_nome" placeholder="Nome Completo" />
+    <input type="email" id="input_email" placeholder="E-mail" />
+    <input type="text" id="input_senha" placeholder="Senha" />
+    <button onclick="cadastro()">Registrar e Começar</button>
+
+    <p>Já tem uma conta? <a href="login.html">Fazer Login</a></p>
+  </div>
+
+  <div id="alerta">
+      <span id="fecharAlerta" onclick="fecharAlerta()">&times;</span>
+      <span id="mensagem"></span>
+  </div>
+
+  <div id="porta" onclick="irParaIndex()">
+      <img src="../assets/porta.png" alt="porta">
+  </div>
+
+  <audio id="somPorta" src="../assets/porta-som.mp3"></audio>
+
 </body>
 </html>
 <script>
-    function cadastro(){
-        let nome = input_nome.value;
-        let email = input_email.value;
-        let senha = input_senha.value;
+  let mensagemAtual = '';
+  let alerta = document.getElementById("alerta");
+  let mensagem = document.getElementById("mensagem");
+  let porta = document.getElementById("porta");
 
-        if( nome != '' && email != '' && senha != '' ){
-            alert('Cadastro efetuado!');
-            window.location.href = 'index.html';
-        } else {
-            alert('Preencha todos os campos para continuar.');
-        }
+  function cadastro() {
+    let nome = input_nome.value;
+    let email = input_email.value;
+    let senha = input_senha.value;
+
+    if (nome != "" && email != "" && senha != "") {
+      mensagemAtual = "Cadastro efetuado!";
+      mostrarSucesso();
+    } else {
+      mensagemAtual = "Preencha todos os campos para continuar.";
+      mostrarErro();
     }
+  }
+
+  function mostrarSucesso(){
+    porta.style.display = "block";
+    document.getElementById("somPorta").play();
+  }
+
+  function mostrarErro(){
+    mensagem.innerText = mensagemAtual;
+    irParaLogin = false;
+    alerta.style.background = "red";
+    alerta.style.display = "block";
+  }
+
+  function irParaIndex(){
+    window.location.href = "index.html";
+  }
+
+  function fecharAlerta(){
+    alerta.style.display = "none";
+  }
+
 </script>
