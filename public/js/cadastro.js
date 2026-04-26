@@ -4,7 +4,7 @@ function cadastro() {
     let email = document.getElementById("input_email").value;
     let senha = document.getElementById("input_senha").value;
 
-    if (nome === "" || email === "" || senha === "") {
+    if (!nome || !email || !senha) {
         mostrarMensagemCadastro("Preencha todos os campos para continuar.", "red", false);
         return;
     }
@@ -21,10 +21,10 @@ function cadastro() {
         })
     })
     .then(response => {
-        if (response.ok) {
-            mostrarMensagemCadastro("Cadastro efetuado!", "green", true);
+        if (!response.ok) {
+            throw new Error("Nao foi possivel realizar o cadastro.");
         } else {
-            mostrarMensagemCadastro("Nao foi possivel realizar o cadastro.", "red", false);
+            mostrarMensagemCadastro("Cadastro efetuado!", "green", true);
         }
     })
     .catch(erro => {
@@ -39,14 +39,23 @@ function mostrarMensagemCadastro(mensagem, cor, abrirPorta) {
     let porta = document.getElementById("porta");
     let somPorta = document.getElementById("somPorta");
 
-    if (alerta != null && mensagemElemento != null) {
+    if (alerta && mensagemElemento) {
         mensagemElemento.innerHTML = mensagem;
         alerta.style.background = cor;
         alerta.style.display = "block";
     }
 
-    if (abrirPorta == true && porta != null && somPorta != null) {
+    if (abrirPorta && porta && somPorta) {
         porta.style.display = "block";
         somPorta.play();
     }
 }
+
+  function irParaLogin(){
+    window.location.href = "login.html";
+  }
+
+  function fecharAlerta(){
+    const alerta = document.getElementById("alerta");
+    alerta.style.display = "none";
+  }
