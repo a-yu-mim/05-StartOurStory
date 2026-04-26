@@ -1,15 +1,15 @@
 // =========================================================
 // |     "Onde vou rodar isso? Meu PC ou site real?"       |
 // =========================================================
-   var ambiente_processo = 'desenvolvimento';
-// var ambiente_processo = 'producao';
+   let ambiente_processo = 'desenvolvimento';
+// let ambiente_processo = 'producao';
 
 
 // =========================================================
 // |      "Se for produção então use .env,                 |
 // |                  caso contrário use .env.dev"         |
 // =========================================================
-    var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
+    const caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
 
 
 // =========================================================
@@ -21,29 +21,29 @@
 // =========================================================
 // |      "Estou fazendo as ferramentas para usar"         |
 // =========================================================
-    var express = require("express");
-    var cors = require("cors");
-    var path = require("path");
+    const express = require("express");
+    const cors = require("cors");
+    const path = require("path");
 
 
 // =========================================================
 // |   "Pega a porta e o endereço que coloquei no .env"    |
 // =========================================================
-    var PORTA_APP = process.env.APP_PORT;
-    var HOST_APP = process.env.APP_HOST;
+    const PORTA_APP = process.env.APP_PORT;
+    const HOST_APP = process.env.APP_HOST;
 
 
 // =========================================================
 // |              "Criando meu servidor"                   |
 // =========================================================
-    var app = express();
+    const app = express();
 
 
 // =========================================================
-// |    "Separando partes do meu site para virar rotas"    |
+// |               "Importação das rotas"                  |
 // =========================================================
-    var indexRouter = require("./src/routes/index");
-    var usuarioRouter = require("./src/routes/usuarios");
+    const indexRouter = require("./src/routes/index");
+    const usuarioRouter = require("./src/routes/usuarios");
 
 
 // =========================================================

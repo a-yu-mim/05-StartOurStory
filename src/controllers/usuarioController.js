@@ -1,13 +1,17 @@
-var usuarioModel = require("../models/usuarioModel");
+// ---------------------------------------------------
+//  Controller recebe dados, valida e chama o model 
+// ---------------------------------------------------
+
+const usuarioModel = require("../models/usuarioModel");
 
 function autenticar(req, res) {
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
+    const email = req.body.emailServer;
+    const senha = req.body.senhaServer;
 
     if (email == undefined) {
-        res.status(400).send("Seu email está undefined!");
+        res.status(400).send("Email não informado");
     } else if (senha == undefined) {
-        res.status(400).send("Sua senha está indefinida!");
+        res.status(400).send("Senha não informada");
     } else {
 
         usuarioModel.autenticar(email, senha)
@@ -40,18 +44,18 @@ function autenticar(req, res) {
 }
 
 function cadastrar(req, res) {
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-    var nome = req.body.nomeServer;
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
+    // Crie uma constiável que vá recuperar os valores do arquivo cadastro.html
+    const nome = req.body.nomeServer;
+    const email = req.body.emailServer;
+    const senha = req.body.senhaServer;
     
     // Faça as validações dos valores
     if (nome == undefined) {
-        res.status(400).send("Seu nome está undefined!");
+        res.status(400).send("Nome não informado");
     } else if (email == undefined) {
-        res.status(400).send("Seu email está undefined!");
+        res.status(400).send("Email não informado");
     } else if (senha == undefined) {
-        res.status(400).send("Sua senha está undefined!");
+        res.status(400).send("Senha não informada");
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
