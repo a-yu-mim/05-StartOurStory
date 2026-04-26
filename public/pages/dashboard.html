@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Casamento</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+}
+
+body {
+    background: #f8dede;
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 200px;
+    background: #1f1f1f;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+}
+
+.nav-item {
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.container0 {
+    flex: 1;
+    margin-left: 200px;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.left-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.right-section {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.kpis {
+    display: flex;
+    gap: 20px;
+}
+
+.kpi {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.kpi h3 {
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 14px;
+}
+
+.kpi span {
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+}
+
+.charts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.chart {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.lista {
+    margin: 15px 0;
+    max-height: 120px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #f8f9fa;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.item button {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.item button:hover {
+    background: #c82333;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #f48fb1;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #f48fb1;
+    color: white;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+button:hover {
+    background: #e91e63;
+}
+
+#avisoMeta {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #c3e6cb;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="nav-item">Home</div>
+    <div class="nav-item">Dashboard</div>
+    <div class="nav-item">Login</div>
+    <div class="nav-item">Cadastro</div>
+</div>
+
+<div class="container0">
+
+    <div class="left-section">
+        <div class="kpis">
+            <div class="kpi">
+                <h3>Convidados</h3>
+                <span id="totalConvidados">0</span>
+            </div>
+            <div class="kpi">
+                <h3>Acúmulo</h3>
+                <span id="totalMeta">R$ 0</span>
+            </div>
+            <div class="kpi">
+                <h3>Contagem Regressiva</h3>
+                <div id="countdown">
+                    <span id="cdDias">26</span>d
+                    <span id="cdHoras">10</span>h
+                    <span id="cdMin">00</span>m
+                    <span id="cdSeg">00</span>s
+                </div>
+            </div>
+        </div>
+
+        <div class="charts">
+            <div class="chart">
+                <canvas id="linhaGrafico"></canvas>
+            </div>
+            <div id="avisoMeta" style="display: none;">
+                Parabens! Voce atingiu a meta de economia!
+            </div>
+            <div class="chart">
+                <canvas id="barraGrafico"></canvas>
+            </div>
+        </div>
+    </div>
+        
+    <div class="right-section">
+            <div class="card">
+                <h2>Convidados</h2>
+                <input type="text" id="input_convidado" placeholder="Nome do convidado...">
+                <button onclick="addConvidado()">Adicionar Convidado</button>
+                <div class="lista" id="listaConvidados"></div>
+            </div>
+            
+            <div class="card">
+                <h2>Economia</h2>
+                <input type="number" id="input_economia" placeholder="Valor economizado...">
+                <button onclick="addEconomia()">Adicionar Economia</button>
+                <div class="lista" id="listaEconomia"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script>
+
+    let convidados = [];
+    let economias  = [];
+
+    let metaEconomia   = 50000;
+    let maxConvidados  = 300;
+
+    let convidadoToRemove = '';
+    let economiaToRemove  = 0;
+
+    let listaConvidadosEl = document.getElementById('listaConvidados');
+    let listaEconomiaEl   = document.getElementById('listaEconomia');
+    let totalConvidadosEl = document.getElementById('totalConvidados');
+    let totalMetaEl       = document.getElementById('totalMeta');
+
+    // -----------------------------------------------
+    // CONTAGEM REGRESSIVA
+    // Data atual:  24/04/2026
+    // Data do casamento: 20/05/2026 às 10h
+    // Diferença: 26 dias e 10 horas = 2.282.400 segundos
+    // -----------------------------------------------
+    let totalSegundos = 2282400;
+
+    function atualizarContagem() {
+
+        if (totalSegundos <= 0) {
+            document.getElementById('countdown').innerHTML = 'Chegou o dia!';
+            return;
+        }
+
+        let resto = totalSegundos;
+
+        let dias = (resto - (resto % 86400)) / 86400;
+        resto = resto % 86400;
+
+        let horas = (resto - (resto % 3600)) / 3600;
+        resto = resto % 3600;
+
+        let minutos = (resto - (resto % 60)) / 60;
+        let seg = resto % 60;
+
+        let horasTexto   = '' + horas;
+        let minutosTexto = '' + minutos;
+        let segTexto     = '' + seg;
+
+        if (horas < 10) {
+            horasTexto = '0' + horas;
+        }
+        if (minutos < 10) {
+            minutosTexto = '0' + minutos;
+        }
+        if (seg < 10) {
+            segTexto = '0' + seg;
+        }
+
+        document.getElementById('cdDias').innerHTML  = dias;
+        document.getElementById('cdHoras').innerHTML = horasTexto;
+        document.getElementById('cdMin').innerHTML   = minutosTexto;
+        document.getElementById('cdSeg').innerHTML   = segTexto;
+
+        totalSegundos = totalSegundos - 1;
+    }
+
+
+    function addConvidado() {
+        let input = document.getElementById('input_convidado');
+        let nome  = input.value;
+
+        if (nome == '') {
+            alert('Por favor, insira o nome do convidado.');
+            return;
+        }
+
+        let duplicado = false;
+        for (let i = 0; i < convidados.length; i++) {
+            if (convidados[i] == nome) {
+                duplicado = true;
+                break;
+            }
+        }
+
+        if (duplicado) {
+            alert('Este convidado já foi adicionado!');
+            return;
+        }
+
+        convidados.push(nome);
+        input.value = '';
+        atualizar();
+    }
+
+    function removerConvidado() {
+        if (confirm('Tem certeza que deseja remover este convidado?')) {
+            let novaLista = [];
+            for (let i = 0; i < convidados.length; i++) {
+                if (convidados[i] != convidadoToRemove) {
+                    novaLista.push(convidados[i]);
+                }
+            }
+            convidados = novaLista;
+            atualizar();
+        }
+    }
+
+
+    function addEconomia() {
+        let input = document.getElementById('input_economia');
+        let valor = parseInt(input.value);
+
+        if (input.value == '' || valor <= 0) {
+            alert('Por favor, insira um valor válido.');
+            return;
+        }
+
+        economias.push(valor);
+        input.value = '';
+        atualizar();
+    }
+
+    function removerEconomia() {
+        if (confirm('Tem certeza que deseja remover este valor?')) {
+            let novaLista = [];
+            for (let i = 0; i < economias.length; i++) {
+                if (economias[i] != economiaToRemove) {
+                    novaLista.push(economias[i]);
+                }
+            }
+            economias = novaLista;
+            atualizar();
+        }
+    }
+
+
+    function atualizar() {
+        totalConvidadosEl.innerHTML = convidados.length;
+
+        let economiaTotal = 0;
+        for (let i = 0; i < economias.length; i++) {
+            economiaTotal = economiaTotal + economias[i];
+        }
+
+        totalMetaEl.innerHTML = 'R$ ' + economiaTotal;
+
+        renderListas();
+        atualizarGraficos();
+    }
+
+
+    let linhaGrafico = new Chart(document.getElementById('linhaGrafico'), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Progresso para a Meta (%)',
+                data: [],
+                borderColor: '#f48fb1',
+                backgroundColor: 'rgba(244, 143, 177, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: true } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: { display: true, text: '%' }
+                }
+            }
+        }
+    });
+
+    let barraGrafico = new Chart(document.getElementById('barraGrafico'), {
+        type: 'bar',
+        data: {
+            labels: ['Meta Restante', 'Convidados'],
+            datasets: [
+                {
+                    label: 'Meta Restante',
+                    data: [metaEconomia, 0],
+                    backgroundColor: '#f48fb1',
+                    yAxisID: 'yEcon'
+                },
+                {
+                    label: 'Convidados',
+                    data: [0, 0],
+                    backgroundColor: '#a8d8ea',
+                    yAxisID: 'yConv'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: true } },
+            scales: {
+                yEcon: {
+                    type: 'linear',
+                    position: 'left',
+                    beginAtZero: true,
+                    max: metaEconomia,
+                    title: { display: true, text: 'R$' }
+                },
+                yConv: {
+                    type: 'linear',
+                    position: 'right',
+                    beginAtZero: true,
+                    max: maxConvidados,
+                    title: { display: true, text: 'Convidados' },
+                    grid: { drawOnChartArea: false }
+                }
+            }
+        }
+    });
+
+ 
+    function renderListas() {
+        let htmlConvidados = '';
+        for (let i = 0; i < convidados.length; i++) {
+            htmlConvidados = htmlConvidados + '<div class="item"><span>' + convidados[i] + '</span>';
+            htmlConvidados = htmlConvidados + '<button onclick="convidadoToRemove = \'' + convidados[i] + '\'; removerConvidado();" title="Remover">×</button></div>';
+        }
+        listaConvidadosEl.innerHTML = htmlConvidados;
+
+        let htmlEconomia = '';
+        for (let i = 0; i < economias.length; i++) {
+            htmlEconomia = htmlEconomia + '<div class="item"><span>R$ ' + economias[i] + '</span>';
+            htmlEconomia = htmlEconomia + '<button onclick="economiaToRemove = ' + economias[i] + '; removerEconomia();" title="Remover">×</button></div>';
+        }
+        listaEconomiaEl.innerHTML = htmlEconomia;
+    }
+
+
+    function atualizarGraficos() {
+        let economiaTotal = 0;
+        for (let i = 0; i < economias.length; i++) {
+            economiaTotal = economiaTotal + economias[i];
+        }
+
+        let metaRestante = metaEconomia - economiaTotal;
+        if (metaRestante < 0) {
+            metaRestante = 0;
+        }
+
+        barraGrafico.data.datasets[0].data = [metaRestante, 0];
+        barraGrafico.data.datasets[1].data = [0, convidados.length];
+        barraGrafico.update();
+
+        let porcentagens = [];
+        let soma = 0;
+        for (let i = 0; i < economias.length; i++) {
+            soma = soma + economias[i];
+
+            let porcentagem = (soma * 100) / metaEconomia;
+            porcentagem = parseInt(porcentagem);
+
+            if (porcentagem > 100) {
+                porcentagem = 100;
+            }
+
+            porcentagens.push(porcentagem);
+        }
+
+        let labels = [];
+        for (let i = 0; i < porcentagens.length; i++) {
+            labels.push('Entrada ' + (i + 1));
+        }
+
+        linhaGrafico.data.labels = labels;
+        linhaGrafico.data.datasets[0].data = porcentagens;
+        linhaGrafico.update();
+
+        let aviso = document.getElementById('avisoMeta');
+        if (soma >= metaEconomia) {
+            aviso.style.display = 'block';
+        } else {
+            aviso.style.display = 'none';
+        }
+    }
+
+    atualizar();
+
+</script>

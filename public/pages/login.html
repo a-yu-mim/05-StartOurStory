@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Login</title>
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../pages/css/login.css">
     
 </head>
 <body id="body">
@@ -21,6 +21,7 @@
     </div>
 </body>
 </html>
+<script src="js/login.js"></script>
 <script>
     function darkModo() {
         let fundo = document.getElementById("body");
@@ -69,15 +70,4 @@
         }
     }
 
-    function login(){
-        let email = input_email.value;
-        let senha = input_senha.value;
-
-        if( email != '' && senha != '' ){
-            alert('Login efetuado!');
-            window.location.href = 'index.html';
-        } else {
-            alert('Preencha todos os campos para continuar.');
-        }
-    }
 </script>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página Cadastro</title>
+    <link rel="stylesheet" href="../pages/css/cadastro.css" />
+
+</head>
+<body>
+  <div class="card">
+    <h2>Criar Nova Conta</h2>
+
+    <input type="text" id="input_nome" placeholder="Nome Completo" />
+    <input type="email" id="input_email" placeholder="E-mail" />
+    <input type="text" id="input_senha" placeholder="Senha" />
+    <button onclick="cadastro()">Registrar e Começar</button>
+
+    <p>Já tem uma conta? <a href="login.html">Fazer Login</a></p>
+  </div>
+
+  <div id="alerta">
+      <span id="fecharAlerta" onclick="fecharAlerta()">&times;</span>
+      <span id="mensagem"></span>
+  </div>
+
+    <div id="porta" onclick="irParaLogin()">
+      <img src="assets/porta.png" alt="porta">
+  </div>
+
+    <audio id="somPorta" src="assets/porta-som.mp3"></audio>
+
+</body>
+</html>
+<script src="js/cadastro.js"></script>
+<script>
+  function irParaLogin(){
+    window.location.href = "login.html";
+  }
+
+  function fecharAlerta(){
+    var alerta = document.getElementById("alerta");
+    alerta.style.display = "none";
+  }
+
+</script>

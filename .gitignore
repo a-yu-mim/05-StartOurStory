@@ -1,0 +1,9 @@
+# ====================================================================================
+# |    Aqui são as coisas que ao mandar para o Github não vão! Ficam até em cinza.   |
+# |   Exemplo:                                                                       |
+# |        * node_modules => biblioteca Node                                         |
+# |        * .env.dev => que tem meus dados pessoais                                 |
+# ====================================================================================
+
+node_modules
+.env.dev
