@@ -31,7 +31,7 @@ function login() {
         sessionStorage.NOME_USUARIO = dadosUsuario.nome;
 
         alert("Login efetuado!");
-        window.location.href = "dashboard.html";
+        window.location.href = "/pages/dashboard.html";
     })
     .catch(erro => {
         alert(erro.message);

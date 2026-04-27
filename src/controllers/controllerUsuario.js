@@ -2,7 +2,39 @@
 //  Controller recebe dados, valida e chama o model 
 // ---------------------------------------------------
 
-const usuarioModel = require("../models/usuarioModel");
+const usuarioModel = require("../models/modelUsuario");
+
+function cadastrar(req, res) {
+    const nome = req.body.nomeServer;
+    const email = req.body.emailServer;
+    const senha = req.body.senhaServer;
+    
+    if (nome == undefined) {
+        res.status(400).send("Nome não informado");
+    } else if (email == undefined) {
+        res.status(400).send("Email não informado");
+    } else if (senha == undefined) {
+        res.status(400).send("Senha não informada");
+    } else {
+
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.cadastrar(nome, email, senha)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (err) {
+                    console.log(err);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        err.sqlMessage
+                    );
+                    res.status(500).json(err.sqlMessage);
+                }
+            );
+    }
+}
 
 function autenticar(req, res) {
     const email = req.body.emailServer;
@@ -33,51 +65,18 @@ function autenticar(req, res) {
                     }
                 }
             ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
-                    res.status(500).json(erro.sqlMessage);
+                function (err) {
+                    console.log(err);
+                    console.log("\nHouve um erro ao realizar o login! Erro: ", err.sqlMessage);
+                    res.status(500).json(err.sqlMessage);
                 }
             );
     }
 
 }
 
-function cadastrar(req, res) {
-    // Crie uma constiável que vá recuperar os valores do arquivo cadastro.html
-    const nome = req.body.nomeServer;
-    const email = req.body.emailServer;
-    const senha = req.body.senhaServer;
-    
-    // Faça as validações dos valores
-    if (nome == undefined) {
-        res.status(400).send("Nome não informado");
-    } else if (email == undefined) {
-        res.status(400).send("Email não informado");
-    } else if (senha == undefined) {
-        res.status(400).send("Senha não informada");
-    } else {
-
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, senha)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o cadastro! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
-    }
-}
 
 module.exports = {
-    autenticar,
-    cadastrar
+    cadastrar,
+    autenticar
 }

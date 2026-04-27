@@ -42,8 +42,10 @@
 // =========================================================
 // |               "Importação das rotas"                  |
 // =========================================================
-    const indexRouter = require("./src/routes/index");
-    const usuarioRouter = require("./src/routes/usuarios");
+    const indexRouter = require("./src/routes/routesLogin");
+    const usuarioRouter = require("./src/routes/routesUsuario");
+    const convidadoRouter = require("./src/routes/routesConvidado");
+    const economiaRouter = require("./src/routes/routesEconomia");
 
 
 // =========================================================
@@ -52,11 +54,6 @@
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
 
-
-// =========================================================
-// |   "Tudo o que estiver na pasta public vai aparecer"   |
-// =========================================================
-    app.use(express.static(path.join(__dirname, "public")));
 
 
 // =========================================================
@@ -70,6 +67,13 @@
 // =========================================================
     app.use("/", indexRouter);
     app.use("/usuarios", usuarioRouter);
+    app.use("/convidado", convidadoRouter);
+    app.use("/economia", economiaRouter);
+
+// =========================================================
+// |   "Tudo o que estiver na pasta public vai aparecer"   |
+// =========================================================
+    app.use(express.static(path.join(__dirname, "public")));
 
 
 // =========================================================
@@ -77,18 +81,17 @@
 // =========================================================
     app.listen(PORTA_APP, function () {
     console.log(`
-        
-    ##   ##  ######   #####             ####       ##     ######     ##              ##  ##    ####    ######  
+     ##   ##  ######   #####             ####       ##     ######     ##              ##  ##    ####    ######  
     ##   ##  ##       ##  ##            ## ##     ####      ##      ####             ##  ##     ##         ##  
     ##   ##  ##       ##  ##            ##  ##   ##  ##     ##     ##  ##            ##  ##     ##        ##   
     ## # ##  ####     #####    ######   ##  ##   ######     ##     ######   ######   ##  ##     ##       ##    
     #######  ##       ##  ##            ##  ##   ##  ##     ##     ##  ##            ##  ##     ##      ##     
     ### ###  ##       ##  ##            ## ##    ##  ##     ##     ##  ##             ####      ##     ##      
     ##   ##  ######   #####             ####     ##  ##     ##     ##  ##              ##      ####    ######  
-
-    -----------------------------------------------------------
-            Servidor: http://${HOST_APP}:${PORTA_APP} 
-            Ambiente: ${process.env.AMBIENTE_PROCESSO}
-    -----------------------------------------------------------
+    \n
+    ---------------------------------------------------
+        Servidor: http://${HOST_APP}:${PORTA_APP} 
+        Ambiente: ${process.env.AMBIENTE_PROCESSO}
+    ---------------------------------------------------
     `);
 });
