@@ -33,17 +33,17 @@ function adicionar(req, res) {
 }
 
 function remover(req, res) {
-    const id = req.params.id;
-    if (id === undefined) {
-        res.status(400).send("ID não informado");
-    } else {
-        economiaModel.remover(id)
-            .then(() => res.status(204).send())
-            .catch(err => {
-                console.log(err);
-                res.status(500).json({ erro: err.message });
-            });
+    const valor = req.params.id;
+    const usuarioId = req.query.usuarioId;
+    if (!valor || !usuarioId) {
+        res.status(400).send("Valor ou usuarioId não informado");
+        return;
     }
+    economiaModel.remover(valor, usuarioId)
+        .then(() => res.status(204).send())
+        .catch(err => {
+            res.status(500).json({ erro: err.message });
+        });
 }
 
 module.exports = {

@@ -15,7 +15,7 @@ function adicionar(nome, usuarioId) {
 
 
 function remover(nome) {
-    const sql = `UPDATE convidado SET nome = NULL WHERE nome = ?`;
+    const sql = `DELETE FROM convidado WHERE nome = ?`;
     return database.executar(sql, [nome]);
 }
 

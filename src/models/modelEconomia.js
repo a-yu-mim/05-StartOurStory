@@ -12,8 +12,7 @@ function adicionar(valor, usuarioId) {
 }
 
 function remover(valor, usuarioId) {
-//  const sql = `DELETE FROM economia WHERE valor = ?`; 
-    const sql = `INSERT INTO economia (valor, id_usuario) VALUES (-?, ?)`;
+    const sql = `DELETE FROM economia WHERE valor = ? AND id_usuario = ?`;
     return database.executar(sql, [valor, usuarioId]);
 }
 

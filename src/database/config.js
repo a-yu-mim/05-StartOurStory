@@ -25,7 +25,7 @@ function executar(instrucao, parametros = []) {
         conexao.connect();
 
         conexao.query(instrucao, parametros,(erro, resultados) => {
-            conexao.end();
+        conexao.end();
 
             if (erro) {
                 reject(erro);
