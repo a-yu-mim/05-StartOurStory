@@ -1,7 +1,6 @@
 
 const economiaModel = require("../models/modelEconomia");
 
-
 function listar(req, res) {
     const usuarioId = req.params.usuarioId;
     if (usuarioId === undefined) {
@@ -24,8 +23,8 @@ function adicionar(req, res) {
         res.status(400).send("Usuário não informado");
     } else {
         economiaModel.adicionar(valor, usuarioId)
-            .then(() => res.status(201).send())
-            .catch(err => {
+        .then(() => res.status(201).send())
+        .catch(err => {
                 console.log(err);
                 res.status(500).json({ erro: err.message });
             });
@@ -40,14 +39,28 @@ function remover(req, res) {
         return;
     }
     economiaModel.remover(valor, usuarioId)
-        .then(() => res.status(204).send())
-        .catch(err => {
+    .then(() => res.status(204).send())
+    .catch(err => {
             res.status(500).json({ erro: err.message });
         });
+    }
+    
+function totalEconomia(req, res) {
+    const usuarioId = req.params.usuarioId;
+    if (usuarioId === undefined) {
+        res.status(400).send("Usuário não informado");
+    } else {
+        economiaModel.totalEconomia(usuarioId)
+            .then(resultado => res.json(resultado[0]))
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({ erro: err.message });
+            });
+    }
 }
-
-module.exports = {
+    module.exports = {
     listar,
     adicionar,
-    remover
+    remover,
+    totalEconomia
 };

@@ -16,8 +16,14 @@ function remover(valor, usuarioId) {
     return database.executar(sql, [valor, usuarioId]);
 }
 
+function totalEconomia() {
+    const sql = `SELECT SUM(valor) AS total FROM economia`;
+    return database.executar(sql);
+}
+
 module.exports = {
     listar,
     adicionar,
-    remover
+    remover,
+    totalEconomia
 };

@@ -1,13 +1,8 @@
-// ------------------------------------------------
-//     Define a rota inicial ao acessar a URL
-// ------------------------------------------------
 
 const express = require("express");
 const router = express.Router();
-const path = require("path");
+const loginController = require("../controllers/controllerLogin");
 
-router.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../../public/pages/login.html"));
-});
+router.get("/", loginController.exibirLogin);
 
 module.exports = router;
