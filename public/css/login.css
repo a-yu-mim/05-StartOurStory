@@ -13,6 +13,63 @@ body {
     color: #222;
 }
 
+.card {
+    width: 350px;
+    height: 400px;
+    padding: 45px 40px;
+    border: 2px solid #067806;
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.card h2 {
+    text-align: center;
+    font-size: 28px;
+}
+
+.card input {
+    width: 100%;
+    height: 42px;
+    margin-bottom: 12px;
+    padding: 0 10px;
+    border: 2px solid #067806;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #222;
+    background: white;
+}
+
+.card button {
+    width: 100%;
+    height: 44px;
+    margin-top: 7px;
+    border: none;
+    border-radius: 6px;
+    background: #f06f62;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.card button:hover {
+    background: #f55246;
+}
+
+.card p {
+    margin: 12px 0 0;
+    text-align: center;
+    font-size: 16px;
+}
+
+.card a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
+
 #botao {
     position: fixed;
     top: 20px;
@@ -23,7 +80,6 @@ body {
     border: none;
     padding: 0;
     background: #ccc;
-    outline: 2px solid #ccc;
     cursor: pointer;
 }
 
@@ -31,65 +87,10 @@ body {
     width: 24px;
     height: 24px;
     background: white;
-    border-radius: 50%;
+    border-radius: 100%;
     position: absolute;
     top: 3px;
     left: 4px;
+    transition: .5s;
 }
 
-#card {
-    width: 350px;
-    padding: 30px;
-    border: 2px solid #006400;
-    border-radius: 6px;
-    background: #ffffff;
-}
-
-.card-content {
-    margin-top: 0;
-}
-
-h2 {
-    margin: 0 0 15px;
-    text-align: center;
-    font-size: 28px;
-}
-
-#card input {
-    width: 100%;
-    height: 42px;
-    margin-bottom: 12px;
-    padding: 0 10px;
-    border: 2px solid #006400;
-    border-radius: 5px;
-    font-size: 16px;
-    background: white;
-    color: #222;
-}
-
-#card button {
-    width: 100%;
-    height: 44px;
-    margin-top: 4px;
-    border: none;
-    border-radius: 6px;
-    background: #f06f62;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-p {
-    margin: 12px 0 0;
-    text-align: center;
-    font-size: 16px;
-}
-
-a {
-    text-decoration: none;
-    color: #000000;
-}
-
-a:hover {
-    text-decoration: underline;
-}

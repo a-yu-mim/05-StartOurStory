@@ -42,37 +42,44 @@ function darkModo() {
         let fundo = document.getElementById("body");
         let botao = document.getElementById("botao");
         let alavanca = document.getElementById("alavanca");
-        let card = document.getElementById("card");
+        let card = document.querySelector(".card");
+        let h2 = document.querySelector(".card h2");
+        let p = document.querySelector(".card p");
+        let link = document.getElementById("link");
         let email = document.getElementById("input_email");
         let senha = document.getElementById("input_senha");
         let btnEntrar = document.getElementById("btn-entrar");
-        let link = document.getElementById("link");
 
         if (alavanca.style.left == "32px") {
-            fundo.style = "";
             botao.style = "";
-            alavanca.style.left = "";
+            alavanca.style = "";
+            fundo.style = "";
             card.style = "";
+            h2.style = "";
+            p.style = "";
+            link.style = "";
             btnEntrar.style = "";
             email.style = "";
             senha.style = "";
-            link.style = "";
         } else {
-            fundo.style.background = "#121212";
-            fundo.style.color = "#f1f1f1";
-            botao.style.background = "#4caf50";
-            botao.style.outline = "2px solid #4caf50";
             alavanca.style.left = "32px";
-            card.style.background = "#1e1e1e";
-            card.style.border = "2px solid #333";
+            botao.style.background = "#4d4d4d";
+            alavanca.style.background = "black";
+            fundo.style.background = "#000000";
+            card.style.background = "#000000";
+            card.style.border = "2px solid #4d4d4d";
             card.style.color = "#ffffff";
-            btnEntrar.style.background = "black";
-            email.style.background = "#252525";
+            h2.style.color = "#4d4d4d";
+            p.style.color = "#4d4d4d";
+            link.style.color = "#4d4d4d";
+            btnEntrar.style.color = "#616161";
+            btnEntrar.style.background = "#111111";
+            btnEntrar.style.border = "2px solid #4d4d4d";
+            email.style.background = "#000000";
             email.style.color = "white";
-            email.style.border = "2px solid #333";
-            senha.style.background = "#252525";
+            email.style.border = "2px solid #4d4d4d";
+            senha.style.background = "#000000";
             senha.style.color = "white";
-            senha.style.border = "2px solid #333";
-            link.style.color = "white";
+            senha.style.border = "2px solid #4d4d4d";
         }
     }
