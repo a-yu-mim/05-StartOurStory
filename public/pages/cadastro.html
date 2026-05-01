@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Página Cadastro</title>
     <link rel="stylesheet" href="../css/cadastro.css" />
+    <script src="../js/cadastro.js" defer></script>
 
 </head>
 <body>
+  
   <div class="card">
     <h2>Criar Nova Conta</h2>
-
     <input type="text" id="input_nome" placeholder="Nome Completo" />
     <input type="email" id="input_email" placeholder="E-mail" />
     <input type="text" id="input_senha" placeholder="Senha" />
     <button onclick="cadastro()">Registrar e Começar</button>
-
     <p>Já tem uma conta? <a href="login.html">Fazer Login</a></p>
   </div>
 
@@ -24,14 +24,14 @@
       <span id="mensagem"></span>
   </div>
 
-    <div id="porta" onclick="irParaLogin()">
-      <img src="../assets/porta.png" alt="porta">
+  <div id="porta" onclick="irParaLogin()">
+    <img src="../assets/porta.png" alt="porta">
   </div>
 
-    <audio id="somPorta" src="../assets/porta-som.mp3"></audio>
+  <audio id="somPorta" src="../assets/porta-som.mp3"></audio>
 
 </body>
 </html>
 
-<script src="../js/cadastro.js"></script>
+
 
