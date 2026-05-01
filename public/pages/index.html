@@ -5,53 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Home</title>
     <link rel="stylesheet" href="../css/index.css">
-    
+    <script src="../js/index.js" defer></script>
 </head>
 <body>
-    <div class="fundo">
-        <div class="areaTrabalho" onclick="fecharMenu()">
-            <div class="pasta" onclick="window.location='login.html'">
-                <img class="iconePasta" src="../assets/pasta.png" alt="">
-                <span class="nomePasta">Pasta1</span>
-            </div>
-
-            <div class="pasta" onclick="window.location='cadastro.html'">
-                <img class="iconePasta" src="../assets/pasta.png" alt="">
-                <span class="nomePasta">Pasta2</span>
-            </div>
+    <div class="areaTrabalho">
+        <div class="pasta" onclick="window.location='login.html'">
+            <img class="iconePasta" src="../assets/pasta.png" alt="">
+            <span class="nomePasta">Pasta1</span>
         </div>
 
-        <div id="barraInferior">
-            <button id="menu" type="button" onclick="abreFechaMenu()">Start</button>
-
-            <div id="menuItens">
-                <div class="itemMenu" onclick="window.location.href='cadastro.html'">Cadastro</div>
-                <div class="itemMenu" onclick="window.location.href='login.html'">Login</div>
-                <div class="itemMenu" onclick="window.location.href='dashboard.html'">Dashboard</div>
-            </div>
+        <div class="pasta" onclick="window.location='cadastro.html'">
+            <img class="iconePasta" src="../assets/pasta.png" alt="">
+            <span class="nomePasta">Pasta2</span>
         </div>
     </div>
-    
+
+    <div id="barraInferior">
+        <button id="menu" type="button" onclick="abreFechaMenu()">Start</button>
+
+        <div id="menuItens">
+            <div class="itemMenu" onclick="window.location.href='cadastro.html'">Cadastro</div>
+            <div class="itemMenu" onclick="window.location.href='login.html'">Login</div>
+            <div class="itemMenu" onclick="window.location.href='dashboard.html'">Dashboard</div>
+        </div>
+    </div>
 </body>
 </html>
-<script>
-    let menuAberto = false;
-    let menu = document.getElementById('menu');
-    let menuItens = document.getElementById('menuItens');
-
-    function abreFechaMenu() {
-        menuAberto = true;
-
-        if (menuAberto) {
-            menuItens.style.display = 'block';
-        } else {
-            menuItens.style.display = 'none';
-        }
-    }
-
-    function fecharMenu() {
-        menuAberto = false;
-        menuItens.style.display = 'none';
-    }
-
-</script>

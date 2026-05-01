@@ -3,7 +3,6 @@ if (!sessionStorage.ID_USUARIO || !sessionStorage.EMAIL_USUARIO) {
     window.location.href = "login.html";
 }
 
-window.addEventListener('DOMContentLoaded', function() {
     if (sessionStorage.NOME_USUARIO) {
         let nome = sessionStorage.NOME_USUARIO;
         alert(`Bem-vindo, ${nome}!`);
@@ -65,7 +64,6 @@ window.addEventListener('DOMContentLoaded', function() {
         .catch(err => {
             console.error('Erro ao carregar economias:', err);
         });
-});
 
 let convidados = [];
 let economias  = [];
