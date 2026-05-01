@@ -74,7 +74,7 @@ function darkModo() {
         card.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.3)";
         h2.style.color = "#ffffff";
         p.style.color = "#838383";
-        link.style.color = "#ffffff";
+        link.style.color = "#838383";
         btnEntrar.style.color = "#ffffff";
         btnEntrar.style.background = "#0a0a0a";
         email.style.background = "#141414";

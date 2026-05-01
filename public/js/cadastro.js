@@ -103,7 +103,7 @@ function darkModo() {
         btnEntrar.style.background = "#0a0a0a";
         nome.style.background = "#141414";
         nome.style.color = "#ffffff";
-        nome.style.border = "2px solid #2f2f2f";
+        nome.style.border = "2px solid #2f2f2f";    
         email.style.background = "#141414";
         email.style.color = "#ffffff";
         email.style.border = "2px solid #2f2f2f";
