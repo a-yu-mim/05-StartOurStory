@@ -56,18 +56,43 @@ body {
 }
 
 .card p {
-    margin: 12px 0 0;
+    margin: 16px 0 0;
     text-align: center;
     font-size: 16px;
 }
 
-.card a {
+#link {
     text-decoration: none;
     color: #067806;
 }
 
-.card a:hover {
+#link:hover {
     text-decoration: underline;
+}
+
+#botao {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 30px;
+    border-radius: 20px;
+    border: none;
+    padding: 0;
+    background: #ccc;
+    cursor: pointer;
+}
+
+#alavanca {
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 100%;
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    transition: .5s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 #alerta {
@@ -97,3 +122,4 @@ body {
 #porta img {
     width: 220px;
 }
+

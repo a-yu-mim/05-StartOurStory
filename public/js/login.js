@@ -61,22 +61,22 @@ function darkModo() {
         btnEntrar.style = "";
         email.style = "";
         senha.style = "";
-    } else {
+      } else {
+        botao.style.background = "#ccc";
         alavanca.style.left = "32px";
         alavanca.style.background = "#0c0c0c";
         alavanca.style.boxShadow = "0 2px 6px rgba(0, 0, 0, 0.3)";
-        botao.style.background = "#6d6d6d";
-        botao.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.5)";
-        fundo.style.background = "#0f0f0f";
-        card.style.background = "#1e1e1e";
+        fundo.style.background = "#323232";
+        card.style.background = "#141414";
+        card.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.3)";
         card.style.border = "2px solid #2a2a2a";
         card.style.color = "#f5f5f5";
         card.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.3)";
         h2.style.color = "#ffffff";
         p.style.color = "#838383";
-        link.style.color = "#c8c8c8";
+        link.style.color = "#ffffff";
         btnEntrar.style.color = "#ffffff";
-        btnEntrar.style.background = "#0d0d0d";
+        btnEntrar.style.background = "#0a0a0a";
         email.style.background = "#141414";
         email.style.color = "#ffffff";
         email.style.border = "2px solid #2f2f2f";
