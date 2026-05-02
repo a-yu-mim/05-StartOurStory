@@ -2,7 +2,7 @@
 //   Manipula dados do usuários no Banco de Dados
 // ------------------------------------------------
 
-const database = require("../database/config")
+const database = require("../../config/database")
 
 function cadastrar(nome, email, senha) {
     const instrucaoSql = `

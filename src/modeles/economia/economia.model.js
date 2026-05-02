@@ -1,5 +1,5 @@
 
-const database = require("../database/config");
+const database = require("../../config/database");
 
 function listar(usuarioId) {
     const sql = `SELECT id, valor FROM economia WHERE id_usuario = ?`;

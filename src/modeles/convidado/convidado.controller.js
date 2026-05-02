@@ -1,4 +1,4 @@
-const convidadoModel = require("../models/modelConvidado");
+const convidadoModel = require("./convidado.model");
 
 function listar(req, res) {
     const usuarioId = req.params.usuarioId;

@@ -2,7 +2,7 @@
 //  Controller recebe dados, valida e chama o model 
 // ---------------------------------------------------
 
-const usuarioModel = require("../models/modelUsuario");
+const usuarioModel = require("./usuario.model");
 
 function cadastrar(req, res) {
     const nome = req.body.nomeServer;

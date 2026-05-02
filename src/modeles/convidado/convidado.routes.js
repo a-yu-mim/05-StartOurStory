@@ -1,7 +1,7 @@
 
 const express = require("express");
 const router = express.Router();
-const convidadoController = require("../controllers/controllerConvidado");
+const convidadoController = require("./convidado.controller");
 
 router.get("/contar/:usuarioId", convidadoController.totalConvidado);
 router.get("/:usuarioId", convidadoController.listar);

@@ -42,18 +42,17 @@
 // =========================================================
 // |               "Importação das rotas"                  |
 // =========================================================
-    const indexRouter = require("./src/routes/routesLogin");
-    const usuarioRouter = require("./src/routes/routesUsuario");
-    const convidadoRouter = require("./src/routes/routesConvidado");
-    const economiaRouter = require("./src/routes/routesEconomia");
+    const indexRouter = require("./src/modeles/login/login.routes");
+    const usuarioRouter = require("./src/modeles/usuario/usuario.routes");
+    const convidadoRouter = require("./src/modeles/convidado/convidado.routes");
+    const economiaRouter = require("./src/modeles/economia/economia.routes");
 
-
+    
 // =========================================================
 // |     "Permitir receber dados (tipo json ou input)"     |
 // =========================================================
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
-
 
 
 // =========================================================
@@ -69,6 +68,7 @@
     app.use("/usuarios", usuarioRouter);
     app.use("/convidado", convidadoRouter);
     app.use("/economia", economiaRouter);
+
 
 // =========================================================
 // |   "Tudo o que estiver na pasta public vai aparecer"   |
@@ -88,10 +88,10 @@
     #######  ##       ##  ##            ##  ##   ##  ##     ##     ##  ##            ##  ##     ##      ##     
     ### ###  ##       ##  ##            ## ##    ##  ##     ##     ##  ##             ####      ##     ##      
     ##   ##  ######   #####             ####     ##  ##     ##     ##  ##              ##      ####    ######  
-    \n
+    
     ---------------------------------------------------
-        Servidor: http://${HOST_APP}:${PORTA_APP} 
-        Ambiente: ${process.env.AMBIENTE_PROCESSO}
+    Servidor: http://${HOST_APP}:${PORTA_APP} 
+    Ambiente: ${process.env.AMBIENTE_PROCESSO}
     ---------------------------------------------------
     `);
 });

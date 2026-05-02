@@ -1,4 +1,4 @@
-const database = require("../database/config");
+const database = require("../../config/database");
 
 function listar(usuarioId) {
     const sql = `SELECT id, nome FROM convidado WHERE id_usuario = ?`;
