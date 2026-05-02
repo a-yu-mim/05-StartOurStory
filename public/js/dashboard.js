@@ -87,50 +87,40 @@ fetch(`/economia/${sessionStorage.ID_USUARIO}`)
         esconderLoading();
     });
 
-
-let totalSegundos = 0;
-
-fetch('/usuarios/casamento')
-    .then(response => response.json())
-    .then(data => {
-        let agora = Date.now();
-        let diferença = data.timestamp - agora;
-        totalSegundos = Math.floor(diferença / 1000);
-
-        if (totalSegundos < 0) {
-            totalSegundos = 0;
-        }
-
-        setInterval(atualizarContagem, 1000);
-    })
-    .catch(err => {
-        console.error('Erro ao carregar data do casamento', err);
-    });
+let dataCasamento = Date.parse('2026-05-02T16:59:00');
+let totalSegundos = Math.floor((dataCasamento - Date.now()) / 1000);
 
 function atualizarContagem() {
     if (totalSegundos <= 0) {
-        document.getElementById('countdown').innerHTML = 'Chegou o dia!';
-        return;
+       totalSegundos = 0;
     }
 
-    let resto = totalSegundos;
-
-    let dias = Math.floor(resto / 86400);
-    resto = resto % 86400;
-
+    let dias = Math.floor(totalSegundos / (3600 * 24));
+    let resto = totalSegundos % (3600 * 24);
     let horas = Math.floor(resto / 3600);
     resto = resto % 3600;
-
     let minutos = Math.floor(resto / 60);
-    let seg = resto % 60;
+    let segundos = resto % 60;
 
-    document.getElementById('cdDias').innerHTML  = dias;
-    document.getElementById('cdHoras').innerHTML = horas < 10 ? '0' + horas : horas;
-    document.getElementById('cdMin').innerHTML   = minutos < 10 ? '0' + minutos : minutos;
-    document.getElementById('cdSeg').innerHTML   = seg < 10 ? '0' + seg : seg;
-
-    totalSegundos = totalSegundos - 1;
+if (horas < 10) {
+    horas = '0' + horas;
+}  
+if (minutos < 10) { 
+    minutos = '0' + minutos;
 }
+if (segundos < 10) {
+    segundos = '0' + segundos;
+}
+    document.getElementById('cdDias').innerHTML = dias;
+    document.getElementById('cdHoras').innerHTML = horas;
+    document.getElementById('cdMin').innerHTML = minutos;
+    document.getElementById('cdSeg').innerHTML = segundos;
+
+    totalSegundos--;
+}
+
+atualizarContagem()
+setInterval(atualizarContagem, 1000);
 
 let linhaGrafico = new Chart(document.getElementById('linhaGrafico'), {
     type: 'line',
@@ -323,7 +313,7 @@ function atualizar() {
         economiaTotal = economiaTotal + Number(economias[i]);
     }
 
-    totalMetaEl.innerHTML = `R$ ` + economiaTotal.toFixed(2).replace('.', ',');
+    totalMetaEl.innerHTML = `R$ ` + economiaTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 
     renderListas();
     atualizarGraficos();

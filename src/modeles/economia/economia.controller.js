@@ -7,11 +7,11 @@ function listar(req, res) {
         res.status(400).send("Usuário não informado");
     } else {
         economiaModel.listar(usuarioId)
-            .then(economias => res.json(economias))
-            .catch(err => {
-                console.log(err);
-                res.status(500).json({ erro: err.message });
-            });
+        .then(economias => res.json(economias))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ erro: err.message });
+        });
     }
 }
 
@@ -25,25 +25,26 @@ function adicionar(req, res) {
         economiaModel.adicionar(valor, usuarioId)
         .then(() => res.status(201).send())
         .catch(err => {
-                console.log(err);
-                res.status(500).json({ erro: err.message });
-            });
+            console.log(err);
+            res.status(500).json({ erro: err.message });
+        });
     }
 }
 
 function remover(req, res) {
     const valor = req.params.id;
-    const usuarioId = req.query.usuarioId;
-    if (!valor || !usuarioId) {
+    const usuarioId = req.params.usuarioId;
+    if (valor === undefined || usuarioId === undefined) {
         res.status(400).send("Valor ou usuarioId não informado");
-        return;
-    }
-    economiaModel.remover(valor, usuarioId)
-    .then(() => res.status(204).send())
-    .catch(err => {
+    } else {
+        economiaModel.remover(valor, usuarioId)
+        .then(() => res.status(204).send())
+        .catch(err => {
+            console.log(err);
             res.status(500).json({ erro: err.message });
         });
     }
+}
     
 function totalEconomia(req, res) {
     const usuarioId = req.params.usuarioId;
@@ -51,11 +52,11 @@ function totalEconomia(req, res) {
         res.status(400).send("Usuário não informado");
     } else {
         economiaModel.totalEconomia(usuarioId)
-            .then(resultado => res.json(resultado[0]))
-            .catch(err => {
-                console.log(err);
-                res.status(500).json({ erro: err.message });
-            });
+        .then(resultado => res.json(resultado[0]))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ erro: err.message });
+        });
     }
 }
     module.exports = {
