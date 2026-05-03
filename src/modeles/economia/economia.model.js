@@ -21,9 +21,15 @@ function totalEconomia() {
     return database.executar(sql);
 }
 
+function listarTodos() {
+    const sql = `SELECT valor FROM economia WHERE valor > 0 ORDER BY id ASC`;
+    return database.executar(sql);
+}
+
 module.exports = {
     listar,
     adicionar,
     remover,
-    totalEconomia
+    totalEconomia,
+    listarTodos
 };

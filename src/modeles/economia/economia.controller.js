@@ -47,21 +47,27 @@ function remover(req, res) {
 }
     
 function totalEconomia(req, res) {
-    const usuarioId = req.params.usuarioId;
-    if (usuarioId === undefined) {
-        res.status(400).send("Usuário não informado");
-    } else {
-        economiaModel.totalEconomia(usuarioId)
-        .then(resultado => res.json(resultado[0]))
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ erro: err.message });
-        });
-    }
+    economiaModel.totalEconomia()
+    .then(resultado => res.json(resultado[0]))
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({ erro: err.message });
+    });
 }
+
+function listarTodos(req, res) {
+    economiaModel.listarTodos()
+    .then(economias => res.json(economias))
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({ erro: err.message });
+    });
+}
+
     module.exports = {
     listar,
     adicionar,
     remover,
-    totalEconomia
+    totalEconomia,
+    listarTodos
 };

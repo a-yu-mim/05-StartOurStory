@@ -1,6 +1,10 @@
 
 let convidados = [];
 let economias  = [];
+
+let totalConvidadosGlobal = 0;
+let totalEconomiaGlobal = 0;
+
 let metaEconomia   = 50000;
 let maxConvidados  = 300;
 
@@ -16,7 +20,7 @@ let fetchesCompletos = 0;
 
 function esconderLoading() {
     fetchesCompletos++;
-    if (fetchesCompletos >= 2) {
+    if (fetchesCompletos >= 5) {
         document.getElementById('loading').style.display = 'none';
     }
 }
@@ -28,8 +32,8 @@ if (sessionStorage.NOME_USUARIO) {
 fetch(`/convidado/${sessionStorage.ID_USUARIO}`)
     .then(response => response.json())
     .then(data => {
-
         let nomesValidos = [];
+
         for (let i = 0; i < data.length; i++) {
             let nome = '';
 
@@ -43,9 +47,8 @@ fetch(`/convidado/${sessionStorage.ID_USUARIO}`)
                 nomesValidos.push(nome);
             }
         }
-
         convidados = nomesValidos;
-        atualizar();
+        renderListas();
     })
     .catch(err => {
         console.error('Erro ao carregar convidados:', err);
@@ -57,7 +60,6 @@ fetch(`/convidado/${sessionStorage.ID_USUARIO}`)
 fetch(`/economia/${sessionStorage.ID_USUARIO}`)
     .then(response => response.json())
     .then(data => {
-
         let listaEconomiasAtivas = [];
 
         for (let i = 0; i < data.length; i++) {
@@ -76,9 +78,61 @@ fetch(`/economia/${sessionStorage.ID_USUARIO}`)
                 }
             }
         }
-
         economias = listaEconomiasAtivas;
-        atualizar();
+        renderListas();
+    })
+    .catch(err => {
+        console.error('Erro ao carregar economias:', err);
+    })
+    .finally(() => {
+        esconderLoading();
+    });
+
+fetch('/convidado/contar')
+    .then(response => response.json())
+    .then(data => {
+        totalConvidadosGlobal = data.total;
+        atualizarKpisGraficos();
+    })
+    .catch(err => {
+        console.error('Erro ao carregar total de convidados:', err);
+    })
+    .finally(() => {
+        esconderLoading();
+    });
+
+fetch('/economia/soma')
+    .then(response => response.json())
+    .then(data => {
+        totalEconomiaGlobal = data.total || 0;
+        atualizarKpisGraficos();
+    })
+    .catch(err => {
+        console.error('Erro ao carregar total de economia:', err);
+    })
+    .finally(() => {
+        esconderLoading();
+    });
+
+fetch('/economia/todos')
+    .then(response => response.json())
+    .then(data => {
+        let soma = 0;
+        let porcentagens = [];
+        let labels = [];
+
+        for (let i = 0; i < data.length; i++) {
+            soma += Number(data[i].valor);
+            let porcentagem = Math.floor(soma * 100 / metaEconomia);
+            if (porcentagem > 100) {
+                porcentagem = 100;
+            }
+            porcentagens.push(porcentagem);
+            labels.push(`Depósito ${i + 1}`);
+        }
+        linhaGrafico.data.labels = labels;
+        linhaGrafico.data.datasets[0].data = porcentagens;
+        linhaGrafico.update();
     })
     .catch(err => {
         console.error('Erro ao carregar economias:', err);
@@ -90,10 +144,11 @@ fetch(`/economia/${sessionStorage.ID_USUARIO}`)
 let dataCasamento = Date.parse('2026-05-02T16:59:00');
 let totalSegundos = Math.floor((dataCasamento - Date.now()) / 1000);
 
+if (totalSegundos <= 0) {
+   totalSegundos = 0;
+}
+
 function atualizarContagem() {
-    if (totalSegundos <= 0) {
-       totalSegundos = 0;
-    }
 
     let dias = Math.floor(totalSegundos / (3600 * 24));
     let resto = totalSegundos % (3600 * 24);
@@ -191,6 +246,36 @@ let barraGrafico = new Chart(document.getElementById('barraGrafico'), {
     }
 });
 
+function atualizarKpisGraficos() {
+    totalConvidadosEl.innerHTML = totalConvidadosGlobal;
+    totalMetaEl.innerHTML = `R$ ` + totalEconomiaGlobal.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+
+    let metaRestante = metaEconomia - totalEconomiaGlobal;
+    if (metaRestante < 0) {
+        metaRestante = 0;
+    }
+
+    barraGrafico.data.datasets[0].data = [metaRestante, 0];
+    barraGrafico.data.datasets[1].data = [0, totalConvidadosGlobal];
+    barraGrafico.update();
+
+    let porcentagens = parseInt((totalEconomiaGlobal * 100) / metaEconomia);
+    if (porcentagens > 100) {
+        porcentagens = 100;
+    }
+    
+    linhaGrafico.data.labels = ['Total'];
+    linhaGrafico.data.datasets[0].data = [porcentagens];
+    linhaGrafico.update();
+
+    let aviso = document.getElementById('avisoMeta');
+    if (totalEconomiaGlobal >= metaEconomia) {
+        aviso.style.display = 'block';
+    } else {
+        aviso.style.display = 'none';
+    }
+}
+
 function addConvidado() {
     let input = document.getElementById('input_convidado');
     let nome  = input.value;
@@ -220,8 +305,10 @@ function addConvidado() {
             return response.text().then(text => { throw new Error(text); });
         }
         convidados.push(nome);
+        totalConvidadosGlobal++;
         input.value = '';
-        atualizar();
+        renderListas();
+        atualizarKpisGraficos();
     })
     .catch(err => {
         alert('Erro ao adicionar convidado: ' + err.message);
@@ -232,7 +319,7 @@ function addEconomia() {
     let input = document.getElementById('input_economia');
     let valor = input.value;
 
-    if (input.value == '' || valor <= 0) {
+    if (valor == '' || valor <= 0) {
         alert('Por favor, insira um valor válido.');
         return;
     }
@@ -250,8 +337,10 @@ function addEconomia() {
             return response.text().then(text => { throw new Error(text); });
         }
         economias.push(Number(valor));
+        totalEconomiaGlobal = Number(totalEconomiaGlobal) + Number(valor);
         input.value = '';
-        atualizar();
+        renderListas();
+        atualizarKpisGraficos();
     })
     .catch(err => {
         alert('Erro ao adicionar economia: ' + err.message);
@@ -259,30 +348,34 @@ function addEconomia() {
 }
 
 function removerConvidado() {
-if (confirm('Tem certeza que deseja remover este convidado?')) {
-    fetch(`/convidado/${encodeURIComponent(convidadoToRemove)}`, {
-        method: 'DELETE'
-    })
-    .then(resposta => {
-        if (!resposta.ok) {
-            return resposta.text().then(texto => { throw new Error(texto); });
-        }
-        let novaLista = [];
-        for (let i = 0; i < convidados.length; i++) {
-            if (convidados[i] !== convidadoToRemove) {
-                novaLista.push(convidados[i]);
+    if (confirm('Tem certeza que deseja remover este convidado?')) {
+        fetch(`/convidado/${encodeURIComponent(convidadoToRemove)}`, {
+            method: 'DELETE'
+        })
+        .then(resposta => {
+            if (!resposta.ok) {
+                return resposta.text().then(texto => { throw new Error(texto); });
             }
-        }
-        convidados = novaLista;
-        atualizar();
-    })
-    .catch(erro => alert('Erro ao remover convidado: ' + erro.message));
+            let novaLista = [];
+            for (let i = 0; i < convidados.length; i++) {
+                if (convidados[i] !== convidadoToRemove) {
+                    novaLista.push(convidados[i]);
+                }
+            }
+            convidados = novaLista;
+            totalConvidadosGlobal--;
+            renderListas();
+            atualizarKpisGraficos();
+        })
+        .catch(erro => {
+            alert('Erro ao remover convidado: ' + erro.message);
+        });
     }
 }
 
-    function removerEconomia() {
+function removerEconomia() {
     if (confirm('Tem certeza que deseja remover este valor?')) {
-        fetch('/economia/' + economiaToRemove + '?usuarioId=' + sessionStorage.ID_USUARIO, {
+        fetch('/economia/' + sessionStorage.ID_USUARIO + '/' + economiaToRemove, {
             method: 'DELETE'
         })
         .then(function(response) {
@@ -297,7 +390,9 @@ if (confirm('Tem certeza que deseja remover este convidado?')) {
                 }
             }
             economias = novaLista;
-            atualizar();
+            totalEconomiaGlobal = totalEconomiaGlobal - Number(economiaToRemove);
+            renderListas();
+            atualizarKpisGraficos();
         })
         .catch(err => {
             alert('Erro ao remover economia: ' + err.message);
@@ -305,23 +400,8 @@ if (confirm('Tem certeza que deseja remover este convidado?')) {
     }
 }
 
-function atualizar() {
-    totalConvidadosEl.innerHTML = convidados.length;
-
-    let economiaTotal = 0;
-    for (let i = 0; i < economias.length; i++) {
-        economiaTotal = economiaTotal + Number(economias[i]);
-    }
-
-    totalMetaEl.innerHTML = `R$ ` + economiaTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-
-    renderListas();
-    atualizarGraficos();
-}
-
 function renderListas() {
     let htmlConvidados = '';
-
     for (let i = 0; i < convidados.length; i++) {
         htmlConvidados += `
             <div class="item">
@@ -330,70 +410,16 @@ function renderListas() {
             </div>
         `;
     }
-
     listaConvidadosEl.innerHTML = htmlConvidados;
 
     let htmlEconomia = '';
     for (let i = 0; i < economias.length; i++) {
         htmlEconomia += `
             <div class="item">
-                <span>R$ ${Number(economias[i]).toFixed(2).replace('.', ',')}</span>
+                <span>R$ ${Number(economias[i]).toLocaleString('pt-BR', { minimumFractionDigits: 2})}</span>
                 <button onclick="economiaToRemove = ${economias[i]}; removerEconomia();" title="Remover">&times;</button>
             </div>
         `;
     }
-
     listaEconomiaEl.innerHTML = htmlEconomia;
 }
-
-function atualizarGraficos() {
-    let economiaTotal = 0;
-    
-    for (let i = 0; i < economias.length; i++) {
-        economiaTotal = economiaTotal + economias[i];
-    }
-
-    let metaRestante = metaEconomia - economiaTotal;
-    
-    if (metaRestante < 0) {
-        metaRestante = 0;
-    }
-
-    barraGrafico.data.datasets[0].data = [metaRestante, 0];
-    barraGrafico.data.datasets[1].data = [0, convidados.length];
-    barraGrafico.update();
-
-    let porcentagens = [];
-    let soma = 0;
-
-    for (let i = 0; i < economias.length; i++) {
-        soma = soma + economias[i];
-
-        let porcentagem = (soma * 100) / metaEconomia;
-        porcentagem = parseInt(porcentagem);
-
-        if (porcentagem > 100) {
-            porcentagem = 100;
-        }
-
-        porcentagens.push(porcentagem);
-    }
-
-    let labels = [];
-    for (let i = 0; i < porcentagens.length; i++) {
-        labels.push('Entrada ' + (i + 1));
-    }
-
-    linhaGrafico.data.labels = labels;
-    linhaGrafico.data.datasets[0].data = porcentagens;
-    linhaGrafico.update();
-
-    let aviso = document.getElementById('avisoMeta');
-    if (soma >= metaEconomia) {
-        aviso.style.display = 'block';
-    } else {
-        aviso.style.display = 'none';
-    }
-}
-
-    atualizar();

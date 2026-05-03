@@ -56,18 +56,14 @@ function remover(req, res) {
     }
     
 function totalConvidado(req, res) {
-    const usuarioId = req.params.usuarioId;
-    if (usuarioId === undefined) {
-        res.status(400).send("Usuário não informado");
-    } else {
-        convidadoModel.totalConvidado(usuarioId)
-            .then(resultado => res.json(resultado[0]))
-            .catch(err => {
-                console.log(err);
-                res.status(500).json({ erro: err.message });
-            });
-    }
+    convidadoModel.totalConvidado()
+        .then(resultado => res.json(resultado[0]))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ erro: err.message });
+        });
 }
+
     module.exports = {
     listar,
     adicionar,
