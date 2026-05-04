@@ -1,10 +1,13 @@
 
 let convidados = [];
 let economias  = [];
-let totalConvidadosGlobal = 0;
-let totalEconomiaGlobal = 0;
+let valoresGrafico = [];
+
+let totalConvidado = 0;
+let totalEconomia = 0;
 let metaEconomia   = 50000;
 let maxConvidados  = 300;
+
 let convidadoToRemove = '';
 let economiaToRemove  = 0;
 let fetchesCompletos = 0;
@@ -25,7 +28,7 @@ if (sessionStorage.NOME_USUARIO) {
     alert(`Bem-vindo, ${sessionStorage.NOME_USUARIO}!`);
 }
 
-let dataCasamento = Date.parse('2026-05-02T16:59:00');
+let dataCasamento = Date.parse('2026-05-31T10:00:00');
 let totalSegundos = Math.floor((dataCasamento - Date.now()) / 1000);
 
 if (totalSegundos <= 0) {
@@ -62,7 +65,6 @@ function atualizarContagem() {
         totalSegundos--;
     }
 }
-
 atualizarContagem()
 setInterval(atualizarContagem, 1000);
 
@@ -82,7 +84,17 @@ let linhaGrafico = new Chart(document.getElementById('linhaGrafico'), {
     },
     options: {
         responsive: true,
-        plugins: { legend: { display: true } },
+        plugins: { 
+            legend: { display: true },
+            tooltip: {
+                displayColors: false,
+                callbacks: {
+                    label: function(context) {
+                        let valor = valoresGrafico[context.dataIndex];
+                        return '+ ' + valor.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits : 2 });
+                    }
+                }
+            } },
         scales: {
             y: {
                 beginAtZero: true,
@@ -137,20 +149,23 @@ let barraGrafico = new Chart(document.getElementById('barraGrafico'), {
 });
 
 function atualizarKpisGraficos() {
-    totalConvidadosEl.innerHTML = totalConvidadosGlobal;
-    totalMetaEl.innerHTML = `R$ ` + totalEconomiaGlobal.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+    totalConvidadosEl.innerHTML = totalConvidado;
 
-    let metaRestante = metaEconomia - totalEconomiaGlobal;
+    let totalEconomiaFormatado = Number(totalEconomia) || 0;
+
+    totalMetaEl.innerHTML = `R$ ` + totalEconomiaFormatado.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits : 2 });
+    
+    let metaRestante = metaEconomia - totalEconomia;
     if (metaRestante < 0) {
         metaRestante = 0;
     }
 
     barraGrafico.data.datasets[0].data = [metaRestante, 0];
-    barraGrafico.data.datasets[1].data = [0, totalConvidadosGlobal];
+    barraGrafico.data.datasets[1].data = [0, totalConvidado];
     barraGrafico.update();
 
     let aviso = document.getElementById('avisoMeta');
-    if (totalEconomiaGlobal >= metaEconomia) {
+    if (totalEconomia >= metaEconomia) {
         aviso.style.display = 'block';
     } else {
         aviso.style.display = 'none';
@@ -164,6 +179,8 @@ function atualizarGraficoLinha() {
         let soma = 0;
         let porcentagens = [];
         let labels = [];
+        valoresGrafico = [];
+
         for (let i = 0; i < data.length; i++) {
             soma += Number(data[i].valor);
             let porcentagem = Math.floor(soma * 100 / metaEconomia);
@@ -171,6 +188,7 @@ function atualizarGraficoLinha() {
                 porcentagem = 100;
             }
             porcentagens.push(porcentagem);
+            valoresGrafico.push(Number(data[i].valor));
             labels.push(`${i + 1}`);
         }
 
@@ -180,6 +198,9 @@ function atualizarGraficoLinha() {
     })
     .catch(err => {
         console.error('Erro ao atualizar gráfico de linha:', err);
+    })
+    .finally(() => {
+        esconderLoading();
     });
 }
 
@@ -232,7 +253,7 @@ fetch(`/economia/${sessionStorage.ID_USUARIO}`)
 fetch('/convidado/contar')
     .then(response => response.json())
     .then(data => {
-        totalConvidadosGlobal = data.total;
+        totalConvidado = data.total;
         atualizarKpisGraficos();
     })
     .catch(err => {
@@ -245,7 +266,7 @@ fetch('/convidado/contar')
 fetch('/economia/soma')
     .then(response => response.json())
     .then(data => {
-        totalEconomiaGlobal = data.total || 0;
+        totalEconomia = Number(data.total) || 0;
         atualizarKpisGraficos();
     })
     .catch(err => {
@@ -255,32 +276,7 @@ fetch('/economia/soma')
         esconderLoading();
     });
 
-fetch('/economia/todos')
-    .then(response => response.json())
-    .then(data => {
-        let soma = 0;
-        let porcentagens = [];
-        let labels = [];
-
-        for (let i = 0; i < data.length; i++) {
-            soma += Number(data[i].valor);
-            let porcentagem = Math.floor(soma * 100 / metaEconomia);
-            if (porcentagem > 100) {
-                porcentagem = 100;
-            }
-            porcentagens.push(porcentagem);
-            labels.push(`${i + 1}`);
-        }
-        linhaGrafico.data.labels = labels;
-        linhaGrafico.data.datasets[0].data = porcentagens;
-        linhaGrafico.update();
-    })
-    .catch(err => {
-        console.error('Erro ao carregar economias:', err);
-    })
-    .finally(() => {
-        esconderLoading();
-    });
+atualizarGraficoLinha();
 
 function addConvidado() {
     let input = document.getElementById('input_convidado');
@@ -311,7 +307,7 @@ function addConvidado() {
             return response.text().then(text => { throw new Error(text); });
         }
         convidados.push(nome);
-        totalConvidadosGlobal++;
+        totalConvidado++;
         input.value = '';
         renderListas();
         atualizarKpisGraficos();
@@ -342,7 +338,7 @@ function addEconomia() {
         if (!response.ok) {
             return response.text().then(text => { throw new Error(text); });
         }
-        totalEconomiaGlobal = Number(totalEconomiaGlobal) + Number(valor);
+        totalEconomia = Number(totalEconomia) + Number(valor);
         input.value = '';
 
         fetch(`/economia/${sessionStorage.ID_USUARIO}`)
@@ -382,7 +378,7 @@ function removerConvidado() {
                 }
             }
             convidados = novaLista;
-            totalConvidadosGlobal--;
+            totalConvidado--;
             renderListas();
             atualizarKpisGraficos();
         })
@@ -418,7 +414,7 @@ function removerEconomia() {
             }
 
             economias = novaLista;
-            totalEconomiaGlobal = totalEconomiaGlobal - valorRemovido;
+            totalEconomia = totalEconomia - valorRemovido;
             renderListas();
             atualizarKpisGraficos();
             atualizarGraficoLinha();
@@ -445,7 +441,7 @@ function renderListas() {
     for (let i = 0; i < economias.length; i++) {
         htmlEconomia += `
             <div class="item">
-                <span>R$ ${Number(economias[i].valor).toLocaleString('pt-BR', { minimumFractionDigits: 2})}</span>
+                <span>R$ ${Number(economias[i].valor).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits : 2})}</span>
                 <button onclick="economiaToRemove = ${economias[i].id}; removerEconomia();" title="Remover">&times;</button>
             </div>
         `;
