@@ -87,6 +87,7 @@ let linhaGrafico = new Chart(document.getElementById('linhaGrafico'), {
             y: {
                 beginAtZero: true,
                 max: 100,
+                ticks: { stepSize: 20 },
                 title: { display: true, text: '%' }
             }
         }
@@ -211,21 +212,12 @@ fetch(`/convidado/${sessionStorage.ID_USUARIO}`)
 fetch(`/economia/${sessionStorage.ID_USUARIO}`)
     .then(response => response.json())
     .then(data => {
+        for (let i = 0; i < data.length; i++) {
+            let id = data[i].id;
+            let valor = Number(data[i].valor);
 
-        for (let i = 0; i < data.length; i++) {
-            let valor = parseInt(data[i].valor);
             if (valor > 0) {
-                economias.push(valor);
-            }
-        }
-            
-        for (let i = 0; i < data.length; i++) {
-            let valor = parseInt(data[i].valor);
-            if (valor < 0) {
-                let index = economias.indexOf(Math.abs(valor));
-                if (index !== -1) {
-                    economias.splice(index, 1);
-                }
+                economias.push({id: id, valor:valor});
             }
         }
         renderListas();
@@ -350,12 +342,24 @@ function addEconomia() {
         if (!response.ok) {
             return response.text().then(text => { throw new Error(text); });
         }
-        economias.push(Number(valor));
         totalEconomiaGlobal = Number(totalEconomiaGlobal) + Number(valor);
         input.value = '';
-        renderListas();
-        atualizarKpisGraficos();
-        atualizarGraficoLinha();
+
+        fetch(`/economia/${sessionStorage.ID_USUARIO}`)
+        .then(response => response.json())
+        .then(data => {
+            economias = [];
+            for (let i = 0; i < data.length; i++) {
+                let id = data[i].id;
+                let valor = Number(data[i].valor);
+                if(valor > 0) {
+                    economias.push({ id: id, valor: valor});
+                }
+            }
+            renderListas();
+            atualizarKpisGraficos();
+            atualizarGraficoLinha();
+        })
     })
     .catch(err => {
         alert('Erro ao adicionar economia: ' + err.message);
@@ -398,14 +402,23 @@ function removerEconomia() {
                 alert('Erro ao remover economia');
                 return;
             }
+
+            let valorRemovido = 0;
+            for (let i = 0; i < economias.length; i++) {
+                if (economias[i].id == economiaToRemove) {
+                    valorRemovido = economias[i].valor;
+                }
+            }
+
             let novaLista = [];
             for (let i = 0; i < economias.length; i++) {
-                if (economias[i] != economiaToRemove) {
+                if (economias[i].id != economiaToRemove) {
                     novaLista.push(economias[i]);
                 }
             }
+
             economias = novaLista;
-            totalEconomiaGlobal = totalEconomiaGlobal - Number(economiaToRemove);
+            totalEconomiaGlobal = totalEconomiaGlobal - valorRemovido;
             renderListas();
             atualizarKpisGraficos();
             atualizarGraficoLinha();
@@ -432,8 +445,8 @@ function renderListas() {
     for (let i = 0; i < economias.length; i++) {
         htmlEconomia += `
             <div class="item">
-                <span>R$ ${Number(economias[i]).toLocaleString('pt-BR', { minimumFractionDigits: 2})}</span>
-                <button onclick="economiaToRemove = ${economias[i]}; removerEconomia();" title="Remover">&times;</button>
+                <span>R$ ${Number(economias[i].valor).toLocaleString('pt-BR', { minimumFractionDigits: 2})}</span>
+                <button onclick="economiaToRemove = ${economias[i].id}; removerEconomia();" title="Remover">&times;</button>
             </div>
         `;
     }

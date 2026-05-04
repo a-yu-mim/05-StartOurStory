@@ -1,3 +1,4 @@
+
 const database = require("../../config/database");
 
 function listar(usuarioId) {

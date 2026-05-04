@@ -32,12 +32,12 @@ function adicionar(req, res) {
 }
 
 function remover(req, res) {
-    const valor = req.params.id;
+    const id = req.params.id;
     const usuarioId = req.params.usuarioId;
-    if (valor === undefined || usuarioId === undefined) {
-        res.status(400).send("Valor ou usuarioId não informado");
+    if (id === undefined || usuarioId === undefined) {
+        res.status(400).send("id ou usuarioId não informado");
     } else {
-        economiaModel.remover(valor, usuarioId)
+        economiaModel.remover(id, usuarioId)
         .then(() => res.status(204).send())
         .catch(err => {
             console.log(err);

@@ -11,9 +11,9 @@ function adicionar(valor, usuarioId) {
     return database.executar(sql, [valor, usuarioId]);
 }
 
-function remover(valor, usuarioId) {
-    const sql = `DELETE FROM economia WHERE valor = ? AND id_usuario = ?`;
-    return database.executar(sql, [valor, usuarioId]);
+function remover(id, usuarioId) {
+    const sql = `DELETE FROM economia WHERE id = ? AND id_usuario = ?`;
+    return database.executar(sql, [id, usuarioId]);
 }
 
 function totalEconomia() {
