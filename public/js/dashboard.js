@@ -1,22 +1,18 @@
 
 let convidados = [];
 let economias  = [];
-
 let totalConvidadosGlobal = 0;
 let totalEconomiaGlobal = 0;
-
 let metaEconomia   = 50000;
 let maxConvidados  = 300;
-
 let convidadoToRemove = '';
 let economiaToRemove  = 0;
+let fetchesCompletos = 0;
 
 let listaConvidadosEl = document.getElementById('listaConvidados');
 let listaEconomiaEl   = document.getElementById('listaEconomia');
 let totalConvidadosEl = document.getElementById('totalConvidados');
 let totalMetaEl       = document.getElementById('totalMeta');
-
-let fetchesCompletos = 0;
 
 function esconderLoading() {
     fetchesCompletos++;
@@ -128,7 +124,7 @@ fetch('/economia/todos')
                 porcentagem = 100;
             }
             porcentagens.push(porcentagem);
-            labels.push(`Depósito ${i + 1}`);
+            labels.push(`${i + 1}`);
         }
         linhaGrafico.data.labels = labels;
         linhaGrafico.data.datasets[0].data = porcentagens;
@@ -149,29 +145,34 @@ if (totalSegundos <= 0) {
 }
 
 function atualizarContagem() {
+    if (totalSegundos <= 0) {
+        document.getElementById('cdDias').innerHTML = '0';
+        document.getElementById('cdHoras').innerHTML = '00';
+        document.getElementById('cdMin').innerHTML = '00';
+        document.getElementById('cdSeg').innerHTML = '00';
+    } else {
+        let dias = Math.floor(totalSegundos / 86400);
+        let horas = Math.floor((totalSegundos % 86400) / 3600);
+        let minutos = Math.floor((totalSegundos % 3600) / 60);
+        let segundos = totalSegundos % 60;
 
-    let dias = Math.floor(totalSegundos / (3600 * 24));
-    let resto = totalSegundos % (3600 * 24);
-    let horas = Math.floor(resto / 3600);
-    resto = resto % 3600;
-    let minutos = Math.floor(resto / 60);
-    let segundos = resto % 60;
+        if (horas < 10) {
+            horas = '0' + horas;
+        }  
+        if (minutos < 10) { 
+            minutos = '0' + minutos;
+        }
+        if (segundos < 10) {
+            segundos = '0' + segundos;
+        }
 
-if (horas < 10) {
-    horas = '0' + horas;
-}  
-if (minutos < 10) { 
-    minutos = '0' + minutos;
-}
-if (segundos < 10) {
-    segundos = '0' + segundos;
-}
-    document.getElementById('cdDias').innerHTML = dias;
-    document.getElementById('cdHoras').innerHTML = horas;
-    document.getElementById('cdMin').innerHTML = minutos;
-    document.getElementById('cdSeg').innerHTML = segundos;
+        document.getElementById('cdDias').innerHTML = dias;
+        document.getElementById('cdHoras').innerHTML = horas;
+        document.getElementById('cdMin').innerHTML = minutos;
+        document.getElementById('cdSeg').innerHTML = segundos;
 
-    totalSegundos--;
+        totalSegundos--;
+    }
 }
 
 atualizarContagem()
@@ -259,15 +260,6 @@ function atualizarKpisGraficos() {
     barraGrafico.data.datasets[1].data = [0, totalConvidadosGlobal];
     barraGrafico.update();
 
-    let porcentagens = parseInt((totalEconomiaGlobal * 100) / metaEconomia);
-    if (porcentagens > 100) {
-        porcentagens = 100;
-    }
-    
-    linhaGrafico.data.labels = ['Total'];
-    linhaGrafico.data.datasets[0].data = [porcentagens];
-    linhaGrafico.update();
-
     let aviso = document.getElementById('avisoMeta');
     if (totalEconomiaGlobal >= metaEconomia) {
         aviso.style.display = 'block';
@@ -275,6 +267,33 @@ function atualizarKpisGraficos() {
         aviso.style.display = 'none';
     }
 }
+
+function atualizarGraficoLinha() {
+    fetch('/economia/todos')
+    .then(response => response.json())
+    .then(data => {
+        let soma = 0;
+        let porcentagens = [];
+        let labels = [];
+        for (let i = 0; i < data.length; i++) {
+            soma += Number(data[i].valor);
+            let porcentagem = Math.floor(soma * 100 / metaEconomia);
+            if (porcentagem > 100) {
+                porcentagem = 100;
+            }
+            porcentagens.push(porcentagem);
+            labels.push(`${i + 1}`);
+        }
+
+        linhaGrafico.data.labels = labels;
+        linhaGrafico.data.datasets[0].data = porcentagens;
+        linhaGrafico.update();
+    })
+    .catch(err => {
+        console.error('Erro ao atualizar gráfico de linha:', err);
+    });
+}
+
 
 function addConvidado() {
     let input = document.getElementById('input_convidado');
@@ -309,6 +328,7 @@ function addConvidado() {
         input.value = '';
         renderListas();
         atualizarKpisGraficos();
+        atualizarGraficoLinha();
     })
     .catch(err => {
         alert('Erro ao adicionar convidado: ' + err.message);
