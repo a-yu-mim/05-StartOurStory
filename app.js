@@ -46,6 +46,7 @@
     const usuarioRouter = require("./src/modeles/usuario/usuario.routes");
     const convidadoRouter = require("./src/modeles/convidado/convidado.routes");
     const economiaRouter = require("./src/modeles/economia/economia.routes");
+    const listaRouter = require("./src/modeles/lista/lista.routes");
 
     
 // =========================================================
@@ -68,6 +69,7 @@
     app.use("/usuarios", usuarioRouter);
     app.use("/convidado", convidadoRouter);
     app.use("/economia", economiaRouter);
+    app.use("/lista", listaRouter);
 
 
 // =========================================================

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista para Impressão</title>
+    <link rel="stylesheet" href="../css/lista.css">
+    <script src="../js/auth.js"></script>
+    <script src="../js/lista.js" defer></script>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="nav-item" onclick="window.location.href='/pages/index.html'">Home</div>
+        <div class="nav-item" onclick="window.location.href='/pages/dashboard.html'">Dashboard</div>
+          <div class="nav-item" onclick="window.location.href='/pages/lista.html'">Lista</div>
+        <div class="nav-item" onclick="window.location.href='/pages/login.html'">Login</div>
+        <div class="nav-item" onclick="window.location.href='/pages/cadastro.html'">Cadastro</div>
+    </div>
+
+    <div class="container1">
+        <button class="btn1" id="btnImprimir" type="button">Imprimir</button>
+
+        <section class="card">
+            <h1>Lista de Convidados</h1>
+            <div class="lista" id="listaConvidados"></div>
+        </section>
+    </div>
+</body>
+</html>
+
