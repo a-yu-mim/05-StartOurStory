@@ -1,11 +1,16 @@
 
-function cadastro() {
-    let nome = document.getElementById("input_nome").value;
-    let email = document.getElementById("input_email").value;
-    let senha = document.getElementById("input_senha").value;
+function irParaLogin(){
+    window.location.href = "login.html";
+}
 
-    if (!nome || !email || !senha) {
-        mostrarMensagemCadastro("Preencha todos os campos para continuar.", "red", false);
+function cadastro() {
+    let nomeEl = document.getElementById("input_nome").value;
+    let emailEl = document.getElementById("input_email").value;
+    let senhaEl = document.getElementById("input_senha").value;
+    let codigoEl = document.getElementById("input_codigo").value;
+
+    if (!nomeEl || !emailEl || !senhaEl) {
+        mostrarAlerta("Preencha todos os campos.", "red");
         return;
     }
 
@@ -15,49 +20,50 @@ function cadastro() {
             "Content-Type": "application/json"
         }, 
         body: JSON.stringify({
-            nomeServer: nome,
-            emailServer: email,
-            senhaServer: senha
+            nome: nomeEl,
+            email: emailEl,
+            senha: senhaEl,
+            codigo: codigoEl
         })
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error("Nao foi possivel realizar o cadastro.");
+            throw new Error("Erro no cadastro.");
         } else {
-            mostrarMensagemCadastro("Cadastro efetuado!", "green", true);
+            mostrarAlerta("Cadastro efetuado!", "green");
         }
     })
     .catch(erro => {
-        mostrarMensagemCadastro("Erro de conexao com o servidor.", "red", false);
+        mostrarAlerta("Erro de conexão com o servidor.", "red");
         console.error(erro);
     });
 }
 
-function mostrarMensagemCadastro(mensagem, cor, abrirPorta) {
-    let alerta = document.getElementById("alerta");
-    let mensagemElemento = document.getElementById("mensagem");
-    let porta = document.getElementById("porta");
-    let somPorta = document.getElementById("somPorta");
+function mostrarAlerta(mensagem, cor, abrirPorta = false) {
+    let alertaEl = document.getElementById("alerta");
+    let mensagemEl = document.getElementById("mensagem");
+    let portaEl    = document.getElementById("porta");
+    let somPortaEl = document.getElementById("somPorta");
 
-    if (alerta && mensagemElemento) {
-        mensagemElemento.innerHTML = mensagem;
-        alerta.style.background = cor;
-        alerta.style.display = "block";
+    if (!alertaEl || !mensagemEl) {
+        return;
+    } 
+
+    mensagemEl.innerHTML = mensagem;
+    alertaEl.style.background = cor;
+    alertaEl.style.display = "block";
+    
+    if (abrirPorta && portaEl && somPortaEl) {
+        portaEl.style.display = "block";
+        somPortaEl.play();
     }
-
-    if (abrirPorta && porta && somPorta) {
-        porta.style.display = "block";
-        somPorta.play();
-    }
-}
-
-function irParaLogin(){
-    window.location.href = "login.html";
 }
 
 function fecharAlerta(){
-    const alerta = document.getElementById("alerta");
-    alerta.style.display = "none";
+    let alertaEl = document.getElementById("alerta");
+    if (alertaEl) {
+        alertaEl.style.display = "none";
+    }
 }
 
 function darkModo() {

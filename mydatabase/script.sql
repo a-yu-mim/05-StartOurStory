@@ -1,25 +1,39 @@
 
 CREATE DATABASE StartOurStory;
 USE StartOurStory;
+drop DATABASE startourstory;
 
 CREATE TABLE usuario (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	nome VARCHAR(45) UNIQUE,
 	email VARCHAR(45) UNIQUE NOT NULL,
-	senha VARCHAR(45) NOT NULL
+	senha VARCHAR(45) NOT NULL,
+    fkParceiro INT,
+    FOREIGN KEY (fkParceiro) REFERENCES usuario(id)
+);
+
+CREATE TABLE codigo (
+	codigo VARCHAR(45) PRIMARY KEY,
+	fkUsuario INT,
+	FOREIGN KEY (fkUsuario) REFERENCES usuario(id)
 );
 
 CREATE TABLE convidado (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	nome VARCHAR(45),
-	id_usuario INT,
-    UNIQUE (nome, id_usuario),
-	FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+	fkUsuario INT,
+    UNIQUE (nome, fkUsuario),
+	FOREIGN KEY (fkUsuario) REFERENCES usuario(id)
 );
 
 CREATE TABLE economia (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	valor DECIMAL(7,2) NOT NULL,
-	id_usuario INT,
-	FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+	fkUsuario INT,
+	FOREIGN KEY (fkUsuario) REFERENCES usuario(id)
 );
+
+select * from usuario;
+select * from codigo;
+select * from convidado;
+select * from economia;

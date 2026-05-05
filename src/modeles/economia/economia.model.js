@@ -1,29 +1,29 @@
 
 const database = require("../../config/database");
 
-function listar(usuarioId) {
-    const sql = `SELECT id, valor FROM economia WHERE id_usuario = ?`;
-    return database.executar(sql, [usuarioId]);
+function listar(usuarioId, parceiroId) {
+    const sql = `SELECT id, valor, fkUsuario FROM economia WHERE fkUsuario = ? OR fkUsuario = ?`;
+    return database.executar(sql, [usuarioId, parceiroId]);
 }
 
 function adicionar(valor, usuarioId) {
-    const sql = `INSERT INTO economia (valor, id_usuario) VALUES (?, ?)`;
+    const sql = `INSERT INTO economia (valor, fkUsuario) VALUES (?, ?)`;
     return database.executar(sql, [valor, usuarioId]);
 }
 
 function remover(id, usuarioId) {
-    const sql = `DELETE FROM economia WHERE id = ? AND id_usuario = ?`;
+    const sql = `DELETE FROM economia WHERE id = ? AND fkUsuario = ?`;
     return database.executar(sql, [id, usuarioId]);
 }
 
-function totalEconomia() {
-    const sql = `SELECT SUM(valor) AS total FROM economia`;
-    return database.executar(sql);
+function totalEconomia(usuarioId, parceiroId) {
+    const sql = `SELECT SUM(valor) AS total FROM economia WHERE fkUsuario = ? OR fkUsuario = ?`;
+    return database.executar(sql, [usuarioId, parceiroId]);
 }
 
-function listarTodos() {
-    const sql = `SELECT valor FROM economia WHERE valor > 0 ORDER BY id ASC`;
-    return database.executar(sql);
+function listarTodos(usuarioId, parceiroId) {
+    const sql = `SELECT valor FROM economia WHERE (fkUsuario = ? OR fkUsuario = ?) AND valor > 0 ORDER BY id ASC`;
+    return database.executar(sql, [usuarioId, parceiroId]);
 }
 
 module.exports = {

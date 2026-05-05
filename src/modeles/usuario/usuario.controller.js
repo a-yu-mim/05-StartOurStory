@@ -1,80 +1,72 @@
-// ---------------------------------------------------
-//  Controller recebe dados, valida e chama o model 
-// ---------------------------------------------------
 
 const usuarioModel = require("./usuario.model");
 
 function cadastrar(req, res) {
-    const nome = req.body.nomeServer;
-    const email = req.body.emailServer;
-    const senha = req.body.senhaServer;
+    const nome = req.body.nome;
+    const email = req.body.email;
+    const senha = req.body.senha;
+    const codigo = req.body.codigo;
     
-    if (nome == undefined) {
-        res.status(400).send("Nome não informado");
-    } else if (email == undefined) {
-        res.status(400).send("Email não informado");
-    } else if (senha == undefined) {
-        res.status(400).send("Senha não informada");
-    } else {
-
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, senha)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (err) {
-                    console.log(err);
-                    console.log(
-                        "\nHouve um erro ao realizar o cadastro! Erro: ",
-                        err.sqlMessage
-                    );
-                    res.status(500).json(err.sqlMessage);
-                }
-            );
+    if (!nome || !email || !senha) {
+        res.status(400).send("Preencha todos os campos.");
+        return;
     }
+    
+    if (!codigo) {
+        usuarioModel.cadastrar(nome, email, senha, null)
+            .then(resultado =>
+                usuarioModel.gerarCodigo(resultado.insertId))
+            .then(() => {
+                res.status(201).json({ message: "Cadastro efetuado!" });
+            })
+            .catch((err) => {
+                res.status(500).json(err.sqlMessage);
+            });
+        return;
+    }
+    
+    usuarioModel.buscarPorCodigo(codigo)
+        .then(function (lista) {
+        
+        if (lista.length == 0 || lista[0].fkParceiro != null) {
+            res.status(400).json({ message: "Código inválido ou já utilizado." });
+            return;
+        }
+
+        const idParceiro = lista[0].id;
+
+        return usuarioModel.cadastrar(nome, email, senha, idParceiro)
+            .then(resultado => usuarioModel.vincularParceiro(idParceiro, resultado.insertId))
+            .then(resultado => usuarioModel.gerarCodigo(resultado.insertId))
+            .then(() => res.status(201).json({ message: "Cadastro efetuado! Parceiro vinculado!" }))
+        })
+        .catch( err => res.status(500).json(err.sqlMessage));
 }
+
 
 function autenticar(req, res) {
-    const email = req.body.emailServer;
-    const senha = req.body.senhaServer;
+    const email = req.body.email;
+    const senha = req.body.senha;
 
-    if (email == undefined) {
-        res.status(400).send("Email não informado");
-    } else if (senha == undefined) {
-        res.status(400).send("Senha não informada");
-    } else {
-
-        usuarioModel.autenticar(email, senha)
-            .then(
-                function (resultadoAutenticar) {
-                    console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
-
-                    if (resultadoAutenticar.length == 1) {
-                        res.json({
-                            id: resultadoAutenticar[0].id,
-                            email: resultadoAutenticar[0].email,
-                            nome: resultadoAutenticar[0].nome
-                        });
-                    } else if (resultadoAutenticar.length == 0) {
-                        res.status(403).send("Email e/ou senha inválido(s)");
-                    } else {
-                        res.status(403).send("Mais de um usuário com o mesmo login e senha!");
-                    }
-                }
-            ).catch(
-                function (err) {
-                    console.log(err);
-                    console.log("\nHouve um erro ao realizar o login! Erro: ", err.sqlMessage);
-                    res.status(500).json(err.sqlMessage);
-                }
-            );
+    if (!email || !senha) {
+        res.status(400).send("Preencha todos os campos.");
+        return;
     }
 
+    usuarioModel.autenticar(email, senha)
+        .then(function (lista) {
+            if (lista.length == 1) {
+                res.json({
+                    id:    lista[0].id,
+                    email: lista[0].email,
+                    nome:  lista[0].nome
+                });
+            } else {
+                res.status(403).send("Email ou senha inválidos.");
+            }
+        })
+            .catch((err) => res.status(500).json(err.sqlMessage));
 }
-
 
 module.exports = {
     cadastrar,

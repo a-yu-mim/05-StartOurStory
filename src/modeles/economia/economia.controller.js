@@ -1,67 +1,87 @@
 
 const economiaModel = require("./economia.model");
+const usuarioModel = require("../usuario/usuario.model");
 
 function listar(req, res) {
     const usuarioId = req.params.usuarioId;
-    if (usuarioId === undefined) {
+
+    if (!usuarioId) {
         res.status(400).send("Usuário não informado");
-    } else {
-        economiaModel.listar(usuarioId)
-        .then(economias => res.json(economias))
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ erro: err.message });
-        });
-    }
-}
+        return;
+    } 
+
+    usuarioModel.buscarPorId(usuarioId)
+        .then(lista => { 
+            const parceiroId = lista[0].id_parceiro;
+            return economiaModel.listar(usuarioId, parceiroId);
+        })
+        .then(lista => res.json(lista))
+        .catch(err => res.status(500).json({ erro: err.message }));
+};
 
 function adicionar(req, res) {
-    const { valor, usuarioId } = req.body;
-    if (valor === undefined) {
+    const valor = req.body.valor;
+    const usuarioId = req.body.usuarioId;
+
+    if (!valor) {
         res.status(400).send("Valor não informado");
-    } else if (usuarioId === undefined) {
+        return;
+    } else if (!usuarioId) {
         res.status(400).send("Usuário não informado");
-    } else {
-        economiaModel.adicionar(valor, usuarioId)
+        return;
+    } 
+
+    economiaModel.adicionar(valor, usuarioId)
         .then(() => res.status(201).send())
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ erro: err.message });
-        });
-    }
-}
+        .catch(err => res.status(500).json({ erro: err.message }));
+};
 
 function remover(req, res) {
     const id = req.params.id;
     const usuarioId = req.params.usuarioId;
-    if (id === undefined || usuarioId === undefined) {
+
+    if (!id || !usuarioId) {
         res.status(400).send("id ou usuarioId não informado");
-    } else {
-        economiaModel.remover(id, usuarioId)
+        return;
+    } 
+        
+    economiaModel.remover(id, usuarioId)
         .then(() => res.status(204).send())
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ erro: err.message });
-        });
-    }
-}
-    
+        .catch(err => res.status(500).json({ erro: err.message }));
+};
+
 function totalEconomia(req, res) {
-    economiaModel.totalEconomia()
-    .then(resultado => res.json(resultado[0]))
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({ erro: err.message });
-    });
-}
+    const usuarioId = req.params.usuarioId;
+
+    if(!usuarioId) {
+        res.status(400).send("Usuário não informado");
+        return;
+    }
+
+    usuarioModel.buscarPorId(usuarioId)
+        .then(lista => {
+            const parceiroId = lista[0].fkParceiro || null;
+            return economiaModel.totalEconomia(usuarioId, parceiroId);
+        })
+        .then(resultado => res.json(resultado[0]))
+        .catch(err => res.status(500).json({ erro: err.message }));
+};
 
 function listarTodos(req, res) {
-    economiaModel.listarTodos()
-    .then(economias => res.json(economias))
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({ erro: err.message });
-    });
+    const usuarioId = req.params.usuarioId;
+
+    if(!usuarioId) {
+        res.status(400).send("Usuário não informado");
+        return;
+    }
+
+    usuarioModel.buscarPorId(usuarioId)
+        .then(lista => {
+            const parceiroId = lista[0].fkParceiro || null;
+            return economiaModel.listarTodos(usuarioId, parceiroId);
+        })
+        .then(lista => res.json(lista))
+        .catch(err => res.status(500).json({ erro: err.message }));
 }
 
     module.exports = {

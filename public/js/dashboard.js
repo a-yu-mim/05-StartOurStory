@@ -1,4 +1,7 @@
 
+const usuarioId = sessionStorage.getItem('ID_USUARIO');
+let parceiroId = null;
+
 let convidados = [];
 let economias  = [];
 let valoresGrafico = [];
@@ -22,10 +25,6 @@ function esconderLoading() {
     if (fetchesCompletos >= 5) {
         document.getElementById('loading').style.display = 'none';
     }
-}
-
-if (sessionStorage.NOME_USUARIO) {
-    alert(`Bem-vindo, ${sessionStorage.NOME_USUARIO}!`);
 }
 
 let dataCasamento = Date.parse('2026-05-31T10:00:00');
@@ -173,7 +172,7 @@ function atualizarKpisGraficos() {
 }
 
 function atualizarGraficoLinha() {
-    fetch('/economia/todos')
+    fetch(`/economia/todos/${usuarioId}`)
     .then(response => response.json())
     .then(data => {
         let soma = 0;
@@ -204,77 +203,52 @@ function atualizarGraficoLinha() {
     });
 }
 
-fetch(`/convidado/${sessionStorage.ID_USUARIO}`)
+fetch(`/convidado/${usuarioId}`)
     .then(response => response.json())
     .then(data => {
-        
         for (let i = 0; i < data.length; i++) {
-            let nome = '';
-
-            if (typeof data[i] === 'object' && data[i] !== null) {
-                nome = data[i].nome;
-            } else {
-                nome = data[i];
-            }
-
-            if (nome && nome !== '-' && nome !== null) {
+            let nome = data[i].nome;
+            if (nome && nome !== '-') {
                 convidados.push(nome);
             }
         }
         renderListas();
     })
-    .catch(err => {
-        console.error('Erro ao carregar convidados:', err);
-    })
-    .finally(() => {
-        esconderLoading();
-    });
+    .catch(err => console.error('Erro ao carregar convidados:', err))
+    .finally(() => esconderLoading()); 
 
-fetch(`/economia/${sessionStorage.ID_USUARIO}`)
+fetch(`/economia/${usuarioId}`)
     .then(response => response.json())
     .then(data => {
         for (let i = 0; i < data.length; i++) {
             let id = data[i].id;
             let valor = Number(data[i].valor);
-
             if (valor > 0) {
                 economias.push({id: id, valor:valor});
             }
         }
         renderListas();
     })
-    .catch(err => {
-        console.error('Erro ao carregar economias:', err);
-    })
-    .finally(() => {
-        esconderLoading();
-    });
+    .catch(err => console.error('Erro ao carregar economias:', err))
+    .finally(() => esconderLoading());
 
-fetch('/convidado/contar')
+fetch(`/convidado/contar/${usuarioId}`)
     .then(response => response.json())
     .then(data => {
         totalConvidado = data.total;
         atualizarKpisGraficos();
     })
-    .catch(err => {
-        console.error('Erro ao carregar total de convidados:', err);
-    })
-    .finally(() => {
-        esconderLoading();
-    });
+    .catch(err => console.error('Erro ao carregar total de convidados:', err))
+    .finally(() => esconderLoading());
 
-fetch('/economia/soma')
+fetch(`/economia/soma/${usuarioId}`)
     .then(response => response.json())
     .then(data => {
         totalEconomia = Number(data.total) || 0;
         atualizarKpisGraficos();
     })
-    .catch(err => {
-        console.error('Erro ao carregar total de economia:', err);
-    })
-    .finally(() => {
-        esconderLoading();
-    });
+    .catch(err => console.error('Erro ao carregar total de economia:', err))
+    .finally(() => esconderLoading());
 
 atualizarGraficoLinha();
 

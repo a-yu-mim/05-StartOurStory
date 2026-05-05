@@ -1,10 +1,10 @@
 
 function login() {
-    let email = document.getElementById("input_email").value;
-    let senha = document.getElementById("input_senha").value;
+    let emailEl = document.getElementById("input_email").value;
+    let senhaEl = document.getElementById("input_senha").value;
 
-    if (!email || !senha) {
-        alert("Preencha todos os campos para continuar.");
+    if (!emailEl || !senhaEl) {
+        mostrarAlerta("Preencha todos os campos.", "red", false);
         return;
     }
 
@@ -14,8 +14,8 @@ function login() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            emailServer: email,
-            senhaServer: senha
+            email: emailEl,
+            senha: senhaEl
         })
     })
     .then(response => {
@@ -26,18 +26,37 @@ function login() {
         }
     })
     .then(dadosUsuario => {
-        sessionStorage.ID_USUARIO = dadosUsuario.id;
-        sessionStorage.EMAIL_USUARIO = dadosUsuario.email;
-        sessionStorage.NOME_USUARIO = dadosUsuario.nome;
-
-        alert("Login efetuado!");
+        sessionStorage.setItem("ID_USUARIO", dadosUsuario.id);
+        sessionStorage.setItem("EMAIL_USUARIO", dadosUsuario.email);
+        sessionStorage.setItem("NOME_USUARIO", dadosUsuario.nome);
         window.location.href = "/pages/dashboard.html";
     })
     .catch(erro => {
-        alert(erro.message);
+        mostrarAlerta(erro.message, "red");
     });
 }
 
+function mostrarAlerta(mensagem, cor) {
+    let alertaEl = document.getElementById("alerta");
+    let mensagemEl = document.getElementById("mensagem");
+
+    if (!alertaEl || !mensagemEl) {
+        return;
+    }
+
+    mensagemEl.innerHTML = mensagem;
+    alertaEl.style.background = cor;
+    alertaEl.style.display = "block";
+}
+
+function fecharAlerta() {
+    let alertaEl = document.getElementById("alerta");
+
+    if (alertaEl) {
+        alertaEl.style.display = "none";
+    }
+}
+    
 function darkModo() {
     let fundo = document.getElementById("body");
     let botao = document.getElementById("botao");
