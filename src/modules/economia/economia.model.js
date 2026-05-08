@@ -1,15 +1,9 @@
 
 const database = require("../../config/database");
 
-<<<<<<< HEAD
 function listar(usuarioId, parceiroId) {
     const sql = `SELECT id, valor, fkUsuario FROM economia WHERE fkUsuario = ? OR fkUsuario = ?`;
     return database.executar(sql, [usuarioId, parceiroId]);
-=======
-function listar(usuarioId) {
-    const sql = `SELECT id, valor FROM economia WHERE fkUsuario = ?`;
-    return database.executar(sql, [usuarioId]);
->>>>>>> 987268c (ponto salvo)
 }
 
 function adicionar(valor, usuarioId) {

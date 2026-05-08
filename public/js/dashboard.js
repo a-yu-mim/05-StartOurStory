@@ -63,8 +63,7 @@ function atualizarContagem() {
         totalSegundos--;
     }
 }
-atualizarContagem()
-setInterval(atualizarContagem, 1000);
+setTimeout(atualizarContagem(), 1000);
 
 let linhaGrafico = new Chart(document.getElementById('linhaGrafico'), {
     type: 'line',

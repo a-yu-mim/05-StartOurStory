@@ -42,11 +42,11 @@
 // =========================================================
 // |               "Importação das rotas"                  |
 // =========================================================
-    const indexRouter = require("./src/modeles/login/login.routes");
-    const usuarioRouter = require("./src/modeles/usuario/usuario.routes");
-    const convidadoRouter = require("./src/modeles/convidado/convidado.routes");
-    const economiaRouter = require("./src/modeles/economia/economia.routes");
-    const listaRouter = require("./src/modeles/lista/lista.routes");
+    const indexRouter = require("./src/modules/login/login.routes");
+    const usuarioRouter = require("./src/modules/usuario/usuario.routes");
+    const convidadoRouter = require("./src/modules/convidado/convidado.routes");
+    const economiaRouter = require("./src/modules/economia/economia.routes");
+    const listaRouter = require("./src/modules/lista/lista.routes");
 
     
 // =========================================================
