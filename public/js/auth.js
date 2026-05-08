@@ -11,4 +11,4 @@ function limparSessao() {
     window.location.href = "/pages/login.html";
 }
 
-verificarSessao();
+validarSessao();
