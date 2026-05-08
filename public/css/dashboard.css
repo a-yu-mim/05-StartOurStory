@@ -1,14 +1,13 @@
 * {
     box-sizing: border-box;
     margin: 0;
-    padding: 0;
     font-family: monospace;
 }
 
 body {
     background: #f8dede;
-    display: flex;
     min-height: 100vh;
+    display: flex;
 }
 
 .sidebar {
@@ -23,7 +22,6 @@ body {
     height: 100vh;
     left: 0;
     top: 0;
-    overflow-y: auto;
 }
 
 .nav-item {
@@ -32,7 +30,7 @@ body {
     padding: 10px;
     font-size: 18px;
     border-radius: 5px;
-    transition: background 0.3s ease;
+    transition: 0.3s;
 }
 
 .nav-item:hover {
@@ -82,7 +80,7 @@ body {
 }
 
 .kpi span {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
     color: #333;
@@ -101,13 +99,10 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     width: 100%;
     height: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .card {
-    padding: 20px;
+    padding: 0px 20px;
     border-radius: 15px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     background: white;
@@ -115,13 +110,14 @@ body {
 
 .card h2 {
     color: #333;
-    margin-bottom: 15px;
+    font-size: 20px;
+    padding: 20px 0;
 }
 
 .lista {
     margin: 15px 0;
     gap: 8px;
-    max-height: 120px;
+    max-height: 110px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -131,10 +127,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 12px 0 12px 12px;
     background: #f8f9fa;
     border-radius: 8px;
-    border: 1px solid #e9ecef;
+    font-size: 15px;
 }
 
 .item button {
@@ -150,6 +146,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    margin: 0 8px 0 0;
 }
 
 .item button:hover {
@@ -161,7 +159,6 @@ input {
     padding: 12px;
     border: 2px solid #e9ecef;
     border-radius: 8px;
-    margin-top: 10px;
     font-size: 16px;
 }
 
@@ -179,6 +176,7 @@ button {
     background: #f48fb1;
     color: white;
     margin-top: 10px;
+    margin-bottom: 10px;
     font-size: 16px;
     font-weight: 500;
 }

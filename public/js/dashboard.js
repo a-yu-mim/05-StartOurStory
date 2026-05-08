@@ -1,6 +1,5 @@
 
-const usuarioId = sessionStorage.getItem('ID_USUARIO');
-let parceiroId = null;
+
 
 let convidados = [];
 let economias  = [];
@@ -278,7 +277,7 @@ function addConvidado() {
     })
     .then(response => {
         if (!response.ok) {
-            return response.text().then(text => { throw new Error(text); });
+            return response.text().then(t => { throw Error(t); });
         }
         convidados.push(nome);
         totalConvidado++;
@@ -310,7 +309,7 @@ function addEconomia() {
     })
     .then(response => {
         if (!response.ok) {
-            return response.text().then(text => { throw new Error(text); });
+            return response.text().then(t => { throw Error(t); });
         }
         totalEconomia = Number(totalEconomia) + Number(valor);
         input.value = '';
@@ -343,7 +342,7 @@ function removerConvidado() {
         })
         .then(resposta => {
             if (!resposta.ok) {
-                return resposta.text().then(texto => { throw new Error(texto); });
+                return resposta.text().then(texto => { throw Error(texto); });
             }
             let novaLista = [];
             for (let i = 0; i < convidados.length; i++) {
