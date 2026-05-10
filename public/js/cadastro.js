@@ -30,7 +30,10 @@ function cadastro() {
         if (!response.ok) {
             throw new Error("Erro no cadastro.");
         } else {
-            mostrarAlerta("Cadastro efetuado!", "green");
+            mostrarAlerta("Cadastro efetuado!", "green", true);
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 1200);
         }
     })
     .catch(erro => {

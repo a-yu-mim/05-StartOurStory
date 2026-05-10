@@ -203,7 +203,7 @@ function atualizarGraficoLinha() {
     });
 }
 
-fetch(`/convidado/${usuarioId}`)
+fetch(`/convidado/meus/${usuarioId}`)
     .then(response => response.json())
     .then(data => {
         for (let i = 0; i < data.length; i++) {

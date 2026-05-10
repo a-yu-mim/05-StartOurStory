@@ -5,7 +5,7 @@ function cadastrar(req, res) {
     const nome = req.body.nome;
     const email = req.body.email;
     const senha = req.body.senha;
-    const codigo = req.body.codigo;
+    const codigo = req.body.codigo || null;
     
     if (!nome || !email || !senha) {
         res.status(400).send("Preencha todos os campos.");
@@ -27,20 +27,23 @@ function cadastrar(req, res) {
     
     usuarioModel.buscarPorCodigo(codigo)
         .then(function (lista) {
-        
-        if (lista.length == 0 || lista[0].fkParceiro != null) {
-            res.status(400).json({ message: "Código inválido ou já utilizado." });
-            return;
-        }
+            if (lista.length == 0 || lista[0].fkParceiro != null) {
+                res.status(400).json({ message: "Código inválido ou já utilizado." });
+                return;
+            }
 
-        const idParceiro = lista[0].id;
+            const idParceiro = lista[0].id;
+            let idNovoUsuario;
 
-        return usuarioModel.cadastrar(nome, email, senha, idParceiro)
-            .then(resultado => usuarioModel.vincularParceiro(idParceiro, resultado.insertId))
-            .then(resultado => usuarioModel.gerarCodigo(resultado.insertId))
-            .then(() => res.status(201).json({ message: "Cadastro efetuado! Parceiro vinculado!" }))
+            return usuarioModel.cadastrar(nome, email, senha, idParceiro)
+                .then(resultado => {
+                    idNovoUsuario = resultado.insertId;
+                    return usuarioModel.vincularParceiro(idParceiro, idNovoUsuario);
+                })
+                .then(() => usuarioModel.gerarCodigo(idNovoUsuario))
+                .then(() => res.status(201).json({ message: "Cadastro efetuado! Parceiro vinculado!" }));
         })
-        .catch( err => res.status(500).json(err.sqlMessage));
+        .catch(err => res.status(500).json(err.sqlMessage));
 }
 
 
