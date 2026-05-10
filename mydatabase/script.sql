@@ -1,6 +1,5 @@
 CREATE DATABASE StartOurStory;
 USE StartOurStory;
-drop DATABASE startourstory;
 
 CREATE TABLE usuario (
 	id INT PRIMARY KEY AUTO_INCREMENT,
@@ -13,10 +12,10 @@ CREATE TABLE usuario (
 );
 
 CREATE TABLE codigo (
-	codigo VARCHAR(45) PRIMARY KEY,
+	codigo INT PRIMARY KEY AUTO_INCREMENT,
 	fkUsuario INT,
 	FOREIGN KEY (fkUsuario) REFERENCES usuario(id)
-);
+) AUTO_INCREMENT = 1000;
 
 CREATE TABLE convidado (
 	id INT PRIMARY KEY AUTO_INCREMENT,

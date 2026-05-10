@@ -27,12 +27,12 @@ function vincularParceiro(idUsuario, idParceiro) {
 }
 
 function gerarCodigo(idUsuario) {
-    let sql = `INSERT INTO codigo (codigo, fkUsuario) VALUES (UUID(), ?);`;
+    let sql = `INSERT INTO codigo (fkUsuario) VALUES (?);`;
     return database.executar(sql, [idUsuario]);
 }
 
 function buscarPorId(usuarioId) {
-    let sql = `SELECT id, nome, email FROM usuario WHERE id = ?;`;
+    let sql = `SELECT id, nome, email, fkParceiro FROM usuario WHERE id = ?;`;
     return database.executar(sql, [usuarioId]);
 }
 

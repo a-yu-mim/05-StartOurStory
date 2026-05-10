@@ -19,6 +19,8 @@ let listaEconomiaEl   = document.getElementById('listaEconomia');
 let totalConvidadosEl = document.getElementById('totalConvidados');
 let totalMetaEl       = document.getElementById('totalMeta');
 
+let usuarioId = sessionStorage.ID_USUARIO;
+
 function esconderLoading() {
     fetchesCompletos++;
     if (fetchesCompletos >= 5) {

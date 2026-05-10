@@ -65,8 +65,8 @@
 // =========================================================
 // |                 "Ligando as rotas"                    |
 // =========================================================
-    app.use("/login", indexRouter);
-    app.use("/usuario", usuarioRouter);
+    app.use("/", indexRouter);
+    app.use("/usuarios", usuarioRouter);
     app.use("/convidado", convidadoRouter);
     app.use("/economia", economiaRouter);
     app.use("/lista", listaRouter);

@@ -1,9 +1,8 @@
-
 let express = require("express");
 let router = express.Router();
 
 router.get("/", (req, res) => {
-    res.sendFile("login.html", { root: "./src/modules/login" });
+    res.sendFile("login.html", { root: "./public/pages" });
 });
 
 router.post("/login", (req, res) => {
