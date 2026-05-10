@@ -30,6 +30,5 @@ function remover(req, res) {
 
 module.exports = {
     listar,
-    remover,
-    // totalConvidado
+    remover
 };

@@ -68,7 +68,22 @@ function autenticar(req, res) {
             .catch((err) => res.status(500).json(err.sqlMessage));
 }
 
+function buscarParceiro(req, res) {
+    let usuarioId = req.params.usuarioId;
+
+    usuarioModel.buscarParceiro(usuarioId)
+        .then(function (lista) {
+            if (lista.length == 0) {
+                res.status(404).json({ message: "Parceiro não encontrado." });
+                return;
+            }
+            res.json(lista[0]);
+        })
+        .catch((err) => res.status(500).json(err.sqlMessage));
+}
+
 module.exports = {
     cadastrar,
-    autenticar
+    autenticar,
+    buscarParceiro
 }

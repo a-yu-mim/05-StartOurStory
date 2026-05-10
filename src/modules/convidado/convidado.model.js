@@ -17,7 +17,7 @@ function remover(nome) {
 }
 
 function totalConvidado(usuarioId, parceiroId) {
-    const sql = `SELECT COUNT(*) AS total FROM convidado WHERE fkUsuario = ? or id_usuario = ?;`;
+    const sql = `SELECT COUNT(*) AS total FROM convidado WHERE fkUsuario = ? OR fkUsuario = ?;`;
     return database.executar(sql, [usuarioId, parceiroId]);
 }
 

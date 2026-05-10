@@ -95,3 +95,31 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
+#alerta {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: red;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    width: 250px;
+}
+
+#fecharAlerta {
+    cursor: pointer;
+}
+
+#porta {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    left: 30px;
+    cursor: pointer;
+}
+
+#porta img {
+    width: 220px;
+}
+
