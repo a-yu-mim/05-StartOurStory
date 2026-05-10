@@ -1,4 +1,12 @@
 
+function esconderLoading() {
+    let loadingEl = document.getElementById('loading');
+    
+    if (loadingEl) {
+        loadingEl.style.display = 'none';
+    }
+}
+
 function login() {
     let emailEl = document.getElementById("input_email").value;
     let senhaEl = document.getElementById("input_senha").value;
@@ -20,19 +28,24 @@ function login() {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error("Email ou senha inválidos.");
+            mostrarAlerta("Email ou senha inválidos.", "red");
+            return null;
         } else {
             return response.json();
         }
     })
     .then(dadosUsuario => {
+        if (!dadosUsuario) {
+            return;
+        }
+
         sessionStorage.setItem("ID_USUARIO", dadosUsuario.id);
         sessionStorage.setItem("EMAIL_USUARIO", dadosUsuario.email);
         sessionStorage.setItem("NOME_USUARIO", dadosUsuario.nome);
         window.location.href = "/pages/dashboard.html";
     })
     .catch(erro => {
-        mostrarAlerta(erro.message, "red");
+        mostrarAlerta("Não foi possível conectar ao servidor.", "red");
     });
 }
 
@@ -104,3 +117,5 @@ function darkModo() {
         senha.style.border = "2px solid #2f2f2f";
     }
 }
+
+esconderLoading();

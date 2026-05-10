@@ -1,8 +1,17 @@
 
+function esconderLoading() {
+    let loadingEl = document.getElementById('loading');
+
+    if (loadingEl) {
+        loadingEl.style.display = 'none';
+    }
+}
+
 let listaConvidadosEl = document.getElementById('listaConvidados');
 let btnImprimir = document.getElementById('btnImprimir');
 
 let convidados = [];
+
 
 function renderLista() {
     listaConvidadosEl.innerHTML = '';
@@ -28,6 +37,11 @@ function carregarConvidados() {
                 }
             }
             renderLista();
+            esconderLoading();
+        })
+        .catch(function (erro) {
+            console.error('Erro ao carregar convidados:', erro);
+            esconderLoading();
         });
 }
 

@@ -1,6 +1,4 @@
 
-
-
 let convidados = [];
 let economias  = [];
 let valoresGrafico = [];
@@ -28,6 +26,10 @@ function esconderLoading() {
     }
 }
 
+function mostrarAlerta(mensagem) {
+    alert(mensagem);
+}
+
 let dataCasamento = Date.parse('2026-05-31T10:00:00');
 let totalSegundos = Math.floor((dataCasamento - Date.now()) / 1000);
 
@@ -37,10 +39,10 @@ if (totalSegundos <= 0) {
 
 function atualizarContagem() {
     if (totalSegundos <= 0) {
-        document.getElementById('cdDias').innerHTML = '0';
+        document.getElementById('cdDias').innerHTML  = '0';
         document.getElementById('cdHoras').innerHTML = '00';
-        document.getElementById('cdMin').innerHTML = '00';
-        document.getElementById('cdSeg').innerHTML = '00';
+        document.getElementById('cdMin').innerHTML   = '00';
+        document.getElementById('cdSeg').innerHTML   = '00';
     } else {
         let dias = Math.floor(totalSegundos / 86400);
         let horas = Math.floor((totalSegundos % 86400) / 3600);
@@ -65,7 +67,7 @@ function atualizarContagem() {
         totalSegundos--;
     }
 }
-setTimeout(atualizarContagem(), 1000);
+setInterval(atualizarContagem, 1000);
 
 let linhaGrafico = new Chart(document.getElementById('linhaGrafico'), {
     type: 'line',
@@ -90,7 +92,7 @@ let linhaGrafico = new Chart(document.getElementById('linhaGrafico'), {
                 callbacks: {
                     label: function(context) {
                         let valor = valoresGrafico[context.dataIndex];
-                        return '+ ' + valor.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits : 2 });
+                        return '+ ' + Number(valor).toFixed(2).replace('.', ',');
                     }
                 }
             } },
@@ -152,7 +154,7 @@ function atualizarKpisGraficos() {
 
     let totalEconomiaFormatado = Number(totalEconomia) || 0;
 
-    totalMetaEl.innerHTML = `R$ ` + totalEconomiaFormatado.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits : 2 });
+    totalMetaEl.innerHTML = `R$ ` + Number(totalEconomiaFormatado).toFixed(2).replace('.', ',');
     
     let metaRestante = metaEconomia - totalEconomia;
     if (metaRestante < 0) {
@@ -194,11 +196,10 @@ function atualizarGraficoLinha() {
         linhaGrafico.data.labels = labels;
         linhaGrafico.data.datasets[0].data = porcentagens;
         linhaGrafico.update();
+        esconderLoading();
     })
     .catch(err => {
         console.error('Erro ao atualizar gráfico de linha:', err);
-    })
-    .finally(() => {
         esconderLoading();
     });
 }
@@ -213,9 +214,12 @@ fetch(`/convidado/meus/${usuarioId}`)
             }
         }
         renderListas();
+        esconderLoading();
     })
-    .catch(err => console.error('Erro ao carregar convidados:', err))
-    .finally(() => esconderLoading()); 
+    .catch(err => {
+        console.error('Erro ao carregar convidados:', err);
+        esconderLoading();
+    }); 
 
 fetch(`/economia/${usuarioId}`)
     .then(response => response.json())
@@ -228,27 +232,36 @@ fetch(`/economia/${usuarioId}`)
             }
         }
         renderListas();
+        esconderLoading();
     })
-    .catch(err => console.error('Erro ao carregar economias:', err))
-    .finally(() => esconderLoading());
+    .catch(err => {
+        console.error('Erro ao carregar economias:', err);
+        esconderLoading();
+    });
 
 fetch(`/convidado/contar/${usuarioId}`)
     .then(response => response.json())
     .then(data => {
         totalConvidado = data.total;
         atualizarKpisGraficos();
+        esconderLoading();
     })
-    .catch(err => console.error('Erro ao carregar total de convidados:', err))
-    .finally(() => esconderLoading());
+    .catch(err => {
+        console.error('Erro ao carregar total de convidados:', err);
+        esconderLoading();
+    });
 
 fetch(`/economia/soma/${usuarioId}`)
     .then(response => response.json())
     .then(data => {
         totalEconomia = Number(data.total) || 0;
         atualizarKpisGraficos();
+        esconderLoading();
     })
-    .catch(err => console.error('Erro ao carregar total de economia:', err))
-    .finally(() => esconderLoading());
+    .catch(err => {
+        console.error('Erro ao carregar total de economia:', err);
+        esconderLoading();
+    });
 
 atualizarGraficoLinha();
 
@@ -278,7 +291,9 @@ function addConvidado() {
     })
     .then(response => {
         if (!response.ok) {
-            return response.text().then(t => { throw Error(t); });
+            return response.text().then(t => {
+                mostrarAlerta('Erro ao adicionar convidado: ' + t);
+            });
         }
         convidados.push(nome);
         totalConvidado++;
@@ -310,7 +325,9 @@ function addEconomia() {
     })
     .then(response => {
         if (!response.ok) {
-            return response.text().then(t => { throw Error(t); });
+            return response.text().then(t => {
+                mostrarAlerta('Erro ao adicionar economia: ' + t);
+            });
         }
         totalEconomia = Number(totalEconomia) + Number(valor);
         input.value = '';
@@ -343,7 +360,9 @@ function removerConvidado() {
         })
         .then(resposta => {
             if (!resposta.ok) {
-                return resposta.text().then(texto => { throw Error(texto); });
+                return resposta.text().then(texto => {
+                    mostrarAlerta('Erro ao remover convidado: ' + texto);
+                });
             }
             let novaLista = [];
             for (let i = 0; i < convidados.length; i++) {
@@ -415,7 +434,7 @@ function renderListas() {
     for (let i = 0; i < economias.length; i++) {
         htmlEconomia += `
             <div class="item">
-                <span>R$ ${Number(economias[i].valor).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits : 2})}</span>
+                <span>R$ ${Number(economias[i].valor).toFixed(2).replace('.', ',')}</span>
                 <button onclick="economiaToRemove = ${economias[i].id}; removerEconomia();" title="Remover">&times;</button>
             </div>
         `;

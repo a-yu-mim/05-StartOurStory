@@ -1,4 +1,12 @@
 
+function esconderLoading() {
+    let loadingEl = document.getElementById('loading');
+    
+    if (loadingEl) {
+        loadingEl.style.display = 'none';
+    }
+}
+
 function irParaLogin(){
     window.location.href = "login.html";
 }
@@ -16,29 +24,26 @@ function cadastro() {
 
     fetch("/usuarios/cadastrar", {
         method:"POST", 
-        headers: {
-            "Content-Type": "application/json"
-        }, 
+        headers: { "Content-Type": "application/json"}, 
         body: JSON.stringify({
-            nome: nomeEl,
-            email: emailEl,
-            senha: senhaEl,
+            nome:   nomeEl,
+            email:  emailEl,
+            senha:  senhaEl,
             codigo: codigoEl
         })
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error("Erro no cadastro.");
+            return response.json().then(data => { 
+                mostrarAlerta(data.message || "Erro ao cadastrar.", "red");       
+            });
         } else {
             mostrarAlerta("Cadastro efetuado!", "green", true);
-            setTimeout(() => {
-                window.location.href = "login.html";
-            }, 1200);
+            setTimeout(() => { window.location.href = "login.html"; }, 1200);
         }
     })
     .catch(erro => {
         mostrarAlerta("Erro de conexão com o servidor.", "red");
-        console.error(erro);
     });
 }
 
@@ -64,6 +69,7 @@ function mostrarAlerta(mensagem, cor, abrirPorta = false) {
 
 function fecharAlerta(){
     let alertaEl = document.getElementById("alerta");
+    
     if (alertaEl) {
         alertaEl.style.display = "none";
     }
@@ -80,6 +86,7 @@ function darkModo() {
     let nome = document.getElementById("input_nome");
     let email = document.getElementById("input_email");
     let senha = document.getElementById("input_senha");
+    let codigo = document.getElementById("input_codigo");
     let btnEntrar = document.getElementById("btnEntrar");
 
     if (alavanca.style.left == "32px") {
@@ -94,6 +101,7 @@ function darkModo() {
         nome.style = "";
         email.style = "";
         senha.style = "";
+        codigo.style = "";
       } else {
         botao.style.background = "#ccc";
         alavanca.style.left = "32px";
@@ -119,5 +127,10 @@ function darkModo() {
         senha.style.background = "#141414";
         senha.style.color = "#ffffff";
         senha.style.border = "2px solid #2f2f2f";
+        codigo.style.background = "#141414";
+        codigo.style.color = "#ffffff";
+        codigo.style.border = "2px solid #2f2f2f";
     }
 }
+
+esconderLoading();

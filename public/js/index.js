@@ -1,4 +1,12 @@
+
+function esconderLoading() {
+    let loadingEl = document.getElementById('loading');
     
+    if (loadingEl) {
+        loadingEl.style.display = 'none';
+    }
+}
+
 let menuAberto = false;
 let menuItens = document.getElementById('menuItens');
 
@@ -13,3 +21,5 @@ function abreFechaMenu() {
         document.getElementById('menu').style.borderColor = '#5a5a5a #ffffff #ffffff #5a5a5a';
     }
 }
+
+esconderLoading();
