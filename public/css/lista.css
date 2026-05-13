@@ -26,7 +26,7 @@ body {
     overflow-y: auto;
 }
 
-.nav-item {
+.sidebar div {
     color: white;
     cursor: pointer;
     padding: 10px;
@@ -35,8 +35,17 @@ body {
     transition: background 0.3s ease;
 }
 
-.nav-item:hover {
+.sidebar div:hover {
     background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar #sair {
+    margin-top: auto;
+}
+
+.active {
+    background: #aa677d;
+    color: white;
 }
 
 .container1 {

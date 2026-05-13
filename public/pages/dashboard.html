@@ -7,30 +7,31 @@
     <link rel="stylesheet" href="../css/dashboard.css">
     <script src="../js/auth.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/sidebar.js" defer></script>
     <script src="../js/dashboard.js" defer></script>
 </head>
 <body>
 
 <div id="loading" style="
     position:fixed;
-    top: 0; left:0;
-    width:100%; height:100%;
-    background: #f8dede;
+    inset:0;
+    background: #f6e7ec;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: monospace;
+    font-size: 20px;
     z-index: 999;
-">Carregando...</div>
-
-<!---------------------------------------------------------- -->
+">
+    Carregando...
+</div>
 
 <div class="sidebar">
-    <div class="nav-item" onclick="window.location.href='/pages/index.html'">Home</div>
-    <div class="nav-item" onclick="window.location.href='/pages/dashboard.html'">Dashboard</div>
-    <div class="nav-item" onclick="window.location.href='/pages/lista.html'">Lista</div>
-    <div class="nav-item" onclick="window.location.href='/pages/login.html'">Login</div>
-    <div class="nav-item" onclick="window.location.href='/pages/cadastro.html'">Cadastro</div>
+    <div class="active" onclick="dashboard()">Dashboard</div>
+    <div onclick="lista()">Lista</div>
+    <div onclick="login()">Login</div>
+    <div onclick="cadastro()">Cadastro</div>
+    <div id="sair" onclick="logout()">Logout</div>
 </div>
 
 <div class="container0">

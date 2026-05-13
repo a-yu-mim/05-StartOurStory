@@ -34,15 +34,16 @@ function login() {
             return response.json();
         }
     })
+
+    // ao fazer login e dar certo
     .then(dadosUsuario => {
         if (!dadosUsuario) {
             return;
         }
-
         sessionStorage.setItem("ID_USUARIO", dadosUsuario.id);
         sessionStorage.setItem("EMAIL_USUARIO", dadosUsuario.email);
         sessionStorage.setItem("NOME_USUARIO", dadosUsuario.nome);
-        window.location.href = "/pages/dashboard.html";
+        window.location.href = "/pages/index.html";
     })
     .catch(erro => {
         mostrarAlerta("Não foi possível conectar ao servidor.", "red");

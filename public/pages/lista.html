@@ -6,9 +6,9 @@
     <title>Lista para Impressão</title>
     <link rel="stylesheet" href="../css/lista.css">
     <script src="../js/auth.js"></script>
+    <script src="../js/sidebar.js" defer></script>
     <script src="../js/lista.js" defer></script>
 </head>
-
 <body>
     <div id="loading" style="
         position:fixed;
@@ -23,11 +23,11 @@
     ">Carregando...</div>
 
     <div class="sidebar">
-        <div class="nav-item" onclick="window.location.href='/pages/index.html'">Home</div>
-        <div class="nav-item" onclick="window.location.href='/pages/dashboard.html'">Dashboard</div>
-          <div class="nav-item" onclick="window.location.href='/pages/lista.html'">Lista</div>
-        <div class="nav-item" onclick="window.location.href='/pages/login.html'">Login</div>
-        <div class="nav-item" onclick="window.location.href='/pages/cadastro.html'">Cadastro</div>
+        <div onclick="dashboard()">Dashboard</div>
+        <div class="active" onclick="lista()">Lista</div>
+        <div onclick="login()">Login</div>
+        <div onclick="cadastro()">Cadastro</div>
+        <div id="sair" onclick="logout()">Logout</div>
     </div>
 
     <div class="container1">
