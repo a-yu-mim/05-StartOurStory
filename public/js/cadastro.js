@@ -1,9 +1,9 @@
 
 function esconderLoading() {
-    let loadingEl = document.getElementById('loading');
+    let loading = document.getElementById('loading');
     
-    if (loadingEl) {
-        loadingEl.style.display = 'none';
+    if (loading) {
+        loading.style.display = 'none';
     }
 }
 
@@ -12,24 +12,24 @@ function irParaLogin(){
 }
 
 function cadastro() {
-    let nomeEl = document.getElementById("input_nome").value;
-    let emailEl = document.getElementById("input_email").value;
-    let senhaEl = document.getElementById("input_senha").value;
-    let codigoEl = document.getElementById("input_codigo").value;
+    let input_nome = document.getElementById("input_nome").value;
+    let input_email = document.getElementById("input_email").value;
+    let input_senha = document.getElementById("input_senha").value;
+    let input_codigo = document.getElementById("input_codigo").value;
 
-    if (!nomeEl || !emailEl || !senhaEl) {
+    if (!input_nome || !input_email || !input_senha) {
         mostrarAlerta("Preencha todos os campos.", "red");
         return;
     }
 
     fetch("/usuarios/cadastrar", {
         method:"POST", 
-        headers: { "Content-Type": "application/json"}, 
+        headers: { "Content-Type": "application/json" }, 
         body: JSON.stringify({
-            nome:   nomeEl,
-            email:  emailEl,
-            senha:  senhaEl,
-            codigo: codigoEl
+            nome:   input_nome,
+            email:  input_email,
+            senha:  input_senha,
+            codigo: input_codigo
         })
     })
     .then(response => {
@@ -37,34 +37,26 @@ function cadastro() {
             return response.json().then(data => { 
                 mostrarAlerta(data.message || "Erro ao cadastrar.", "red");       
             });
-        } else {
-            mostrarAlerta("Cadastro efetuado!", "green", true);
-            setTimeout(() => { window.location.href = "login.html"; }, 1200);
-        }
+        } 
+
+        mostrarAlerta("Cadastro efetuado!", "green");
+        setTimeout(irParaLogin, 3000);
     })
-    .catch(erro => {
+    .catch(() => {
         mostrarAlerta("Erro de conexão com o servidor.", "red");
     });
 }
 
-function mostrarAlerta(mensagem, cor, abrirPorta = false) {
+function mostrarAlerta(mensagem, cor) {
     let alertaEl = document.getElementById("alerta");
     let mensagemEl = document.getElementById("mensagem");
-    let portaEl    = document.getElementById("porta");
-    let somPortaEl = document.getElementById("somPorta");
 
-    if (!alertaEl || !mensagemEl) {
-        return;
-    } 
+    if (!alertaEl || !mensagemEl) return;
+    
 
     mensagemEl.innerHTML = mensagem;
     alertaEl.style.background = cor;
     alertaEl.style.display = "block";
-    
-    if (abrirPorta && portaEl && somPortaEl) {
-        portaEl.style.display = "block";
-        somPortaEl.play();
-    }
 }
 
 function fecharAlerta(){
@@ -72,6 +64,7 @@ function fecharAlerta(){
     
     if (alertaEl) {
         alertaEl.style.display = "none";
+        irParaLogin();
     }
 }
 
