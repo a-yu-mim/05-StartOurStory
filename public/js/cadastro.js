@@ -126,4 +126,19 @@ function darkModo() {
     }
 }
 
+function verSenha() {
+    let input = document.getElementById("input_senha");
+    let icone = document.getElementById("iconeSenha");
+
+    if (!input || !icone) return
+
+    if (input.type == "password") {
+        input.type = "text";
+        icone.src = "../assets/olho-aberto.png";
+    } else {
+        input.type = "password";
+        icone.src = "../assets/olho-fechado.png";
+    }
+}
+
 esconderLoading();

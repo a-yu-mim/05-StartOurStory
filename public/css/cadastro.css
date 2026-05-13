@@ -123,15 +123,25 @@ body {
     cursor: pointer;
 }
 
-#porta {
-    display: none;
-    position: fixed;
-    bottom: 80px;
-    left: 30px;
+.senha-container {
+    position: relative;
+    width: 100%;
+}
+
+.senha-container input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+#verSenha {
+    margin: 0;
+    padding: 0;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 11px;
+    right: 15px;
+    background: none;
+    border: none;
     cursor: pointer;
 }
-
-#porta img {
-    width: 220px;
-}
-
