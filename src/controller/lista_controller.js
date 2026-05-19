@@ -1,4 +1,5 @@
-let listaModel = require("./lista.model");
+
+const listaModel = require("../model/lista_model.js");
 
 function listar(req, res) {
     listaModel.listar()

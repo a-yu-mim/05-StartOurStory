@@ -1,5 +1,5 @@
 
-let database = require("../../config/database");
+const database = require("../config/database.js");
 
 function listar(usuarioId, parceiroId) {
     let sql = `SELECT id, nome, fkUsuario FROM convidado WHERE fkUsuario = ? OR fkUsuario = ?;`;

@@ -1,5 +1,5 @@
 
-const usuarioModel = require("./usuario.model");
+const usuarioModel = require("../model/usuario_model.js");
 
 function cadastrar(req, res) {
     const nome = req.body.nome;

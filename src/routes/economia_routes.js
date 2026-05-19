@@ -1,7 +1,7 @@
 
-const express = require("express");
-const router = express.Router();
-const economiaController = require("./economia.controller");
+let express = require("express");
+let router = express.Router();
+let economiaController = require("../controller/economia_controller.js");
 
 router.get("/soma/:usuarioId",  economiaController.totalEconomia);
 router.get("/todos/:usuarioId", economiaController.listarTodos);

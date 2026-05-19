@@ -1,8 +1,8 @@
 // =========================================================
 // |     "Onde vou rodar isso? Meu PC ou site real?"       |
 // =========================================================
-   let ambiente_processo = 'desenvolvimento';
-// let ambiente_processo = 'producao';
+   const ambiente_processo = 'desenvolvimento';
+// const ambiente_processo = 'producao';
 
 
 // =========================================================
@@ -42,11 +42,11 @@
 // =========================================================
 // |               "Importação das rotas"                  |
 // =========================================================
-    const indexRouter = require("./src/modules/login/login.routes");
-    const usuarioRouter = require("./src/modules/usuario/usuario.routes");
-    const convidadoRouter = require("./src/modules/convidado/convidado.routes");
-    const economiaRouter = require("./src/modules/economia/economia.routes");
-    const listaRouter = require("./src/modules/lista/lista.routes");
+    const indexRouter = require("./src/routes/login_routes.js");
+    const usuarioRouter = require("./src/modules/usuario/usuario_routes.js");
+    const convidadoRouter = require("./src/modules/convidado/convidado_route.js");
+    const economiaRouter = require("./src/modules/economia/economia_routes.js");
+    const listaRouter = require("./src/modules/lista/lista_routes.js");
 
     
 // =========================================================

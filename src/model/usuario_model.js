@@ -1,5 +1,5 @@
 
-let database = require("../../config/database")
+let database = require("../config/database.js")
 
 function cadastrar(nome, email, senha, fkParceiro) {
     let sql = `INSERT INTO usuario (nome, email, senha, fkParceiro) VALUES (?, ?, ?, ?);`;

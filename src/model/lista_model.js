@@ -1,4 +1,5 @@
-let database = require("../../config/database");
+
+let database = require("../config/database.js");
 
 function listar() {
     let sql = `SELECT id, nome FROM convidado`;

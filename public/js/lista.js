@@ -24,7 +24,7 @@ function renderLista() {
 }
 
 function carregarConvidados() {
-    fetch('/lista')
+    fetch('/lista/listar')
         .then(function (res) {
             return res.json();
         })

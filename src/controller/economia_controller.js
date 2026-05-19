@@ -1,6 +1,6 @@
 
-const economiaModel = require("./economia.model");
-const usuarioModel = require("../usuario/usuario.model");
+const economiaModel = require("../modules/model/economia_model.js");
+const usuarioModel = require("../modules/model/usuario_model.js");
 
 function listar(req, res) {
     const usuarioId = req.params.usuarioId;

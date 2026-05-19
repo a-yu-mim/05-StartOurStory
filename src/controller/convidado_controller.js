@@ -1,6 +1,6 @@
 
-let convidadoModel = require("./convidado.model");
-let usuarioModel = require("../usuario/usuario.model");
+const convidadoModel = require("../model/convidado_model.js");
+const usuarioModel = require("../model/usuario_model.js");
 
 function listar(req, res) {
     let usuarioId = req.params.usuarioId;
