@@ -26,9 +26,9 @@ function vincularParceiro(idUsuario, idParceiro) {
     return database.executar(sql, [idParceiro, idUsuario]);
 }
 
-function gerarCodigo(idUsuario) {
-    let sql = `INSERT INTO codigo (fkUsuario) VALUES (?);`;
-    return database.executar(sql, [idUsuario]);
+function gerarCodigo(idUsuario, codigo) {
+    let sql = `INSERT INTO codigo (fkUsuario, codigo) VALUES (?, ?);`;
+    return database.executar(sql, [idUsuario, codigo]);
 }
 
 function buscarPorId(usuarioId) {

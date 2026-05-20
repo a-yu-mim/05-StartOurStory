@@ -26,7 +26,7 @@ body{
 
 .topo h2{
     margin: 0;
-    font-size: 25px;
+    font-size: 30px;
     letter-spacing: 2px;
 }
 
@@ -38,7 +38,7 @@ body{
 
 .menu p{
     margin: 0;
-    font-size: 16px;
+    font-size: 18px;
     color: #666;
     cursor: pointer;
     transition: 0.2s;
@@ -69,7 +69,7 @@ img{
 
 .texto h1{
     margin: 0 0 15px;
-    font-size: 40px;
+    font-size: 80px;
 }
 
 .texto p{
@@ -103,20 +103,31 @@ button:hover{
     <div class="menu">
         <p>Home</p>
         <p>Saber Mais</p>
-        <p>Login</p>
+        <p onclick="login()">Login</p>
     </div>
 </div>
 
 <div class="conteudo">
-    <img src="../teste/porta_casal.png">
+    <img src="../assets/porta_casal.png">
     <div class="texto">
         <h1>Olá casal!</h1>
         <p>
             Eu adoraria ouvir você.
             Entre em contato!
         </p>
-        <button>Say hey :)</button>
+        <button onclick="cadastro()">Say hey :)</button>
     </div>
 </div>
 </body>
 </html>
+<script>
+ 
+function cadastro() {
+    window.location.href = "/pages/cadastro.html";
+ }
+
+function login() {
+    window.location.href = "/pages/login.html";
+}
+
+</script>

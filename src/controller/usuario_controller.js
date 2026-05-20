@@ -1,6 +1,20 @@
 
 const usuarioModel = require("../model/usuario_model.js");
 
+let lista = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+             "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+             "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+             "U", "V", "W", "X", "Y", "Z"];
+
+function gerarCodigoAleatorio() {
+    let codigo = "";
+    for (let i = 0; i < 10; i++) {
+    let caracter = Math.floor(Math.random() * lista.length);
+        codigo += lista[caracter];
+    }
+    return codigo;
+}
+
 function cadastrar(req, res) {
     const nome = req.body.nome;
     const email = req.body.email;
@@ -13,9 +27,11 @@ function cadastrar(req, res) {
     }
     
     if (!codigo) {
+        const codigoGerado = gerarCodigoAleatorio();
+
         usuarioModel.cadastrar(nome, email, senha, null)
             .then(resultado =>
-                usuarioModel.gerarCodigo(resultado.insertId))
+                usuarioModel.gerarCodigo(resultado.insertId, codigoGerado))
             .then(() => {
                 res.status(201).json({ message: "Cadastro efetuado!" });
             })
@@ -40,7 +56,7 @@ function cadastrar(req, res) {
                     idNovoUsuario = resultado.insertId;
                     return usuarioModel.vincularParceiro(idParceiro, idNovoUsuario);
                 })
-                .then(() => usuarioModel.gerarCodigo(idNovoUsuario))
+                .then(() => usuarioModel.gerarCodigo(idNovoUsuario, gerarCodigoAleatorio()))
                 .then(() => res.status(201).json({ message: "Cadastro efetuado! Parceiro vinculado!" }));
         })
         .catch(err => res.status(500).json(err.sqlMessage));

@@ -44,7 +44,7 @@ function adicionar(req, res) {
         return;
     } 
 
-    convidadoModel.adicionar(nome,usuarioId)
+    convidadoModel.adicionar(id,usuarioId)
         .then(() => res.status(201).send("Convidado já informado"))
         .catch(err => res.status(500).json({ erro: err.message }));
 };
