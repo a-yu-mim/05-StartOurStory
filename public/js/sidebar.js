@@ -12,5 +12,5 @@ function cadastro() {
     window.location.href = "/pages/cadastro.html";
 }
 function logout() {
-    window.location.href = "/pages/index.html";
+    window.location.href = "/pages/home.html";
 }

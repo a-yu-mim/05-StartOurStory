@@ -43,10 +43,10 @@
 // |               "Importação das rotas"                  |
 // =========================================================
     const indexRouter = require("./src/routes/login_routes.js");
-    const usuarioRouter = require("./src/modules/usuario/usuario_routes.js");
-    const convidadoRouter = require("./src/modules/convidado/convidado_route.js");
-    const economiaRouter = require("./src/modules/economia/economia_routes.js");
-    const listaRouter = require("./src/modules/lista/lista_routes.js");
+    const usuarioRouter = require("./src/routes/usuario_routes.js");
+    const convidadoRouter = require("./src/routes/convidado_routes.js");
+    const economiaRouter = require("./src/routes/economia_routes.js");
+    const listaRouter = require("./src/routes/lista_routes.js");
 
     
 // =========================================================
@@ -65,11 +65,11 @@
 // =========================================================
 // |                 "Ligando as rotas"                    |
 // =========================================================
-    app.use("/", indexRouter);
-    app.use("/usuarios", usuarioRouter);
-    app.use("/convidado", convidadoRouter);
-    app.use("/economia", economiaRouter);
-    app.use("/lista", listaRouter);
+app.use("/usuarios",  usuarioRouter);
+app.use("/convidado", convidadoRouter);
+app.use("/economia",  economiaRouter);
+app.use("/lista",     listaRouter);
+app.use("/",          indexRouter);
 
 
 // =========================================================

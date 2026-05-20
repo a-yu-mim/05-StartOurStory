@@ -10,14 +10,14 @@ function listarSoMeus(usuarioId) {
     return database.executar(sql, [usuarioId]);
 }
 
-function adicionar(nome, usuarioId) {
-    let sql = `INSERT INTO convidado (nome, fkUsuario) VALUES (?, ?);`;
-    return database.executar(sql, [nome, usuarioId]);
+function adicionar(id, usuarioId) {
+    let sql = `INSERT INTO convidado (id, fkUsuario) VALUES (?, ?);`;
+    return database.executar(sql, [id, usuarioId]);
 }
 
-function remover(nome) {
-    let sql = `DELETE FROM convidado WHERE nome = ?;`;
-    return database.executar(sql, [nome]);
+function remover(id) {
+    let sql = `DELETE FROM convidado WHERE id = ?;`;
+    return database.executar(sql, [id]);
 }
 
 function totalConvidado(usuarioId, parceiroId) {

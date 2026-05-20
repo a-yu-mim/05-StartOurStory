@@ -59,7 +59,7 @@ function mostrarPorta() {
 }
 
 function irParaHome() {
-    window.location.href = "/pages/index.html";
+    window.location.href = "/pages/home.html";
 }
 
 function mostrarAlerta(mensagem, cor) {

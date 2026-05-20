@@ -50,14 +50,14 @@ function adicionar(req, res) {
 };
                
 function remover(req, res) {
-    let nome = req.params.id;
+    let id = req.params.id;
 
-    if (!nome) {
+    if (!id) {
         res.status(400).send("Nome não informado");
         return;                 
     }
 
-    convidadoModel.remover(nome)
+    convidadoModel.remover(id)
         .then(() => res.status(204).send())
         .catch(err => res.status(500).json({ erro: err.message }));
 };

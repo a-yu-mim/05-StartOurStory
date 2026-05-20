@@ -12,13 +12,14 @@ CREATE TABLE usuario (
 );
 
 CREATE TABLE codigo (
-	codigo INT AUTO_INCREMENT,
-	fkUsuario INT,
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fkUsuario INT UNIQUE,
+    codigo VARCHAR(10) NOT NULL UNIQUE,
     horario DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (codigo, fkUsuario),
-	CONSTRAINT fkCodigoUsuario
-		FOREIGN KEY (fkUsuario) REFERENCES usuario(id)
-) AUTO_INCREMENT = 1000;
+    horarioUso DATETIME NULL,
+    CONSTRAINT fkCodigoUsuario
+        FOREIGN KEY (fkUsuario) REFERENCES usuario(id)
+);
 
 CREATE TABLE convidado (
 	id INT PRIMARY KEY AUTO_INCREMENT,
@@ -39,11 +40,10 @@ CREATE TABLE economia (
 		FOREIGN KEY (fkUsuario) REFERENCES usuario(id)
 );
 
-CREATE TABLE minigame (
-	id INT AUTO_INCREMENT,
-	caminho VARCHAR(100) NOT NULL,
-	fkUsuario INT,
-	PRIMARY KEY (id, fkUsuario),
-	CONSTRAINT fkMinigameUsuario
-		FOREIGN KEY (fkUsuario) REFERENCES usuario(id)
+CREATE TABLE evento (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    horario DATETIME NOT NULL,
+    fkUsuario INT UNIQUE,
+    CONSTRAINT fkEventoUsuario
+        FOREIGN KEY (fkUsuario) REFERENCES usuario(id)
 );

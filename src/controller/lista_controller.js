@@ -13,12 +13,12 @@ function listar(req, res) {
 }
 
 function remover(req, res) {
-    let nome = req.params.id;
+    let id = req.params.id;
 
-    if (nome == undefined) {
+    if (id == undefined) {
         res.status(400).send("Nome não informado");
     } else {
-        listaModel.remover(nome)
+        listaModel.remover(id)
             .then(function () {
                 res.status(204).send();
             })
