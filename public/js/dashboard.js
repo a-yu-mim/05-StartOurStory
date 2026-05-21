@@ -279,6 +279,7 @@ fetch(`/economia/soma/${usuarioId}`)
         esconderLoading();
     });
 
+
 atualizarGraficoLinha();
 
 function addConvidado() {

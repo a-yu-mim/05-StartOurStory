@@ -9,25 +9,24 @@
     
 </head>
 <body id="body">
-    <div id="loading">Carregando...</div>
-
     <button id="botao" onclick="darkModo()"><div id="alavanca"></div></button>
-
-    <div class="card">
-        <h2>Fazer Login</h2>
-        <input type="email" id="input_email" placeholder="E-mail">
-            <div class="senha-container">
-            <input type="password" id="input_senha" placeholder="Senha">
-            <button id="verSenha" onclick="verSenha()"><img id="iconeSenha" src="../assets/olho-fechado.png" width="20"  style="opacity: 0.5;"></button>
-            </div>
-        <button id="btnEntrar" onclick="login()">Entrar</button>
-        <p>Não tem conta? <a href="/pages/cadastro.html" id="link">Cadastrar</a></p>
-    </div>
-
     <div id="alerta">
         <span id="fecharAlerta" onclick="fecharAlerta()">&times;</span>
         <span id="mensagem"></span>
     </div>
+    
+    <div class="card">
+        <h2>Fazer Login</h2>
+        <input type="email" id="input_email" placeholder="E-mail">
+        <div class="senha-container">
+        <input type="password" id="input_senha" placeholder="Senha">
+        <button id="btnVerSenha" onclick="verSenha()"><img id="iconeSenha" src="../assets/olho-fechado.png" width="20" style="opacity: 0.5;">
+        </button>
+        </div>
+        <button id="btnEntrar" onclick="login()">Entrar</button>
+        <p>Não tem conta? <a href="/pages/cadastro.html" id="link">Cadastrar</a></p>
+    </div>
+
 
     <div id="porta" onclick="irParaHome()">
         <img src="../assets/porta.png" alt="porta">

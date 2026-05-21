@@ -1,19 +1,22 @@
 
-function esconderLoading() {
-    let loadingEl = document.getElementById('loading');
-    
-    if (loadingEl) {
-        loadingEl.style.display = 'none';
-    }
+function irParaHome() {
+    window.location.href = "/pages/home.html";
 }
 
 function login() {
     let input_email = document.getElementById("input_email").value;
     let input_senha = document.getElementById("input_senha").value;
 
-    if (!input_email || !input_senha) {
-        mostrarAlerta("Preencha todos os campos.", "red");
-        return;
+    if (!input_email && !input_senha) {
+        return mostrarAlerta("Preencha todos os campos!", "red");
+    }
+
+    if (!input_email) {
+        return mostrarAlerta("Informe o e-mail.", "red");
+    }
+
+    if (!input_senha) {
+        return mostrarAlerta("Informe a senha.", "red");
     }
 
     fetch("/usuarios/autenticar", {
@@ -24,24 +27,26 @@ function login() {
             senha: input_senha
         })
     })
-    .then(response => {
-        if (!response.ok) {
-            mostrarAlerta("Email ou senha inválidos.", "red");
+    .then(function (resposta) {
+        if (resposta.ok) {
+            return resposta.json();
+        } else {
+            mostrarAlerta("E-mail ou senha incorreta.", "red");
             return null;
-        } 
-        return response.json();
+        }
     })
-    .then(dadosUsuario => {
+    .then(function (dadosUsuario){
         if (!dadosUsuario) return;
+
+        mostrarPorta();
 
         sessionStorage.setItem("ID_USUARIO",    dadosUsuario.id);
         sessionStorage.setItem("EMAIL_USUARIO", dadosUsuario.email);
         sessionStorage.setItem("NOME_USUARIO",  dadosUsuario.nome);
-
-        mostrarPorta();
+        
     })
-    .catch(() => {
-        mostrarAlerta("Não foi possível conectar ao servidor.", "red");
+    .catch(function (erro) {
+        mostrarAlerta("Não foi possivel concluir a operação.", "black");
     });
 }
 
@@ -58,15 +63,10 @@ function mostrarPorta() {
     }
 }
 
-function irParaHome() {
-    window.location.href = "/pages/home.html";
-}
 
 function mostrarAlerta(mensagem, cor) {
     let alerta   = document.getElementById("alerta");
     let mensagemEl = document.getElementById("mensagem");
-
-    if (!alerta || !mensagemEl) return;
 
     mensagemEl.innerHTML = mensagem;
     alerta.style.background = cor;
@@ -133,8 +133,6 @@ function verSenha() {
     let input = document.getElementById("input_senha");
     let icone = document.getElementById("iconeSenha");
 
-    if (!input || !icone) return
-
     if (input.type == "password") {
         input.type = "text";
         icone.src = "../assets/olho-aberto.png";
@@ -143,5 +141,3 @@ function verSenha() {
         icone.src = "../assets/olho-fechado.png";
     }
 }
-
-esconderLoading();

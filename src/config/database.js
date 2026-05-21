@@ -1,7 +1,5 @@
-// ------------------------------------------------
-//       Acesso ao banco de dados MySQL 
-// ------------------------------------------------
 
+//  Acesso ao banco de dados MySQL 
 const mysql = require("mysql2");
 
 const mySqlConfig = {

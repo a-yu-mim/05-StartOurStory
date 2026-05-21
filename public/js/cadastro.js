@@ -17,11 +17,30 @@ function cadastro() {
     let input_senha = document.getElementById("input_senha").value;
     let input_codigo = document.getElementById("input_codigo").value;
 
-    if (!input_nome || !input_email || !input_senha) {
-        mostrarAlerta("Preencha todos os campos.", "red");
-        return;
+    if (!input_nome && !input_email && !input_senha) {
+        return mostrarAlerta("Preencha todos os campos!", "red");
     }
 
+    if (!input_nome) {
+        return mostrarAlerta("Inclua um nome.", "red");
+    }
+
+    if (!input_email) {
+        return mostrarAlerta("Inclua um e-mail.", "red");
+    }
+
+    if (!input_email.includes("@")) {
+        return mostrarAlerta(`Inclua um "@" no endereço de e-mail.`, "red");
+    }
+
+    if (!input_email.includes(".")) {
+        return mostrarAlerta(`Inclua um "." no endereço de e-mail.`, "red");
+    }
+
+    if (!input_senha){
+        return mostrarAlerta("Inclua uma senha", "red");
+    }
+    
     fetch("/usuarios/cadastrar", {
         method:"POST", 
         headers: { "Content-Type": "application/json" }, 
@@ -32,28 +51,27 @@ function cadastro() {
             codigo: input_codigo
         })
     })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(data => { 
-                mostrarAlerta(data.message || "Erro ao cadastrar.", "red");       
-            });
-        } 
+    .then(function (resposta) {
+        if (resposta.ok) {
+            mostrarAlerta("Cadastro realizado com sucesso! Redirecionando para login...", "green");
 
-        mostrarAlerta("Cadastro efetuado!", "green");
-        setTimeout(irParaLogin, 3000);
+            setTimeout(irParaLogin, 3000);
+
+        } else {
+            resposta.text().then(function (mensagem) {
+            mostrarAlerta(mensagem, "red");       
+            });
+        }
     })
-    .catch(() => {
-        mostrarAlerta("Erro de conexão com o servidor.", "red");
+    .catch(function (erro) {
+        mostrarAlerta("Não foi possivel concluir a operação.", "black");
     });
 }
 
 function mostrarAlerta(mensagem, cor) {
     let alertaEl = document.getElementById("alerta");
     let mensagemEl = document.getElementById("mensagem");
-
-    if (!alertaEl || !mensagemEl) return;
     
-
     mensagemEl.innerHTML = mensagem;
     alertaEl.style.background = cor;
     alertaEl.style.display = "block";
@@ -64,7 +82,6 @@ function fecharAlerta(){
     
     if (alertaEl) {
         alertaEl.style.display = "none";
-        irParaLogin();
     }
 }
 
@@ -129,8 +146,6 @@ function darkModo() {
 function verSenha() {
     let input = document.getElementById("input_senha");
     let icone = document.getElementById("iconeSenha");
-
-    if (!input || !icone) return
 
     if (input.type == "password") {
         input.type = "text";
