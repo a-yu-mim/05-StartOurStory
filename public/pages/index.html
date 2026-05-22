@@ -10,7 +10,6 @@ body{
     margin: 0;
     font-family: monospace;
     background-color: #f3f3f3;
-    color: #222;
 }
 
 .topo{
@@ -38,8 +37,8 @@ body{
 
 .menu p{
     margin: 0;
-    font-size: 18px;
-    color: #666;
+    font-size: 20px;
+    color: #717171;
     cursor: pointer;
     transition: 0.2s;
 }
@@ -52,30 +51,34 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5vw;
-    min-height: 80vh;
+    gap: 7vw;
     padding: 0px 5%;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* quebra a linha  */
+    align-content: center;
 }
 
 img{
     width: 100%;
-    max-width: 400px;
+    max-width: 430px;
 }
 
 .texto{
-    max-width: 450px;
+    max-width: 470px;
+    align-items: center;
 }
 
 .texto h1{
-    margin: 0 0 15px;
-    font-size: 80px;
+    margin: 30px 0;
+    font-size: 50px;
+    color: #222;
+    text-align: justify;
 }
 
 .texto p{
     color: #666;
     font-size: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
+    text-align: justify;
 }
 
 
@@ -91,7 +94,7 @@ button{
 }
 
 button:hover{
-    background-color: #333;
+    background-color: #f55246;
 }
 
 </style>
@@ -101,8 +104,8 @@ button:hover{
 <div class="topo">
     <h2>SMART</h2>
     <div class="menu">
-        <p>Home</p>
-        <p>Saber Mais</p>
+        <p>Início</p>
+        <p onclick="sobre()">Sobre</p>
         <p onclick="login()">Login</p>
     </div>
 </div>
@@ -110,12 +113,12 @@ button:hover{
 <div class="conteudo">
     <img src="../assets/porta_casal.png">
     <div class="texto">
-        <h1>Olá casal!</h1>
+        <h1>O começo da nossa história antes do 'sim'</h1>
         <p>
-            Eu adoraria ouvir você.
-            Entre em contato!
+            Um espaço calmo e simples para ele, para ela ou para nós.
+            Onde cada fragmento guarda a espera por esse momento.
         </p>
-        <button onclick="cadastro()">Say hey :)</button>
+        <button onclick="cadastro()">Say yes :)</button>
     </div>
 </div>
 </body>
@@ -128,6 +131,10 @@ function cadastro() {
 
 function login() {
     window.location.href = "/pages/login.html";
+}
+
+function sobre() {
+    window.location.href = "/pages/sobre.html"
 }
 
 </script>
