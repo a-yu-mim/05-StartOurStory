@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Home</title>
-    <script src="../js/auth.js" defer></script>
     <link rel="stylesheet" href="../css/home.css">
-    <script src="../js/home.js" defer></script>
+    <script src="../js/auth.js" defer></script>
 </head>
 <body>
     <div id="loading">Carregando...</div>
@@ -27,10 +26,54 @@
         <button id="menu" type="button" onclick="abreFechaMenu()">Start</button>
 
         <div id="menuItens">
-            <div class="itemMenu" onclick="window.location.href='cadastro.html'">Cadastro</div>
             <div class="itemMenu" onclick="window.location.href='login.html'">Login</div>
-            <div class="itemMenu" onclick="window.location.href='dashboard.html'">Dashboard</div>
+            <div class="itemMenu" id="codigo"></div>
+            <div class="itemMenu" onclick="window.location.href='cadastro.html'">Cadastro</div>
+            <div class="itemMenu" onclick="window.location.href='index.html'">Logout</div>
         </div>
     </div>
 </body>
 </html>
+<script>
+//-------------------------------------------------------------
+
+function esconderLoading() {
+    let loadingEl = document.getElementById('loading');
+
+    if (loadingEl) {
+        loadingEl.style.display = 'none';
+    }
+}
+//-------------------------------------------------------------
+
+let menuAberto = false;
+let usuarioId = sessionStorage.ID_USUARIO;
+let menuItens = document.getElementById('menuItens');
+let div_mensagem = document.getElementById("codigo");
+
+function abreFechaMenu() {
+    if (menuAberto) {
+        menuItens.style.display = 'none';
+        menuAberto = false;
+        document.getElementById('menu').style.borderColor = '#ffffff #5a5a5a #5a5a5a #ffffff';
+    } else {
+        menuItens.style.display = 'block';
+        menuAberto = true;
+        document.getElementById('menu').style.borderColor = '#5a5a5a #ffffff #ffffff #5a5a5a';
+    }
+    
+    fetch(`/codigo/${usuarioId}`)
+        .then(function (resposta) {
+            return resposta.json();
+        })
+        .then(function (dados) {
+            div_mensagem.innerHTML = `${dados.codigo}`;
+        })
+        .catch(function (erro) {
+            div_mensagem.innerHTML = erro.message;
+        });
+
+}
+
+esconderLoading();
+</script>

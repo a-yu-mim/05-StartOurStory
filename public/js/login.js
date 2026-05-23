@@ -43,7 +43,6 @@ function login() {
         sessionStorage.setItem("ID_USUARIO",    dadosUsuario.id);
         sessionStorage.setItem("EMAIL_USUARIO", dadosUsuario.email);
         sessionStorage.setItem("NOME_USUARIO",  dadosUsuario.nome);
-        
     })
     .catch(function (erro) {
         mostrarAlerta("Não foi possivel concluir a operação.", "black");
