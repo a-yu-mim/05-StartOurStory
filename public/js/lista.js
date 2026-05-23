@@ -33,8 +33,15 @@ function renderLista() {
     listaConvidadosEl.innerHTML = '';
 
     let html = '';
+
     for (let i = 0; i < convidados.length; i++) {
-        html = html + '<div class="item"><span class="texto">' + convidados[i] + '</span><button class="btn2" onclick="removerConvidado(\'' + convidados[i] + '\')">&times;</button></div>';
+        html += `
+            <div class="item">
+                <span class="texto">${convidados[i]}</span>
+                <button class="btn2" onclick="removerConvidado('${convidados[i]}')">
+                &times;
+                </button>
+            </div>`;
     }
     listaConvidadosEl.innerHTML = html;
 }
