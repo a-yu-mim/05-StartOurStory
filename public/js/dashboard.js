@@ -174,7 +174,9 @@ function atualizarKpisGraficos() {
     barraGrafico.update();
 
     let aviso = document.getElementById('avisoMeta');
-    if (totalEconomia >= metaEconomia) {
+    let fechado = sessionStorage.getItem('avisoMetaFechado');
+
+    if (totalEconomia >= metaEconomia && fechado != 'sim') {
         aviso.style.display = 'block';
     } else {
         aviso.style.display = 'none';
@@ -316,6 +318,7 @@ function addConvidado() {
 }
 
 function addEconomia() {
+    sessionStorage.removeItem('avisoMetaFechado');
     let input = document.getElementById('input_economia');
     let valor = input.value;
 

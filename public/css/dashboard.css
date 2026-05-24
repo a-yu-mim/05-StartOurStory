@@ -22,7 +22,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
 }
 
 .right-section {
@@ -145,28 +145,41 @@ input:focus {
 button {
     width: 100%;
     padding: 12px;
-    border: none;
-    border-radius: 8px;
     cursor: pointer;
-    background: #f48fb1;
-    color: white;
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 16px;
     font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    background: #f48fb1;
+    color: white;
 }
 
 button:hover {
     background: #e91e63;
 }
 
+#avisoMetaFechar {
+    background: transparent;
+    color: #155724;
+    font-size: 20px;
+    cursor: pointer;
+    width: auto;
+    margin: 0;
+}
+
 #avisoMeta {
-    background: #d4edda;
+    position: fixed;
+    top: 31%;
+    left: 22%;
+    background: #a2d7af;
     color: #155724;
     border: 2px solid #c3e6cb;
     border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    font-size: 20px;
+    padding: 20px 70px;
+    font-size: 21px;
     font-weight: bold;
+    align-items: center;
+    z-index: 999;
 }

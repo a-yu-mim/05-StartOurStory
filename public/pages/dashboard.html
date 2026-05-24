@@ -51,13 +51,14 @@
 
         <div class="charts">
             <div class="chart">
-                <canvas id="linhaGrafico"></canvas>
+            <canvas id="linhaGrafico"></canvas>
             </div>
             <div id="avisoMeta" style="display: none;">
-                Parabens! Voce atingiu a meta de economia!
+                Parabéns! A meta de economia foi atingida!
+                <button id="avisoMetaFechar" onclick="fecharAviso()">&times;</button>
             </div>
             <div class="chart">
-                <canvas id="barraGrafico"></canvas>
+            <canvas id="barraGrafico"></canvas>
             </div>
         </div>
     </div>
@@ -79,7 +80,13 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>
+<script>
+    function fecharAviso() {
+    document.getElementById('avisoMeta').style.display = 'none';
+    sessionStorage.setItem('avisoMetaFechado', 'sim');
+}
+</script>
+    
 
