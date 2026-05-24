@@ -47,7 +47,9 @@ function renderLista() {
 }
 
 function carregarConvidados() {
-    fetch('/lista/listar')
+    let idUsuario = sessionStorage.getItem("ID_USUARIO");
+    
+    fetch('/lista/listar?idUsuario=' + idUsuario)
         .then(function (res) {
             return res.json();
         })
@@ -74,7 +76,9 @@ function removerConvidado(nome) {
         return;
     }
 
-    fetch('/lista/' + nome, {
+    let idUsuario = sessionStorage.getItem("ID_USUARIO");
+
+    fetch('/lista/remover?idUsuario=' + idUsuario + '&nome=' + nome, {
         method: 'DELETE'
     })
         .then(function () {

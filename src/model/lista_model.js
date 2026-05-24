@@ -1,9 +1,14 @@
 
 let database = require("../config/database.js");
 
-function listar() {
-    let sql = `SELECT id, nome FROM convidado`;
-    return database.executar(sql);
+function listar(idUsuario) {
+    let sql = `
+        SELECT c.nome 
+            FROM usuario u JOIN convidado c 
+            ON c.fkUsuario = u.id OR c.fkUsuario = u.fkParceiro
+            WHERE u.id = ?
+        `;
+    return database.executar(sql, [idUsuario]);
 }
 
 function remover(nome) {

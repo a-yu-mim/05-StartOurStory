@@ -26,10 +26,16 @@ function listarTodos(usuarioId, parceiroId) {
     return database.executar(sql, [usuarioId, parceiroId]);
 }
 
+function listarSoMeusValores(usuarioId) {
+    const sql = `SELECT id, valor FROM economia WHERE fkUsuario = ? AND valor > 0`;
+    return database.executar(sql, [usuarioId]);
+}
+
 module.exports = {
     listar,
     adicionar,
     remover,
     totalEconomia,
-    listarTodos
+    listarTodos,
+    listarSoMeusValores
 };

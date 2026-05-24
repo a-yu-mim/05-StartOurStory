@@ -9,25 +9,8 @@
     <script src="../js/lista.js" defer></script>
 </head>
 <body>
-    <div id="loading" style="
-        position:fixed;
-        top:0; left:0;
-        width:100%; height:100%;
-        background:#f8dede;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        font-family:monospace;
-        z-index:999;
-    ">Carregando...</div>
-
-    <div class="sidebar">
-        <div onclick="dashboard()">Dashboard</div>
-        <div class="active">Lista</div>
-        <div onclick="login()">Login</div>
-        <div onclick="cadastro()">Cadastro</div>
-        <div id="sair" onclick="logout()">Logout</div>
-    </div>
+    <div id="sidebar"></div>
+    <script src="/components/sidebar.js"></script>
 
     <div class="container1">
         <button class="btn1" id="btnImprimir" type="button">Imprimir</button>

@@ -22,20 +22,30 @@
   </div>
 
   <div class="card">
-    <h2>Criar Nova Conta</h2>
-    <input type="text"  id="input_nome" placeholder="Nome Completo">
-    <input type="email" id="input_email" placeholder="E-mail">
+    <pp>Nome Completo</pp>
+    <input type="text"  id="input_nome">
+    <pp>E-mail</pp>
+    <input type="email" id="input_email">
     <div class="senha-container">
-    <input type="password" id="input_senha" placeholder="Senha">
+    <pp>Senha</pp>
+    <input type="password" id="input_senha">
     <img id="iconeSenha" src="../assets/olho-fechado.png" onclick="verSenha()">
     </div>
-    <input type="text" id="input_codigo" placeholder="Código do parceiro">
+    <pp>Código de convite *</pp>
+    <input type="text" id="input_codigo">
     <button id="btnEntrar" onclick="cadastro()">Cadastrar</button>
     <p>Já tem uma conta? <a href="login.html" id="link">Fazer Login</a></p> 
   </div>
   
 </body>
 </html>
+<script>
+function darkModo() {
+    let body = document.getElementById("body");
+
+    body.classList.toggle("dark");
+}
+</script>
 
 
 

@@ -84,10 +84,24 @@ function listarTodos(req, res) {
         .catch(err => res.status(500).json({ erro: err.message }));
 }
 
-    module.exports = {
+function listarSoMeusValores(req, res) {
+    const usuarioId = req.params.usuarioId;
+
+    if(!usuarioId) {
+        res.status(400).send("Usuário não informado");
+        return;
+    }
+    
+    economiaModel.listarSoMeusValores(usuarioId)
+        .then(lista => res.json(lista))
+        .catch(err => res.status(500).json({ erro: err.message }));
+}
+
+module.exports = {
     listar,
     adicionar,
     remover,
     totalEconomia,
-    listarTodos
+    listarTodos,
+    listarSoMeusValores
 };

@@ -1,6 +1,7 @@
 * {
     margin: 0;
     box-sizing: border-box;
+    font-family: monospace;
 }
 
 #navbar {
@@ -10,62 +11,66 @@
     width: 100%;
 }
 
-body {
+body{
     padding: 80px 0 0 0;
-    min-height: 100vh;
+    background: #f2f2f2;
+    color: #222;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f2f2f2;
-    color: #222;
 }
 
 .card {
-    width: 400px;
+    width: 475px;
     height: 500px;
-    padding: 30px 40px;
-    border: 2px solid #067806;
-    border-radius: 6px;
-    background: #ffffff;
-}
-
-.card h2 {
-    margin: 25px 0 20px 0;
-    text-align: center;
-    font-size: 30px;
+    padding: 45px 70px;
+    border: 1.6px solid #454545;
+    border-radius: 5px;
+    background: transparent;
+    margin-top: 75px;
 }
 
 .card input {
     width: 100%;
-    height: 45px;
-    margin-bottom: 16px;
+    height: 47px;
+    margin-bottom: 10px;
     padding: 0 10px;
-    border: 2px solid #067806;
     border-radius: 5px;
-    font-size: 16px;
-    color: #222;
-    background: white;
+    font-size: 18px;
+    border: 1.6px solid #454545;
+    color: #2d2d2d;
+    background: transparent;
 }
 
 .card button {
     width: 100%;
-    height: 44px;
-    margin-top: 10px;
+    height: 50px;
     border: none;
-    border-radius: 6px;
-    background: #f06f62;
-    color: white;
-    font-size: 20px;
+    border-radius: 5px;
+    font-size: 19px;
     cursor: pointer;
+    background: #323232;
+    color: #ffffff;
+    transition: 0.1s;
+    margin-top: 10px;
 }
 
+
 .card button:hover {
-    background: #f55246;
+    color: #ffffff;
+    background: #141414;
 }
 
 .card p {
-    margin: 16px 0 0;
+    margin: 20px 0 0;
     text-align: center;
+    font-size: 17px;
+}
+
+.card pp {
+    font-size: 17px;
+    padding-left: 5px;
+    color: #636363;
     font-size: 18px;
 }
 
@@ -104,15 +109,17 @@ body {
 }
 
 #alerta {
+    width: auto;
+    height: auto;
     display: none;
     position: fixed;
-    top: 20px;
-    right: 20px;
-    background: red;
+    top: 60px;
+    right: 25px;
+    padding: 20px 20px;
+    font-size: 15px;
     color: white;
-    padding: 15px;
-    border-radius: 8px;
-    width: 250px;
+    background: red;
+    max-width: 333px;
 }
 
 #fecharAlerta {
@@ -131,14 +138,66 @@ body {
 
 #iconeSenha {
     width: 25px;
-    margin: 2px;
+    margin: 0px;
     padding: 0;
-    opacity: 0.5;
+    opacity: 0.7;
     height: auto;
     position: absolute;
-    top: 9px;
+    top: 33px;
     right: 15px;
     background: none;
     border: none;
     cursor: pointer;
+}
+
+.dark {
+    background: #323232;
+}
+
+.dark .card {
+    background: #323232;
+    border: 1px solid #f1f1f1;
+    color: #f5f5f5;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.dark .card pp {
+    color: #eeeeee;
+}
+
+.dark .card p {
+    color: #b4b4b4;
+}
+
+.dark #link {
+    color: #f1f1f1;
+}
+
+.dark .card input {
+    background: #323232;
+    color: #f5f5f5;
+    border: 1px solid #f1f1f1;
+}
+
+.dark #btnEntrar {
+    background: rgb(32,32,32);
+    border: 1px solid #f1f1f1;
+    color: white;
+}
+
+.dark #btnEntrar:hover {
+    background: #f1f1f1;
+    color: #1d1d1d;
+}
+
+.dark #iconeSenha {
+    opacity: 0.3;
+}
+
+.dark #botao {
+    background: #4d4d4d;
+}
+
+.dark #alavanca {
+    left: 32px;
 }

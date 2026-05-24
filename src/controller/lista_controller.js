@@ -2,7 +2,9 @@
 const listaModel = require("../model/lista_model.js");
 
 function listar(req, res) {
-    listaModel.listar()
+    let idUsuario = req.query.idUsuario;
+
+    listaModel.listar(idUsuario)
         .then(function (convidados) {
             res.json(convidados);
         })
@@ -13,7 +15,7 @@ function listar(req, res) {
 }
 
 function remover(req, res) {
-    let id = req.params.id;
+    let id = req.query.idUsuario;
 
     if (id == undefined) {
         res.status(400).send("Nome não informado");

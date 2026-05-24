@@ -229,7 +229,7 @@ fetch(`/convidado/meus/${usuarioId}`)
         esconderLoading();
     }); 
 
-fetch(`/economia/${usuarioId}`)
+fetch(`/economia/meus/${usuarioId}`)
     .then(response => response.json())
     .then(data => {
         for (let i = 0; i < data.length; i++) {
@@ -341,7 +341,7 @@ function addEconomia() {
         totalEconomia = Number(totalEconomia) + Number(valor);
         input.value = '';
 
-        fetch(`/economia/${sessionStorage.ID_USUARIO}`)
+        fetch(`/economia/meus/${sessionStorage.ID_USUARIO}`)
         .then(response => response.json())
         .then(data => {
             economias = [];
