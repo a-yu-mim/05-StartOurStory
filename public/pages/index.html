@@ -10,14 +10,15 @@
     top: 0;
     left: 0;
     width: 100%;
+    z-index: 2;
 }
 
 body{
     margin: 0;
     font-family: monospace;
-    background: #f2f2f2;
-    color: #222;
-    padding: 80px 0 0 0;
+    background: #f5f5f5;
+    color: #2d2d2d;
+    padding: 90px 0 0 0;
 }
 
 .conteudo{
@@ -30,10 +31,24 @@ body{
     align-content: center;
 }
 
+.container{
+    position: relative;
+}
+
 img{
     width: 100%;
     max-width: 430px;
 }
+
+.imagem-cima{
+    position: absolute;
+    z-index: 1;
+}
+
+.imagem-baixo{
+    z-index: 0;
+}
+
 
 .texto{
     max-width: 470px;
@@ -42,8 +57,8 @@ img{
 
 .texto h1{
     margin: 30px 0;
-    font-size: 50px;
-    color: #222;
+    font-size: 40px;
+    color: #2d2d2d;
     text-align: justify;
 }
 
@@ -54,39 +69,74 @@ img{
     text-align: justify;
 }
 
-
 button{
-    padding: 14px 30px;
-    border: none;
+    border: 1px solid #4d4d4d;
+    background: transparent;
+    color: #2d2d2d;
+    padding: 20px 80px;
     border-radius: 40px;
-    background-color: black;
-    color: white;
+    transition: 0.2s;
     font-size: 20px;
     cursor: pointer;
-    transition: 0.2s;
 }
 
-button:hover{
-    background-color: #f55246;
+button:hover {
+    background: #2d2d2d;
+    color: #f5f5f5;
+}
+
+#botao {
+    position: fixed;
+    top: 25px;
+    right: 50px;
+    width: 60px;
+    height: 30px;
+    border-radius: 20px;
+    border: none;
+    padding: 0;
+    background: #cccccc;
+    cursor: pointer;
+    z-index: 3;
+}
+
+#alavanca {
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 100%;
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    transition: 0.5s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 3;
 }
 
 </style>
 </head>
-<body>
-<div id="navbar"></div>
-<script src="/components/navbar.js"></script>
+<body id="body">
+    <div id="navbar"></div>
+    <script src="/components/navbar.js"></script>
 
-<div class="conteudo">
-    <img src="../assets/porta_casal.png">
-    <div class="texto">
-        <h1>O começo da nossa história antes do 'sim'</h1>
-        <p>
-            Um espaço calmo e simples para ele, para ela ou para nós.
-            Onde cada fragmento guarda a espera por esse momento.
-        </p>
-        <button onclick="cadastro()">Say yes :)</button>
+    <button id="botao" onclick="darkModo()">
+        <div id="alavanca"></div>
+    </button>
+
+    <div class="conteudo">
+        <div class="container">
+        <img class="imagem-cima" src="../assets/porta_fechada.png">
+        <img class="imagem-baixo" src="../assets/casal_de_costas.png">
+        </div>
+        <div class="texto">
+            <h1>「はい」の前に始まる、私たちの物語</h1>
+            <!-- O começo da nossa história antes do 'sim' -->
+            <p>
+                Um espaço calmo e simples para ele, para ela ou para nós.
+                Onde cada fragmento guarda a espera por esse momento.
+            </p>
+            <button id="btnCadastro" onclick="cadastro()">Say yes :)</button>
+        </div>
     </div>
-</div>
 </body>
 </html>
 <script>
@@ -95,12 +145,51 @@ function cadastro() {
     window.location.href = "/pages/cadastro.html";
  }
 
-function login() {
-    window.location.href = "/pages/login.html";
-}
+function darkModo() {
+    let fundo = document.getElementById("body");
+    let botao = document.getElementById("botao");
+    let alavanca = document.getElementById("alavanca");
+    let h1 = document.querySelector(".conteudo h1");
+    let p = document.querySelector(".conteudo p");
+    let botaoCadastro = document.getElementById("btnCadastro");
+    let imagemBaixo = document.querySelector(".imagem-baixo");
+    let imagemCima = document.querySelector(".imagem-cima");
 
-function sobre() {
-    window.location.href = "/pages/sobre.html"
+    if (alavanca.style.left == "32px") {
+        botao.style = "";
+        alavanca.style = "";
+        imagemCima.src = "../assets/porta_fechada.png";
+        imagemBaixo.src = "../assets/casal_de_costas.png";
+        imagemBaixo.style.opacity = "1";
+        fundo.style = "";
+        h1.style = "";
+        p.style = "";
+        botaoCadastro.style = "";
+        botaoCadastro.classList.remove("dark");
+        botaoCadastro.onmouseenter = null;
+        botaoCadastro.onmouseleave = null;
+      } else {
+        botao.style.background = "#4d4d4d";
+        alavanca.style.left = "32px";
+        alavanca.style.boxShadow = "0 2px 6px rgba(0, 0, 0, 0.3)";
+        imagemCima.src = "../assets/porta_fechada_dark.png";
+        imagemBaixo.src = "../assets/casal_de_costas.png";
+        imagemBaixo.style.opacity = "0.5";
+        fundo.style.background = "#323232";
+        h1.style.color = "#f1f1f1";
+        p.style.color = "#838383";
+        botaoCadastro.style.background = "#323232";
+        botaoCadastro.style.color = "#f5f5f5";
+        botaoCadastro.onmouseleave = function() {
+            botaoCadastro.style.background = "#323232";
+            botaoCadastro.style.color = "#f5f5f5";
+        }
+        //mouse entra
+        botaoCadastro.onmouseenter = function() {
+            botaoCadastro.style.background = "#f1f1f1";
+            botaoCadastro.style.color = "#1d1d1d";
+        }
+    }
 }
 
 </script>

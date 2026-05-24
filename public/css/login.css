@@ -1,4 +1,5 @@
 * {
+    margin: 0;
     box-sizing: border-box;
 }
 
@@ -9,63 +10,77 @@
     width: 100%;
 }
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+body{
+    padding: 80px 0 0 0;
     font-family: monospace;
     background: #f2f2f2;
     color: #222;
 }
 
+.conteudo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 13.2vw;
+    padding: 10px 5%;
+    flex-wrap: wrap; /* quebra a linha  */
+    align-content: center;
+}
+
+.porta img{
+    width: 100%;
+    max-width: 430px;
+}
+
 .card {
-    width: 350px;
-    height: 400px;
-    padding: 45px 40px;
-    border: 2px solid #067806;
-    border-radius: 6px;
-    background: #ffffff;
+    width: 375px;
+    height: 420px;
+    padding: 45px 45px;
+    border: 1.6px solid #454545;
+    border-radius: 5px;
+    background: transparent;
 }
 
 .card h2 {
+    margin: 20px 0;
     text-align: center;
-    font-size: 28px;
+    font-size: 30px;
+    color: #2d2d2d;
 }
 
 .card input {
     width: 100%;
-    height: 42px;
-    margin-bottom: 12px;
+    height: 50px;
+    margin-bottom: 20px;
     padding: 0 10px;
-    border: 2px solid #067806;
     border-radius: 5px;
     font-size: 16px;
-    color: #222;
-    background: white;
+    border: 1.6px solid #454545;
+    color: #2d2d2d;
+    background: transparent;
 }
 
 .card button {
     width: 100%;
-    height: 44px;
-    margin-top: 7px;
+    height: 50px;
     border: none;
-    border-radius: 6px;
-    background: #f06f62;
-    color: white;
-    font-size: 16px;
+    border-radius: 5px;
+    font-size: 19px;
     cursor: pointer;
+    background: #323232;
+    color: #ffffff;
+    transition: 0.1s;
 }
 
 .card button:hover {
-    background: #f55246;
+    color: #ffffff;
+    background: #141414;
 }
 
 .card p {
-    margin: 16px 0 0;
+    margin: 20px 0 0;
     text-align: center;
-    font-size: 16px;
+    font-size: 17px;
 }
 
 #link {
@@ -103,31 +118,20 @@ body {
 }
 
 #alerta {
+    width: auto;
+    height: auto;
     display: none;
     position: fixed;
-    top: 20px;
-    right: 20px;
-    background: red;
+    top: 60px;
+    right: 25px;
+    padding: 20px;
+    font-size: 18px;
     color: white;
-    padding: 15px;
-    border-radius: 8px;
-    width: 250px;
+    background: red;
 }
 
 #fecharAlerta {
     cursor: pointer;
-}
-
-#porta {
-    display: none;
-    position: fixed;
-    bottom: 80px;
-    left: 30px;
-    cursor: pointer;
-}
-
-#porta img {
-    width: 220px;
 }
 
 .senha-container {
@@ -140,13 +144,14 @@ body {
     padding-right: 40px;
 }
 
-#btnVerSenha {
+#iconeSenha {
+    width: 25px;
     margin: 0;
     padding: 0;
-    width: auto;
+    opacity: 0.7;
     height: auto;
     position: absolute;
-    top: 11px;
+    top: 13px;
     right: 15px;
     background: none;
     border: none;

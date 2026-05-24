@@ -1,4 +1,5 @@
 * {
+    margin: 0;
     box-sizing: border-box;
 }
 
@@ -10,34 +11,34 @@
 }
 
 body {
-    margin: 0;
+    padding: 80px 0 0 0;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: monospace;
     background: #f2f2f2;
     color: #222;
 }
 
 .card {
-    width: 350px;
-    height: 460px;
-    padding: 25px 40px;
+    width: 400px;
+    height: 500px;
+    padding: 30px 40px;
     border: 2px solid #067806;
     border-radius: 6px;
     background: #ffffff;
 }
 
 .card h2 {
+    margin: 25px 0 20px 0;
     text-align: center;
-    font-size: 28px;
+    font-size: 30px;
 }
 
 .card input {
     width: 100%;
-    height: 42px;
-    margin-bottom: 12px;
+    height: 45px;
+    margin-bottom: 16px;
     padding: 0 10px;
     border: 2px solid #067806;
     border-radius: 5px;
@@ -49,12 +50,12 @@ body {
 .card button {
     width: 100%;
     height: 44px;
-    margin-top: 7px;
+    margin-top: 10px;
     border: none;
     border-radius: 6px;
     background: #f06f62;
     color: white;
-    font-size: 16px;
+    font-size: 20px;
     cursor: pointer;
 }
 
@@ -65,7 +66,7 @@ body {
 .card p {
     margin: 16px 0 0;
     text-align: center;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 #link {
@@ -128,13 +129,14 @@ body {
     padding-right: 40px;
 }
 
-#btnVerSenha {
-    margin: 0;
+#iconeSenha {
+    width: 25px;
+    margin: 2px;
     padding: 0;
-    width: auto;
+    opacity: 0.5;
     height: auto;
     position: absolute;
-    top: 11px;
+    top: 9px;
     right: 15px;
     background: none;
     border: none;

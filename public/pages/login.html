@@ -12,30 +12,96 @@
     <div id="navbar"></div>
     <script src="/components/navbar.js"></script>
 
-    <button id="botao" onclick="darkModo()"><div id="alavanca"></div></button>
+    <button id="botao" onclick="darkModo()">
+        <div id="alavanca"></div>
+    </button>
+
     <div id="alerta">
         <span id="fecharAlerta" onclick="fecharAlerta()">&times;</span>
         <span id="mensagem"></span>
     </div>
     
-    <div class="card">
-        <h2>Fazer Login</h2>
-        <input type="email" id="input_email" placeholder="E-mail">
-        <div class="senha-container">
-        <input type="password" id="input_senha" placeholder="Senha">
-        <button id="btnVerSenha" onclick="verSenha()"><img id="iconeSenha" src="../assets/olho-fechado.png" width="20" style="opacity: 0.5;">
-        </button>
+    <div class="conteudo">
+        <div class="porta">
+            <img src="../assets/porta_fechada.png">
+            <!-- <audio id="somPorta" src="../assets/porta-som.mp3"></audio> -->
         </div>
-        <button id="btnEntrar" onclick="login()">Entrar</button>
-        <p>Não tem conta? <a href="/pages/cadastro.html" id="link">Cadastrar</a></p>
-    </div>
-
-
-    <div id="porta" onclick="irParaHome()">
-        <img src="../assets/porta.png" alt="porta">
-        <audio id="somPorta" src="../assets/porta-som.mp3"></audio>
+    
+        <div class="card">
+            <h2>Fazer Login</h2>
+            <input type="email" id="input_email" placeholder="E-mail">
+            <div class="senha-container">
+            <input type="password" id="input_senha" placeholder="Senha">
+            <img id="iconeSenha" src="../assets/olho-fechado.png" onclick="verSenha()">
+            </div>
+            <button id="btnEntrar" onclick="login()">Entrar</button>
+            <p>Não tem conta? <a href="/pages/cadastro.html" id="link">Cadastrar</a></p>
+        </div>
     </div>
 </body>
 </html>
+<script>
+    function darkModo() {
+    let fundo = document.getElementById("body");
+    let botao = document.getElementById("botao");
+    let alavanca = document.getElementById("alavanca");
+    let imagem = document.querySelector(".porta img");
+    let card = document.querySelector(".card");
+    let h2 = document.querySelector(".card h2");
+    let p = document.querySelector(".card p");
+    let link = document.getElementById("link");
+    let email = document.getElementById("input_email");
+    let senha = document.getElementById("input_senha");
+    let iconeSenha = document.getElementById("iconeSenha");
+    let btnEntrar = document.getElementById("btnEntrar");
+
+    if (alavanca.style.left == "32px") {
+        botao.style = "";
+        alavanca.style = "";
+        imagem.src = "../assets/porta_fechada.png";
+        fundo.style = "";
+        card.style = "";
+        h2.style = "";
+        p.style = "";
+        link.style = "";
+        email.style = "";
+        senha.style = "";
+        iconeSenha.style = "";
+        btnEntrar.style = "";
+        btnEntrar.onmouseenter = null;
+        btnEntrar.onmouseleave = null;
+      } else {
+        botao.style.background = "#4d4d4d";
+        alavanca.style.left = "32px";
+        alavanca.style.boxShadow = "0 2px 6px rgba(0, 0, 0, 0.3)";
+        imagem.src = "../assets/porta_fechada_dark.png";
+        fundo.style.background = "#323232";
+        card.style.background = "#323232";
+        card.style.border = "1px solid #f1f1f1";
+        card.style.color = "#f5f5f5";
+        h2.style.color = "#f1f1f1";
+        p.style.color = "#b4b4b4";
+        link.style.color = "#f1f1f1";
+        email.style.background = "#323232";
+        email.style.color = "#f5f5f5";
+        email.style.border = "0.1px solid #f1f1f1";
+        senha.style.background = "#323232";
+        senha.style.color = "#f5f5f5";
+        senha.style.border = "0.1px solid #f1f1f1";
+        iconeSenha.style.opacity = "0.3";
+        btnEntrar.style.background = "rgb(32 32 32)";
+        btnEntrar.style.border = "0.1px solid #f1f1f1";
+        btnEntrar.onmouseleave = function() {
+            btnEntrar.style.background = "rgb(32, 32, 32)";
+            btnEntrar.style.color = "#f5f5f5";
+        }
+        //mouse entra
+        btnEntrar.onmouseenter = function() {
+            btnEntrar.style.background = "#f1f1f1";
+            btnEntrar.style.color = "#1d1d1d";
+        }
+    }
+}
+</script>
 
 
