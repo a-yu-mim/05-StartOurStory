@@ -7,4 +7,5 @@ fetch('/components/sidebar.html')
         document.getElementById('sidebar').innerHTML = conteudo;
     });
 
+
     

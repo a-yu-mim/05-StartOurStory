@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuração Do Usuário Da Dashboard</title>
+</head>
+<style>
+.container0 {
+    flex: 1;
+    margin-left: 200px;
+    padding: 35px;
+    display: flex;
+    gap: 30px;
+}
+
+</style>
+<body>
+    <div id="sidebar"></div>
+    <script src="/components/sidebar.js"></script>
+    
+    <div class="container0">
+        Código : <div id="codigo"></div>
+    </div>
+</body>
+</html>
+<script>
+    let usuarioId = sessionStorage.ID_USUARIO;
+    let div_mensagem = document.getElementById('codigo');
+        
+    fetch(`/codigo/${usuarioId}`)
+        .then(function (resposta) {
+            return resposta.json();
+        })
+        .then(function (dados) {
+            div_mensagem.innerHTML = `${dados.codigo}`;
+        })
+        .catch(function (erro) {
+            div_mensagem.innerHTML = erro.message;
+        });
+</script>

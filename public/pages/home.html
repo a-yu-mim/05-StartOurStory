@@ -11,9 +11,9 @@
     <div id="loading">Carregando...</div>
 
     <div class="areaTrabalho">
-        <div class="pasta" onclick="window.location='/pages/dashboard.html'">
+        <div class="pasta" onclick="window.location='/pages/lista.html'">
             <img class="iconePasta" src="../assets/pasta.png" alt="">
-            <span class="nomePasta">Game</span>
+            <span class="nomePasta">Lista Para Impressão</span>
         </div>
 
         <div class="pasta" onclick="window.location='/pages/dashboard.html'">
@@ -27,7 +27,7 @@
 
         <div id="menuItens">
             <div class="itemMenu" onclick="window.location.href='login.html'">Login</div>
-            <div class="itemMenu" id="codigo"></div>
+            <!-- <div class="itemMenu" id="codigo"></div> -->
             <div class="itemMenu" onclick="window.location.href='cadastro.html'">Cadastro</div>
             <div class="itemMenu" onclick="window.location.href='index.html'">Logout</div>
         </div>
@@ -61,18 +61,6 @@ function abreFechaMenu() {
         menuAberto = true;
         document.getElementById('menu').style.borderColor = '#5a5a5a #ffffff #ffffff #5a5a5a';
     }
-    
-    fetch(`/codigo/${usuarioId}`)
-        .then(function (resposta) {
-            return resposta.json();
-        })
-        .then(function (dados) {
-            div_mensagem.innerHTML = `${dados.codigo}`;
-        })
-        .catch(function (erro) {
-            div_mensagem.innerHTML = erro.message;
-        });
-
 }
 
 esconderLoading();

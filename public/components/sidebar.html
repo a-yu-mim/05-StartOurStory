@@ -1,5 +1,18 @@
 
 <style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: monospace;
+}
+
+body {
+    background: #f8dede;
+    display: flex;
+    min-height: 100vh;
+    z-indez: 1;
+}
+
 .sidebar {
     width: 200px;
     height: 100vh;
@@ -38,8 +51,10 @@
 
 </style>
 <div class="sidebar">
+    <div id="codigo"></div>
     <div onclick="window.location.href = '/pages/dashboard.html'">Dashboard</div>
     <div onclick="window.location.href = '/pages/lista.html'">Lista</div>
+    <div onclick="window.location.href = '/pages/configFalso.html'">Configuração</div>
     <div id="sair" onclick="window.location.href = '/pages/home.html'">Logout</div>
 </div>
 
