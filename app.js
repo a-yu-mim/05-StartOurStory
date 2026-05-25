@@ -24,7 +24,6 @@
 
 const usuarioRouter = require("./src/routes/usuario_routes.js");
 const codigoRouter = require("./src/routes/codigo_routes.js");
-const horarioRouter = require("./src/routes/horario_routes.js");
 const convidadoRouter = require("./src/routes/convidado_routes.js");
 const economiaRouter = require("./src/routes/economia_routes.js");
 const listaRouter = require("./src/routes/lista_routes.js");
@@ -32,7 +31,6 @@ const indexRouter = require("./src/routes/login_routes.js");
 
 app.use("/usuarios",  usuarioRouter);
 app.use("/codigo", codigoRouter);
-app.use("/horario", codigoRouter);
 app.use("/convidado", convidadoRouter);
 app.use("/economia",  economiaRouter);
 app.use("/lista",     listaRouter);
