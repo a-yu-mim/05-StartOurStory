@@ -44,7 +44,7 @@ function login() {
         sessionStorage.setItem("ID_USUARIO",    dadosUsuario.id);
         sessionStorage.setItem("EMAIL_USUARIO", dadosUsuario.email);
         sessionStorage.setItem("NOME_USUARIO",  dadosUsuario.nome);
-        mostrarAlerta("Login realizado com sucesso!", "green");
+        mostrarAlerta("A porta abriu ! Clique nela para entrar.", "green");
         abrirPorta();
     })
     .catch(function (erro) {

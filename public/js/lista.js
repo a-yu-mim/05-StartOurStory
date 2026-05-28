@@ -93,8 +93,8 @@ function removerConvidado(nome) {
         });
 }
 
-btnImprimir.addEventListener('click', function () {
-    window.print();
-});
+// btnImprimir.addEventListener('click', function () {
+//     window.print();
+// });
 
 carregarConvidados();
