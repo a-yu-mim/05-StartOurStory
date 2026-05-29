@@ -65,10 +65,6 @@ function cadastrar(req, res) {
                 return usuarioModel.vincularParceiro(idParceiro, idNovoUsuario);
             })
             .then(function () {
-                return usuarioModel.gerarCodigo(idNovoUsuario, gerarCodigoAleatorio()
-                );
-            })
-            .then(function () {
                 res
                     .status(201)
                     .send("Cadastro efetuado! Parceiro vinculado!");
