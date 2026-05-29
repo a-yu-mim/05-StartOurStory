@@ -6,7 +6,7 @@ let valoresGrafico = [];
 let totalConvidado = 0;
 let totalEconomia = 0;
 let metaEconomia   = 50000;
-let maxConvidados  = 300;
+let maxConvidados  = 250;
 
 let convidadoToRemove = '';
 let economiaToRemove  = 0;
@@ -38,7 +38,7 @@ function mostrarAlerta(mensagem) {
     alert(mensagem);
 }
 
-let dataCasamento = Date.parse('2026-05-31T10:00:00');
+let dataCasamento = Date.parse('2026-06-01T10:50:00');
 let totalSegundos = Math.floor((dataCasamento - Date.now()) / 1000);
 
 if (totalSegundos <= 0) {
