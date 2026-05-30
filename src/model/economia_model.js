@@ -1,11 +1,6 @@
 
 const database = require("../config/database.js");
 
-function listar(usuarioId, parceiroId) {
-    const sql = `SELECT id, valor, fkUsuario FROM economia WHERE fkUsuario = ? OR fkUsuario = ?`;
-    return database.executar(sql, [usuarioId, parceiroId]);
-}
-
 function adicionar(valor, usuarioId) {
     const sql = `INSERT INTO economia (valor, fkUsuario) VALUES (?, ?)`;
     return database.executar(sql, [valor, usuarioId]);
@@ -32,7 +27,6 @@ function listarSoMeusValores(usuarioId) {
 }
 
 module.exports = {
-    listar,
     adicionar,
     remover,
     totalEconomia,

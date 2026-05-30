@@ -2,23 +2,6 @@
 const economiaModel = require("../model/economia_model.js");
 const usuarioModel = require("../model/usuario_model.js");
 
-function listar(req, res) {
-    const usuarioId = req.params.usuarioId;
-
-    if (!usuarioId) {
-        res.status(400).send("Usuário não informado");
-        return;
-    } 
-
-    usuarioModel.buscarPorId(usuarioId)
-        .then(lista => { 
-            const parceiroId = lista[0].fkParceiro || null;
-            return economiaModel.listar(usuarioId, parceiroId);
-        })
-        .then(lista => res.json(lista))
-        .catch(err => res.status(500).json({ erro: err.message }));
-};
-
 function adicionar(req, res) {
     const valor = req.body.valor;
     const usuarioId = req.body.usuarioId;
@@ -98,7 +81,6 @@ function listarSoMeusValores(req, res) {
 }
 
 module.exports = {
-    listar,
     adicionar,
     remover,
     totalEconomia,
