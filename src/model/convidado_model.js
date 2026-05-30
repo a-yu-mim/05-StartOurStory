@@ -1,10 +1,6 @@
 
 const database = require("../config/database.js");
 
-function listar(usuarioId, parceiroId) {
-    let sql = `SELECT id, nome, fkUsuario FROM convidado WHERE fkUsuario = ? OR fkUsuario = ?;`;
-    return database.executar(sql, [usuarioId, parceiroId]);
-}
 function listarSoMeus(usuarioId) {
     let sql = `SELECT id, nome FROM convidado WHERE fkUsuario = ?;`;
     return database.executar(sql, [usuarioId]);
@@ -26,7 +22,6 @@ function totalConvidado(usuarioId, parceiroId) {
 }
 
 module.exports = {
-    listar,
     listarSoMeus,
     adicionar,
     remover,

@@ -2,23 +2,6 @@
 const convidadoModel = require("../model/convidado_model.js");
 const usuarioModel = require("../model/usuario_model.js");
 
-function listar(req, res) {
-    let usuarioId = req.params.usuarioId;
-
-    if (!usuarioId) {
-        res.status(400).send("Usuário não informado");
-        return;
-    } 
-    
-    usuarioModel.buscarPorId(usuarioId)
-        .then(lista => {
-            let parceiroId = lista[0].fkParceiro || null;
-            return convidadoModel.listar(usuarioId, parceiroId);
-        })
-        .then(lista => res.json(lista))
-        .catch(err => res.status(500).json({ erro: err.message }));
-};
-
 function listarSoMeus(req, res) {
     let usuarioId = req.params.usuarioId;
 
@@ -79,8 +62,7 @@ function totalConvidado(req, res) {
         .catch(err => res.status(500).json({ erro: err.message }));
 };
 
-    module.exports = {
-    listar,
+module.exports = {
     listarSoMeus,
     adicionar,
     remover,

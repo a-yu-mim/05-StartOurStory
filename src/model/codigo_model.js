@@ -3,17 +3,14 @@ const database = require("../config/database.js");
 function buscarCodigoPorUsuario(usuarioId) {
 	let sql = `SELECT codigo FROM codigo WHERE fkUsuario = ?;`;
 	return database.executar(sql, [usuarioId])
-		.then(function (lista) {
-			if (lista.length > 0) {
-				return lista;
+
+		.then(function (resultado) {
+			if (resultado.length > 0) {
+				return resultado;
 			}
 
-			let sqlParceiro = `
-				SELECT c.codigo
-				FROM codigo c
-				JOIN usuario u ON c.fkUsuario = u.fkParceiro
-				WHERE u.id = ?;
-			`;
+			// "Existe um código pertencente ao parceiro desse usuário?"
+			let sqlParceiro = `SELECT codigo FROM codigo WHERE fkUsuario = (SELECT fkParceiro FROM usuario WHERE id = ?);`;
 			return database.executar(sqlParceiro, [usuarioId]);
 		});
 }

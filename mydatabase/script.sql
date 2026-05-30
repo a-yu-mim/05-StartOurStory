@@ -40,10 +40,10 @@ CREATE TABLE economia (
 		FOREIGN KEY (fkUsuario) REFERENCES usuario(id)
 );
 
-CREATE TABLE evento (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    horario DATETIME NOT NULL,
-    fkUsuario INT UNIQUE,
-    CONSTRAINT fkEventoUsuario
-        FOREIGN KEY (fkUsuario) REFERENCES usuario(id)
-);
+-- CREATE TABLE evento (
+--     id INT PRIMARY KEY AUTO_INCREMENT,
+--     horario DATETIME NOT NULL,
+--     fkUsuario INT UNIQUE,
+--     CONSTRAINT fkEventoUsuario
+--         FOREIGN KEY (fkUsuario) REFERENCES usuario(id)
+-- );

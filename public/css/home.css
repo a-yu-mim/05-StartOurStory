@@ -7,18 +7,14 @@ body {
     font-family: monospace;
     min-height: 100vh;
     overflow: hidden;
-    background-image: url('../assets/mar.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    background: url('../assets/mar.jpg') center/cover;
 }
 
 .areaTrabalho {
     width: 100%;
-    display: grid;
+    display: flex;
     min-height: 100vh;
     padding: 28px 22px 90px;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 110px));
     gap: 20px;
     align-content: start;
 }
@@ -79,11 +75,6 @@ body {
     background: #b1b1b1;
 }
 
-#menu:focus-visible {
-    outline: 2px dashed #1f4f94;
-    outline-offset: 2px;
-}
-
 #menuItens {
     display: none;
     position: absolute;
@@ -102,10 +93,6 @@ body {
     margin-top: 2px;
     border: 1px solid transparent;
     cursor: pointer;
-}
-
-.itemMenu:first-child {
-    margin-top: 0;
 }
 
 .itemMenu:hover {

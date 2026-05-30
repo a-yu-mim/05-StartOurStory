@@ -137,6 +137,7 @@ input {
     font-size: 16px;
 }
 
+/* Tira o contorno azul padrão do input quando clica e deixa a borda rosa no lugar. */
 input:focus {
     outline: none;
     border-color: #f48fb1;
