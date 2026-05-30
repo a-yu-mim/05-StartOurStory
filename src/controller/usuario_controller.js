@@ -1,5 +1,6 @@
 
 const usuarioModel = require("../model/usuario_model.js");
+const codigoModel = require("../model/codigo_model.js");
 
 let lista = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
     "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
@@ -58,11 +59,12 @@ function cadastrar(req, res) {
         let idNovoUsuario;
 
         return usuarioModel.cadastrar(nome, email, senha, idParceiro)
-            
             .then(function (resultado) {
                 idNovoUsuario = resultado.insertId;
-                
                 return usuarioModel.vincularParceiro(idParceiro, idNovoUsuario);
+            })
+            .then(function () {
+                return codigoModel.marcarHorarioUso(codigo);
             })
             .then(function () {
                 res
