@@ -172,13 +172,13 @@ button:hover {
 
 #avisoMeta {
     position: fixed;
-    top: 31%;
-    left: 22%;
+    top: 4.8%;
+    left: 15.2%;
     background: #a2d7af;
     color: #155724;
     border-radius: 15px;
-    padding: 20px 70px;
-    font-size: 21px;
+    padding: 21px 177px;
+    font-size: 19px;
     font-weight: bold;
     align-items: center;
     z-index: 999;

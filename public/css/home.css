@@ -27,6 +27,7 @@ body {
     color: #ffffff;
     text-shadow: 1px 1px 0 #000;
     padding: 8px 6px;
+    width: 100px;
     cursor: pointer;
 }
 
@@ -85,13 +86,10 @@ body {
     border: 2px solid;
     border-color: #ffffff #5a5a5a #5a5a5a #ffffff;
     background: #b8b8b8;
-    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
 }
 
 .itemMenu {
     padding: 8px 10px;
-    margin-top: 2px;
-    border: 1px solid transparent;
     cursor: pointer;
 }
 
