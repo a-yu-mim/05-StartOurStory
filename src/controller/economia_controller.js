@@ -1,6 +1,6 @@
 
 const economiaModel = require("../model/economia_model.js");
-const usuarioModel = require("../model/usuario_model.js");
+const cadastroModel = require("../model/cadastro_model.js");
 
 function adicionar(req, res) {
     const valor = req.body.valor;
@@ -41,7 +41,7 @@ function totalEconomia(req, res) {
         return;
     }
 
-    usuarioModel.buscarPorId(usuarioId)
+    cadastroModel.buscarPorId(usuarioId)
         .then(lista => {
             const parceiroId = lista[0].fkParceiro || null;
             return economiaModel.totalEconomia(usuarioId, parceiroId);
@@ -58,7 +58,7 @@ function listarTodos(req, res) {
         return;
     }
 
-    usuarioModel.buscarPorId(usuarioId)
+    cadastroModel.buscarPorId(usuarioId)
         .then(lista => {
             const parceiroId = lista[0].fkParceiro || null;
             return economiaModel.listarTodos(usuarioId, parceiroId);

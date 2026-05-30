@@ -1,6 +1,6 @@
 
 const convidadoModel = require("../model/convidado_model.js");
-const usuarioModel = require("../model/usuario_model.js");
+const cadastroModel = require("../model/cadastro_model.js");
 
 function listarSoMeus(req, res) {
     let usuarioId = req.params.usuarioId;
@@ -53,7 +53,7 @@ function totalConvidado(req, res) {
         return;
     }
     
-    usuarioModel.buscarPorId(usuarioId)
+    cadastroModel.buscarPorId(usuarioId)
         .then(lista => {
             let parceiroId = lista[0].fkParceiro || null;
             return convidadoModel.totalConvidado(usuarioId, parceiroId);

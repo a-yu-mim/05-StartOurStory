@@ -1,5 +1,5 @@
 
-const usuarioModel = require("../model/usuario_model.js");
+const cadastroModel = require("../model/cadastro_model.js");
 const codigoModel = require("../model/codigo_model.js");
 
 let lista = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
@@ -25,10 +25,10 @@ function cadastrar(req, res) {
     if (!codigo) {
         let codigoGerado = gerarCodigoAleatorio();
 
-        return usuarioModel.cadastrar(nome, email, senha, null)
+        return cadastroModel.cadastrar(nome, email, senha, null)
 
         .then(function (resultado) {
-            return usuarioModel.gerarCodigo(
+            return cadastroModel.gerarCodigo(
                 resultado.insertId, 
                 codigoGerado
             );
@@ -45,7 +45,7 @@ function cadastrar(req, res) {
         });
     }
 
-    usuarioModel.buscarPorCodigo(codigo)
+    cadastroModel.buscarPorCodigo(codigo)
 
     .then(function (lista) {
 
@@ -58,10 +58,10 @@ function cadastrar(req, res) {
         let idParceiro = lista[0].id;
         let idNovoUsuario;
 
-        return usuarioModel.cadastrar(nome, email, senha, idParceiro)
+        return cadastroModel.cadastrar(nome, email, senha, idParceiro)
             .then(function (resultado) {
                 idNovoUsuario = resultado.insertId;
-                return usuarioModel.vincularParceiro(idParceiro, idNovoUsuario);
+                return cadastroModel.vincularParceiro(idParceiro, idNovoUsuario);
             })
             .then(function () {
                 return codigoModel.marcarHorarioUso(codigo);
@@ -89,7 +89,7 @@ function autenticar(req, res) {
             .send("Preencha todos os campos.");
     }
 
-    usuarioModel.autenticar(email, senha)
+    cadastroModel.autenticar(email, senha)
 
         .then(function (lista) {
             if (lista.length == 1) {
@@ -114,7 +114,7 @@ function autenticar(req, res) {
 function buscarParceiro(req, res) {
     let usuarioId = req.params.usuarioId;
 
-    usuarioModel.buscarParceiro(usuarioId)
+    cadastroModel.buscarParceiro(usuarioId)
 
         .then(function (lista) {
             if (lista.length == 0) {
