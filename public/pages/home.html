@@ -26,7 +26,13 @@
         <button id="menu" type="button" onclick="abreFechaMenu()">Start</button>
 
         <div id="menuItens">
-            <div class="itemMenu" onclick="window.location.href='index.html'">Sair</div>
+            <div  class="itemMenu" id="codigo"></div>
+            <div class="itemMenu" onclick="window.location.href='/pages/dashboard.html'">Dashboard</div>
+            <div class="itemMenu" onclick="window.location.href='/pages/lista.html'">Lista Para Impressão</div>
+            <div class="itemMenu" onclick="window.location.href='index.html'">
+                <img src="../assets/desligar_preto.png" class="preto" style="width: 18px;">
+                <img src="../assets/desligar_branco.png" class="branco" style="width: 18px;">
+            </div>
         </div>
     </div>
 </body>
@@ -59,6 +65,17 @@ function abreFechaMenu() {
         document.getElementById('menu').style.borderColor = '#5a5a5a #ffffff #ffffff #5a5a5a';
     }
 }
+
+let codigo = document.getElementById('codigo');
+
+fetch(`/codigo/${usuarioId}`)
+    .then(resposta => resposta.json())
+    .then(dados => {
+        codigo.innerHTML = dados.codigo;
+    })
+    .catch(erro => {
+        codigo.innerHTML = erro.message;
+    });
 
 esconderLoading();
 </script>

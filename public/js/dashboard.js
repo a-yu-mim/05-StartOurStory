@@ -150,8 +150,7 @@ let barraGrafico = new Chart(document.getElementById('barraGrafico'), {
                 position: 'right',
                 beginAtZero: true,
                 max: maxConvidados,
-                title: { display: true, text: 'Convidados' },
-                grid: { drawOnChartArea: false }
+                title: { display: true, text: 'Convidados' }
             }
         }
     }
