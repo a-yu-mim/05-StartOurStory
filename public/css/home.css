@@ -91,12 +91,19 @@ body {
     padding: 12px 10px;
     cursor: pointer;
     font-size: 17px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .itemMenu:hover {
     background: #1f4f94;
     color: #ffffff;
     border-color: #9bc0ff;
+}
+
+#sair {
+    gap: 10px;
 }
 
 .branco {

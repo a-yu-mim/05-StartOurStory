@@ -81,20 +81,33 @@ let linhaGrafico = new Chart(document.getElementById('linhaGrafico'), {
     type: 'line',
     data: {
         labels: [],
-        datasets: [{
-            label: 'Progresso para a Meta (%)',
-            data: [],
+        datasets: [
+        {
+            label: 'Progresso econômico (%)',
+            data: [], 
             borderColor: '#f48fb1',
-            backgroundColor: 'rgba(244, 143, 177, 0.1)',
-            borderWidth: 2,
+            backgroundColor: 'rgba(244, 143, 177, 0.39)', // cor abaixo da linha
+            borderWidth: 2, // espessura da linha
+            fill: true, // preencher área abaixo da linha
+            tension: 0.4 // curvar a linha
+        },
+        {
+            label: '75%',
+            data: [75, 75, 75, 75, 75, 75, 75, 75, 75, 75,75, 75, 75, 75, 75, 75, 75, 75, 75, 75,75, 75, 75, 75, 75, 75, 75, 75, 75, 75],
+            backgroundColor: 'rgba(244, 143, 177, 0.39)', 
+            borderWidth: 0,
+            pointRadius: 0,
             fill: true,
-            tension: 0.4
-        }]
-    },
+        }
+    ]
+},
     options: {
-        responsive: true,
-        plugins: { 
-            legend: { display: true },
+        responsive: true, 
+        plugins: {  // extras
+            legend: { 
+                display: true,
+                align: 'center'
+            },
             tooltip: {
                 displayColors: false,
                 callbacks: {
@@ -103,10 +116,11 @@ let linhaGrafico = new Chart(document.getElementById('linhaGrafico'), {
                         return '+ ' + Number(valor).toFixed(2).replace('.', ',');
                     }
                 }
-            } },
+            } 
+        },
         scales: {
             y: {
-                beginAtZero: true,
+                beginAtZero: true, //eixo começando em 0
                 max: 100,
                 ticks: { stepSize: 20 },
                 title: { display: true, text: '%' }
@@ -136,7 +150,11 @@ let barraGrafico = new Chart(document.getElementById('barraGrafico'), {
     },
     options: {
         responsive: true,
-        plugins: { legend: { display: true } },
+        plugins: { 
+            legend: { 
+                display: true
+            } 
+        },
         scales: {
             yEcon: {
                 type: 'linear',
